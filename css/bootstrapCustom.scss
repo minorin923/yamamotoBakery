@@ -1,0 +1,64 @@
+/*bootstrapカスタム*/
+
+/*リンクカラー*/
+$textColor:#616161;
+$mainColor:#f8145b;
+
+$primary:$mainColor;
+$navbar-light-color:                rgba($primary, .7);
+$navbar-light-hover-color:          rgba($primary, .9) ;
+$navbar-light-active-color:         rgba($primary, .9) ;
+$navbar-light-disabled-color:       rgba($primary, .3) ;
+
+$link-color:                              $textColor;
+$link-decoration:                         none ;
+$link-hover-color:                        lighten($link-color, 35%) ;
+$link-hover-decoration:                   underline;
+
+/*元のbootstrapファイル読み込み*/
+/*!
+ * Bootstrap v4.5.0 (https://getbootstrap.com/)
+ * Copyright 2011-2020 The Bootstrap Authors
+ * Copyright 2011-2020 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+ @import "scss/functions";
+ @import "scss/variables";
+ @import "scss/mixins";
+
+ @import "scss/root";
+ @import "scss/reboot";
+ @import "scss/type";
+ @import "scss/images";
+ @import "scss/code";
+ @import "scss/grid";
+ @import "scss/tables";
+ @import "scss/forms";
+ @import "scss/buttons";
+ @import "scss/transitions";
+ //@import "scss/dropdown";
+ @import "scss/button-group";
+ // @import "scss/input-group";
+ //@import "scss/custom-forms";
+ @import "scss/nav";
+ @import "scss/navbar";
+ @import "scss/card";
+ @import "scss/breadcrumb";
+ @import "scss/pagination";
+ //@import "scss/badge";
+ //@import "scss/jumbotron";
+ @import "scss/alert";
+ //@import "scss/progress";
+ @import "scss/media";
+ @import "scss/list-group";
+ @import "scss/close";
+ //@import "scss/toasts";
+ //@import "scss/modal";
+ @import "scss/tooltip";
+ //@import "scss/popover";
+ //@import "scss/carousel";
+ //@import "scss/spinners";
+ @import "scss/utilities";
+ @import "scss/print";
+ 
