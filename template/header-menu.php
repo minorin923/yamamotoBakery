@@ -4,13 +4,22 @@
 
 <?php
 // if ( has_nav_menu( 'Header Navigation' ) ) {
-
-wp_nav_menu(array(
-  'theme_location'  => 'header-navigation',
-  'container'       => 'div',
-  'container_class' => 's-header_menuList collapse navbar-collapse',
-  'container_id'    => 'navbarSupportedContent',
-  'menu_class'      => 'navbar-nav flex-column',
-));
+if (is_front_page()) {
+  wp_nav_menu(array(
+    'theme_location'  => 'header-navigation',
+    'container'       => 'div',
+    'container_class' => 's-header_menuList collapse navbar-collapse',
+    'container_id'    => 'navbarSupportedContent',
+    'menu_class'      => 'navbar-nav flex-column',
+  ));
+} else {
+  wp_nav_menu(array(
+    'theme_location'  => 'header-navigation',
+    'container'       => 'div',
+    'container_class' => 's-header_menuList--subpage collapse navbar-collapse',
+    'container_id'    => 'navbarSupportedContent',
+    'menu_class'      => 'navbar-nav ',
+  ));
+}
 // }
 ?>

@@ -4,7 +4,7 @@
       <a href="/#top"><img src="<?= get_template_directory_uri(); ?>/img/logo.png" alt=""></a>
     </h1>
 
-    <?php if (is_front_page()) {
+    <?php if (!is_single()) {
       get_template_part('template/header', 'menu');
     } ?>
 
