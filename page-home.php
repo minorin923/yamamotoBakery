@@ -47,7 +47,7 @@ Template Name: home
 
   <!-- start:s-blogSection -->
 
-  <section id="s-blog" class=" s-section s-js">
+  <section id="s-blog" class=" s-section s-js"> 
     <div class="s-section_container">
       <div class="s-section_container_titleArea">
         <h2 class="s-section_container_titleArea_title">blog</h2>
