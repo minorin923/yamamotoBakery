@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /*コーディングルール
 (1)クラス命名規則
-  bootstrapと区別するために
+  wordpressのクラスと区別するために
   クラス名、ID名に接頭辞「s-」を付ける
 (2)書式記載順
   height width
@@ -23,10 +23,59 @@ html {
 body {
   color: #616161;
   font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+}
+
+h2, h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+address {
+  font-style: normal;
+  line-height: inherit;
+}
+
+p {
+  margin-top: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 2px;
+}
+
+th {
+  text-align: inherit;
+  display: table-cell;
+  vertical-align: inherit;
+  font-weight: bold;
+}
+
+a {
+  display: block;
+  color: #616161;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  display: inline-block;
 }
 
 /*汎用クラス*/
-/*(1)アスペクト比固定*/
+/*(1)要素のアスペクト比固定*/
 .s-aspectFixed--16-9 {
   position: relative;
   /*アスペクト非固定用疑似要素*/
@@ -65,60 +114,121 @@ body {
      object-fit: cover;
 }
 
+/*(2)ボタンによる要素の表示切替*/
+.s-toggle_button {
+  display: none;
+}
+
+.s-toggle_label {
+  cursor: pointer;
+}
+
+.s-toggle_target {
+  display: none;
+}
+
+.s-toggle_button:checked + .s-toggle_label + .s-toggle_target {
+  display: block;
+}
+
 /*Header*/
 .s-header {
   position: absolute;
 }
 
-.s-header--subpage {
+.s-navArea--sub::before {
+  content: "";
   height: 4.5rem;
   width: 100vw;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100;
-  background-color: white;
+  z-index: 99;
+  background-color: #fff;
 }
 
-.s-header_logoMark {
+.s-logoMark {
   position: fixed;
   top: 1.5rem;
   left: 0.5rem;
   z-index: 100;
 }
 
-.s-header_logoMark img {
+.s-logoMark img {
   height: 2.5rem;
   width: auto;
   -o-object-fit: contain;
      object-fit: contain;
 }
 
-.s-header_button {
-  position: fixed;
-  top: 1.5rem;
-  right: 0;
-  z-index: 100;
-}
-
-.s-header_menuList {
+.s-menuBar_label {
+  height: 1.5rem;
+  width: 1.5rem;
+  display: none;
   position: fixed;
   top: 5rem;
-  left: 0.5rem;
+  right: 0.5rem;
   z-index: 100;
+  background-color: #fff;
+  border: #f8145b 1px solid;
+}
+
+@media screen and (max-width: 768px) {
+  .s-menuBar_label {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .s-menuBar_menu {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .s-menuBar_menu {
+    display: block;
+  }
+}
+
+.s-menuBar_menu .s-menuBar_menu_list, .s-menuBar_menu .s-menuBar_menu_list--sub {
+  position: fixed;
+  z-index: 100;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-.s-header_menuList li:nth-last-child(2) {
+.s-menuBar_menu .s-menuBar_menu_list a, .s-menuBar_menu .s-menuBar_menu_list--sub a {
+  color: #f8145b;
+  padding: 0.5rem 1rem;
+}
+
+.s-menuBar_menu_list {
+  padding-left: 0;
+  top: 5rem;
+  left: 0.5rem;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.s-menuBar_menu_list li:nth-last-child(2) {
   margin-top: 6rem;
 }
 
-.s-header_menuList--subpage {
-  position: fixed;
+.s-menuBar_menu_list--sub {
+  height: 1.7rem;
+  width: 100vw;
   top: 2rem;
   left: 20rem;
-  z-index: 100;
-  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.s-button {
+  cursor: pointer;
+  border-color: #f8f9fa;
 }
 
 /*topSection*/
@@ -235,13 +345,15 @@ body {
 
 .s-section_container_footerArea_link span {
   position: relative;
-  top: -0.3rem;
+  top: 0.2rem;
+  left: -0.6rem;
 }
 
 .s-section_container_footerArea_link .arrow {
   height: 1rem;
   width: 2rem;
-  top: 0.1rem;
+  top: 0.5rem;
+  left: -0.6rem;
   display: inline-block;
   background: url(../img/arrow.png) left top no-repeat;
   background-size: contain;
@@ -712,9 +824,16 @@ body {
 }
 
 .s-single .s-singleArea_footer .s-backbutton {
-  height: auto;
+  display: inline-block;
+  height: 2rem;
   width: 100%;
   margin: 2rem 0;
+  background-color: #f8145b;
+  color: #fff;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .s-single .s-singleArea_footer .s-nextandprev {
@@ -796,19 +915,7 @@ body {
   padding: 0;
 }
 
-.s-widgetArea .s-widget .menuToggle {
-  display: none;
-}
-
-.s-widgetArea .s-widget .menuToggle:checked + .s-archiveYear + .archiveMenu {
-  display: block;
-}
-
-.s-widgetArea .s-widget .menuToggle:checked + .s-archiveYear::after {
-  content: "▲";
-}
-
-.s-widgetArea .s-widget .s-archiveYear {
+.s-archive_year {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -818,13 +925,17 @@ body {
   font-size: 1.1rem;
 }
 
-.s-widgetArea .s-widget .s-archiveYear::after {
-  content: "▼";
-}
-
-.s-widgetArea .s-widget .archiveMenu {
+.s-archive_menu {
   display: none;
   padding-left: 1.5rem;
+}
+
+.s-archive_button:checked + .s-archive_year::after {
+  content: "▲";
+}
+
+.s-archive_button + .s-archive_year::after {
+  content: "▼";
 }
 
 .pagination h2.screen-reader-text {

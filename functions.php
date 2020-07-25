@@ -296,9 +296,9 @@ class customarchive extends WP_Widget
         if ($year_prev != null) {
           echo  '</ul></div>';
         }
-        echo '<div><input id="menuToggle' . $count . '" class="menuToggle" type="checkbox" ></input>';
-        echo '<label class="s-archiveYear" for="menuToggle' . $count . '">' . $month->year . '年</label>';
-        echo '<ul class="archiveMenu">';
+        echo '<div><input id="menuToggle' . $count . '" class="s-archive_button s-toggle_button " type="checkbox" ></input>';
+        echo '<label class="s-archive_year s-toggle_label" for="menuToggle' . $count . '">' . $month->year . '年</label>';
+        echo '<ul class="s-archive_menu s-toggle_target">';
       }
       echo '<li><a href="/' . $month->year . '/' . date("m", mktime(0, 0, 0, $month->month, 1, $month->year)) . $posttype . '">';
       echo date("n", mktime(0, 0, 0, $month->month, 1, $month->year)) . '月';

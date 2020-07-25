@@ -22,7 +22,6 @@ Template Name: newslist
   <div class="s-singleArea">
     <!-- 固定ページ本文の出力 -->
     <?php get_template_part('template/archiveContent','news'); ?>
-    <?php get_template_part('template/archivePagenation'); ?>
   </div>
   <!-- end:singleArea -->
 

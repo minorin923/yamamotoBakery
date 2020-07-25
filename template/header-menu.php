@@ -1,25 +1,14 @@
-<button class="s-header_button navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon "></span>
-</button>
+
+<input id="menuBarToggle" class="s-menuBar_button s-toggle_button" type="checkbox" ></input>
+<label class="s-menuBar_label s-toggle_label" for="menuBarToggle">Button</label>
 
 <?php
 // if ( has_nav_menu( 'Header Navigation' ) ) {
-if (is_front_page()) {
   wp_nav_menu(array(
     'theme_location'  => 'header-navigation',
     'container'       => 'div',
-    'container_class' => 's-header_menuList collapse navbar-collapse',
-    'container_id'    => 'navbarSupportedContent',
-    'menu_class'      => 'navbar-nav flex-column',
+    'container_class' => 's-menuBar_menu s-toggle_target',
+    'menu_class'      => 's-menuBar_menu_list'.((is_front_page())?'':'--sub'),
   ));
-} else {
-  wp_nav_menu(array(
-    'theme_location'  => 'header-navigation',
-    'container'       => 'div',
-    'container_class' => 's-header_menuList--subpage collapse navbar-collapse',
-    'container_id'    => 'navbarSupportedContent',
-    'menu_class'      => 'navbar-nav ',
-  ));
-}
 // }
 ?>

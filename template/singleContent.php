@@ -27,7 +27,7 @@ while (have_posts()) :
     </article>
     <!-- #post-<?php the_ID(); ?> -->
     <div class="s-singleArea_footer">
-      <a class="s-backbutton btn btn-primary" href="/blog" role="button">
+      <a class="s-backbutton s-button" href="/blog" role="button">
         <span>記事一覧へ戻る</span> <span class="arrow"></span>
       </a>
       <div class="s-nextandprev">

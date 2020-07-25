@@ -39,7 +39,7 @@ Template Name: home
 
         </div>
       </div>
-      <div class="s-section_container_footerArea"><a class="s-section_container_footerArea_link btn btn-light" href="/news" role="button">
+      <div class="s-section_container_footerArea"><a class="s-section_container_footerArea_link " href="/news" role="button">
           <span>more</span> <span class="arrow"></span>
         </a></div>
     </div>
@@ -56,7 +56,7 @@ Template Name: home
         <div class="s-blogList">
           [getArticleList count="4" category_id="4" classname="s-blogList_blog"]</div>
       </div>
-      <div class="s-section_container_footerArea"><a class="s-section_container_footerArea_link btn btn-light" href="/blog" role="button">
+      <div class="s-section_container_footerArea"><a class="s-section_container_footerArea_link s-button" href="/blog" role="button">
           <span>more</span> <span class="arrow"></span>
         </a></div>
     </div>

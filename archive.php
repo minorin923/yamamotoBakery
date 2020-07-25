@@ -20,6 +20,5 @@ Template Name: archive
 
 <!-- 固定ページ本文の出力 -->
 <?php get_template_part('template/archiveContent'); ?>
-<?php get_template_part('template/archivePagenation'); ?>
 
 <?php get_footer(); ?>

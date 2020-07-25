@@ -36,3 +36,5 @@
   <?php /* postSingle：END */ ?>
   </div>
   <!-- end:mainContants -->
+
+  <?php get_template_part('template/archivePagenation'); ?>

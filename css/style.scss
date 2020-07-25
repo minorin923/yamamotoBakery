@@ -1,6 +1,6 @@
 /*コーディングルール
 (1)クラス命名規則
-  bootstrapと区別するために
+  wordpressのクラスと区別するために
   クラス名、ID名に接頭辞「s-」を付ける
 (2)書式記載順
   height width
@@ -33,88 +33,165 @@ body{
     "Hiragino Sans",
     Meiryo,
     sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: left;
+}
+h2,h3{
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+address{
+  font-style: normal;
+  line-height: inherit;
+}
+p{
+  margin-top: 0;
+  box-sizing: border-box;
+}
+table{
+  border-collapse: collapse;
+  border-spacing: 2px;
+}
+th{
+  text-align: inherit;
+  display: table-cell;
+  vertical-align: inherit;
+  font-weight: bold;
+}
+a{
+  display: block;
+  color: $textColor;
+  text-decoration: none;
+  background-color: transparent;
+}
+ul{
+  list-style: none;
+}
+li{
+  display: inline-block;
 }
 
 /*汎用クラス*/
-/*(1)アスペクト比固定*/
-.s-aspectFixed--16-9{
-  position: relative;
-   /*アスペクト非固定用疑似要素*/
-  &::before{
+/*(1)要素のアスペクト比固定*/
+.s-aspectFixed{
+  &--16-9{
+    position: relative;
+    /*アスペクト非固定用疑似要素*/
+    &::before{
     content:"";
     display: block;
     /*padding-topの高さは元要素のwidthで決まる*/
     padding-top: 56.25%;
+    }
   }
-}
-.s-aspectFixed--4-3{
-  position: relative;
-  &::before{
-    content:"";
-    display: block;
-    padding-top: 75%;
+  &--4-3{
+    position: relative;
+    &::before{
+      content:"";
+      display: block;
+      padding-top: 75%;
+    }
   }
-}
-  .s-aspectFixed_frame{
+  &_frame{
     /*absluteで親要素のbeforeに貼り付ける*/
     position: absolute;
     top: 0; bottom: 0; left: 0; right: 0;
-
     &_image{
      height: 100%; width: 100%;
      object-fit: cover;
     }
   }
+}
 
-
-
-/*Header*/
-.s-header{
-  position: absolute;
-
-  &--subpage{
-    height: 4.5rem; width: 100vw;
-    position: fixed;
-    top:0; left:0;
-    z-index: 100;
-    background-color: white;
-  }
-
-  &_logoMark{
-    position: fixed;
-    top:1.5rem; left: 0.5rem;
-    z-index: 100;
-    img{
-      height: 2.5rem; width: auto;
-      object-fit: contain;
-    }
-  }
-
-  &_button{
-    position: fixed;
-    top:1.5rem; right: 0;
-    z-index: 100;
-  }
-
-  &_menuList{
-    position: fixed;
-    top:5rem; left: 0.5rem;
-    z-index: 100;
-    font-family: $serifFont;
-
-    li:nth-last-child(2){
-      margin-top: 6rem;
-    }
-  }
-
-  &_menuList--subpage{
-    position: fixed;
-    top:2rem; left:20rem;
-    z-index: 100;
-    font-family: $serifFont;
+/*(2)ボタンによる要素の表示切替*/
+.s-toggle{
+  //<input id="toggle" class="s-toggle--buton" type="checkbox" ></input>
+  &_button{display: none;}
+  //<label class="s-toggle-label" for="toggle"></label>
+  &_label{cursor: pointer;}
+  //表示非表示を切り替える任意の要素に以下のクラスを付ける
+  &_target{display: none;}
+  &_button:checked + &_label + &_target{
+    display: block;
   }
 }
 
+
+/*Header*/
+.s-header{ position: absolute;}
+.s-navArea{
+  &--sub{
+    &::before{
+      content: "";
+      height: 4.5rem; width: 100vw;
+      position: fixed;
+      top:0; left:0;
+      z-index: 99;
+      background-color: #fff;
+    }  
+  }
+}
+.s-logoMark{
+  position: fixed;
+  top:1.5rem; left: 0.5rem;
+  z-index: 100;
+  img{
+    height: 2.5rem; width: auto;
+    object-fit: contain;
+  }
+}
+.s-menuBar{
+  &_button{}
+  &_label{
+    height: 1.5rem; width: 1.5rem; 
+    display: none;
+    position: fixed;
+    top: 5rem; right: 0.5rem;
+    z-index: 100;
+    background-color: #fff;
+    border: $mainColor 1px solid;
+    @media screen and (max-width:$mdScreen) {
+      display: block;
+    }
+  }
+  &_menu{
+    @media screen and (max-width:$mdScreen) {display: none;}
+    @media screen and (min-width:$mdScreen) {display: block;}
+
+    %list{
+      position: fixed;
+      z-index: 100;
+      display: flex;
+      font-family: $serifFont;
+      a{
+        color: $mainColor;
+        padding: 0.5rem 1rem;
+      }
+    }
+    &_list{
+      @extend %list;
+      padding-left: 0; 
+      top:5rem; left: 0.5rem;
+      flex-direction: column;
+      li:nth-last-child(2){ margin-top: 6rem;}
+    }
+    &_list--sub{
+      @extend %list;
+      height: 1.7rem; width: 100vw;
+      top:2rem; left:20rem;
+    }
+  }
+}
+
+
+.s-button{
+  cursor: pointer;
+  border-color: #f8f9fa;
+}
 
 /*topSection*/
 .s-pictureContainer{
@@ -212,11 +289,11 @@ body{
 
         span{
           position: relative;
-          top:-0.3rem;
+          top:0.2rem; left: -0.6rem;
         }
         .arrow{
           height: 1rem; width: 2rem;
-          top:0.1rem;
+          top:0.5rem; left: -0.6rem;
           display: inline-block;
           background:url(../img/arrow.png) left top no-repeat;
           background-size: contain;
@@ -591,10 +668,13 @@ body{
 
     &_footer{
       .s-backbutton{
-        height: auto; width: 100%;
+        display: inline-block;
+        height: 2rem; width: 100%;
         margin: 2rem 0;
-        //background-color: $mainColor;
-        //color: #fff;
+        background-color: $mainColor;
+        color: #fff;
+        text-align: center;
+        align-items: center;
       }
       .s-nextandprev{
         height: 10vh; width: 100%;
@@ -648,31 +728,21 @@ body{
           padding: 0;
         }
       }
-
-      .menuToggle{
-        display: none;
-
-        &:checked + .s-archiveYear +.archiveMenu{
-          display: block;
-        }
-        &:checked + .s-archiveYear::after{
-          content: "▲";
-        }
-      }
-      .s-archiveYear{
-        display: flex;
-        justify-content: space-between;
-        font-size: 1.1rem;
-        &::after{
-          content: "▼";
-        }
-      }
-      .archiveMenu{
-        display: none;
-        padding-left: 1.5rem;
-      }
-    }
+} }
+.s-archive{
+  &_button{}
+  &_year{
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
   }
+  &_menu{
+    display: none;
+    padding-left: 1.5rem;
+  }
+  &_button:checked + &_year::after{content: "▲";}
+  &_button + &_year::after{content: "▼";}
+}
 
 
 .pagination h2.screen-reader-text { display: none; }
