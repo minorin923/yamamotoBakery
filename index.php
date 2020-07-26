@@ -9,14 +9,7 @@ Template Name: index
 
 <?php get_template_part('template/header'); ?>
 
-<!-- トップイメージを投稿ページのアイキャッチ画像から取得する -->
-<div class="s-topArea" style="background-image:url(
-  <?php if (has_post_thumbnail()) : the_post_thumbnail_url( 'medium' );?>
-  <?php else : echo get_template_directory_uri(); ?>/img/blogPic.png
-  <?php endif;?>);">
-  <h2 class="s-topArea_title">blogList</h2>
-</div>  
-<!-- end:topArea -->
+<?php get_template_part('template/topImage'); ?>
 
 <!-- サイドバー読み込み -->
 <div class="s-categoryArea">

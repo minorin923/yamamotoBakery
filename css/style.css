@@ -36,27 +36,10 @@ h2, h3 {
   line-height: 1.2;
 }
 
-address {
-  font-style: normal;
-  line-height: inherit;
-}
-
 p {
   margin-top: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 2px;
-}
-
-th {
-  text-align: inherit;
-  display: table-cell;
-  vertical-align: inherit;
-  font-weight: bold;
 }
 
 a {
@@ -67,6 +50,7 @@ a {
 }
 
 ul {
+  margin: 0;
   list-style: none;
 }
 
@@ -129,6 +113,17 @@ li {
 
 .s-toggle_button:checked + .s-toggle_label + .s-toggle_target {
   display: block;
+}
+
+/*(3)ボタン要素*/
+.s-button {
+  display: inline-block;
+  cursor: pointer;
+  color: #f8145b;
+  white-space: nowrap;
+  border-color: #f8f9fa;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
 }
 
 /*Header*/
@@ -226,24 +221,20 @@ li {
   left: 20rem;
 }
 
-.s-button {
-  cursor: pointer;
-  border-color: #f8f9fa;
-}
-
 /*topSection*/
-.s-pictureContainer {
+.s-picture {
   height: auto;
   width: 92.5vw;
   margin: 0 0 0 auto;
+  position: relative;
 }
 
-.s-pictureContainer_frame_image {
+.s-picture_frame_image {
   -o-object-position: top left;
      object-position: top left;
 }
 
-.s-pictureContainer_frame_textBox {
+.s-picture_textBox {
   position: absolute;
   top: 20%;
   right: 10%;
@@ -257,25 +248,29 @@ li {
           flex-direction: column;
 }
 
-.s-pictureContainer_frame_textBox .s-pictureContainer_frame_textBox--line1, .s-pictureContainer_frame_textBox .s-pictureContainer_frame_textBox--line2 {
+.s-picture_textBox::before {
+  content: "";
+  height: 4rem;
+  width: 4rem;
+  position: absolute;
+  top: -0.9rem;
+  left: -1.6rem;
+  display: block;
+  background: url(../img/icon1.png) center no-repeat;
+  background-size: cover;
+}
+
+.s-picture_textBox .s-picture_textBox--line1, .s-picture_textBox .s-picture_textBox--line2 {
   background-color: rgba(255, 255, 255, 0.3);
   letter-spacing: 0.25rem;
   font-size: 1rem;
   white-space: nowrap;
 }
 
-.s-pictureContainer_frame_textBox--line2 {
+.s-picture_textBox--line2 {
   position: absolute;
   top: 2rem;
-  left: 5rem;
-}
-
-.s-pictureContainer_frame_textBox--image {
-  height: 4rem;
-  width: auto;
-  position: absolute;
-  top: -1rem;
-  left: -2rem;
+  right: -2rem;
 }
 
 /*各セクション共通クラス*/
@@ -327,32 +322,23 @@ li {
   text-align: right;
 }
 
-.s-section_container_footerArea_link {
+.s-moreButton {
   height: 2rem;
   width: 6rem;
   margin-top: 0.5rem;
-  display: inline-block;
-  white-space: nowrap;
-  font-family: Georgia, "Times New Roman", Times, serif;
-  color: #f8145b;
-  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
-          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
 }
 
-.s-section_container_footerArea_link:hover {
-  color: #f8145b;
-}
-
-.s-section_container_footerArea_link span {
+.s-moreButton span {
   position: relative;
   top: 0.2rem;
   left: -0.6rem;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-.s-section_container_footerArea_link .arrow {
+.s-moreButton .arrow {
   height: 1rem;
   width: 2rem;
-  top: 0.5rem;
+  top: 0.6rem;
   left: -0.6rem;
   display: inline-block;
   background: url(../img/arrow.png) left top no-repeat;
@@ -639,6 +625,8 @@ li {
 .s-shopinfoContainer_textContainer .shopAddress {
   font-size: 1rem;
   margin: 1rem 0;
+  font-style: normal;
+  line-height: inherit;
 }
 
 .s-shopinfoContainer_textContainer .shopAccess {
@@ -649,6 +637,7 @@ li {
 .s-shopinfoContainer_textContainer .shopInfo {
   margin-top: 1rem;
   display: inline-block;
+  border-collapse: collapse;
 }
 
 .s-shopinfoContainer_textContainer .shopInfo th {
@@ -706,7 +695,7 @@ li {
   font-size: 1rem;
 }
 
-/*サブページクラス*/
+/*記事一覧ページ*/
 .s-topArea {
   height: 13rem;
   width: auto;
@@ -740,21 +729,6 @@ li {
   color: #f8145b;
 }
 
-.s-archivesArea .s-newsArchives {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-}
-
-.s-archivesArea .s-newsArchives li {
-  text-decoration: none;
-  list-style: none;
-}
-
 .s-categoryArea {
   margin: 2rem auto 0;
   display: -webkit-box;
@@ -781,6 +755,29 @@ li {
   border-right: #f8145b 1px solid;
 }
 
+.pagination h2.screen-reader-text {
+  display: none;
+}
+
+.s-pagenation {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 1.2rem;
+}
+
+.s-pagenation a {
+  display: inline;
+}
+
+/*記事ページ*/
 .s-single {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -791,31 +788,31 @@ li {
           flex-direction: row;
 }
 
-.s-single .s-singleArea {
+.s-singleArea {
   height: auto;
   width: 60%;
 }
 
-.s-single .s-singleArea_titleArea {
+.s-singleArea_titleArea {
   margin-bottom: 2rem;
   border-bottom: #f8145b 1.5px solid;
   position: relative;
 }
 
-.s-single .s-singleArea_titleArea_category {
+.s-singleArea_titleArea_category {
   padding: 0.1rem 0.3rem;
   background-color: #f8145b;
   border-radius: 3px;
   color: #fff;
 }
 
-.s-single .s-singleArea_titleArea_date {
+.s-singleArea_titleArea_date {
   position: absolute;
   right: 0;
   font-size: 0.7rem;
 }
 
-.s-single .s-singleArea_titleArea_title {
+.s-singleArea_titleArea_title {
   margin-top: 1rem;
   font-size: 1.2rem;
   font-weight: bold;
@@ -823,7 +820,7 @@ li {
   color: #f8145b;
 }
 
-.s-single .s-singleArea_footer .s-backbutton {
+.s-backbutton {
   display: inline-block;
   height: 2rem;
   width: 100%;
@@ -836,7 +833,7 @@ li {
           align-items: center;
 }
 
-.s-single .s-singleArea_footer .s-nextandprev {
+.s-nextandprev {
   height: 10vh;
   width: 100%;
   display: -webkit-box;
@@ -847,7 +844,7 @@ li {
           justify-content: space-between;
 }
 
-.s-single .s-singleArea_footer .s-nextandprev a {
+.s-nextandprev a {
   height: auto;
   width: 40%;
   display: -webkit-box;
@@ -856,7 +853,11 @@ li {
   overflow: hidden;
 }
 
-.s-single .s-singleArea_footer .s-nextandprev .prev::before {
+.s-nextandprev a:nth-child(2) {
+  text-align: right;
+}
+
+.s-nextandprev .prev::before {
   height: 1.5rem;
   width: 1.5rem;
   display: inline-block;
@@ -865,7 +866,7 @@ li {
   background-size: contain;
 }
 
-.s-single .s-singleArea_footer .s-nextandprev .next::after {
+.s-nextandprev .next::after {
   height: 1.5rem;
   width: 1.5rem;
   display: inline-block;
@@ -874,10 +875,7 @@ li {
   background-size: contain;
 }
 
-.s-single .s-singleArea_footer .s-nextandprev a:nth-child(2) {
-  text-align: right;
-}
-
+/*ウィジェット関連*/
 .s-widgetArea {
   height: auto;
   width: 40%;
@@ -891,16 +889,16 @@ li {
           flex-direction: column;
 }
 
-.s-widgetArea .s-widget {
+.s-widget {
   margin-bottom: 2.5rem;
 }
 
-.s-widgetArea .s-widget ul {
+.s-widget ul {
+  margin: 0.5rem 0 1rem;
   padding: 0;
-  list-style: none;
 }
 
-.s-widgetArea .s-widget ul li {
+.s-widget ul li {
   margin-bottom: 0.7rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -910,7 +908,7 @@ li {
           justify-content: space-between;
 }
 
-.s-widgetArea .s-widget ul img {
+.s-widget ul img {
   margin: 0 0.8rem 0.3rem 0;
   padding: 0;
 }
@@ -936,20 +934,6 @@ li {
 
 .s-archive_button + .s-archive_year::after {
   content: "▼";
-}
-
-.pagination h2.screen-reader-text {
-  display: none;
-}
-
-.s-pagenation {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  font-size: 1.2rem;
 }
 
 /*各種jsアニメーション*/

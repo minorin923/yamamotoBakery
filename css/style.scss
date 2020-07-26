@@ -44,23 +44,9 @@ h2,h3{
   font-weight: 500;
   line-height: 1.2;
 }
-address{
-  font-style: normal;
-  line-height: inherit;
-}
 p{
   margin-top: 0;
   box-sizing: border-box;
-}
-table{
-  border-collapse: collapse;
-  border-spacing: 2px;
-}
-th{
-  text-align: inherit;
-  display: table-cell;
-  vertical-align: inherit;
-  font-weight: bold;
 }
 a{
   display: block;
@@ -69,11 +55,13 @@ a{
   background-color: transparent;
 }
 ul{
+  margin: 0;
   list-style: none;
 }
 li{
   display: inline-block;
 }
+
 
 /*汎用クラス*/
 /*(1)要素のアスペクト比固定*/
@@ -118,6 +106,16 @@ li{
   &_button:checked + &_label + &_target{
     display: block;
   }
+}
+
+/*(3)ボタン要素*/
+.s-button{
+  display: inline-block;
+  cursor: pointer;
+  color: $mainColor;
+  white-space: nowrap;
+  border-color: #f8f9fa;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .5);
 }
 
 
@@ -188,47 +186,48 @@ li{
 }
 
 
-.s-button{
-  cursor: pointer;
-  border-color: #f8f9fa;
-}
-
 /*topSection*/
-.s-pictureContainer{
+.s-picture{
   height: auto; width: 92.5vw;
   margin: 0 0 0 auto;
+  position: relative;
  
   &_frame{
     &_image{
       object-position: top left;
     }
-   
-    &_textBox{
-      position: absolute;
-      top:20%; right:10%;
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
+  } 
 
-      %lineTmp{
-        background-color: rgba(255,255,255, 0.3);
-        letter-spacing: 0.25rem;
-        font-size: 1rem;
-        white-space: nowrap;
-      }
-      &--line1{
-        @extend %lineTmp;
-      }
-      &--line2{
-        @extend %lineTmp;
-        position: absolute;
-        top:2rem; left: 5rem;
-      }
-      &--image{
-        height:4rem; width: auto;
-        position: absolute;
-        top: -1rem; left: -2rem;  
-      }
+  &_textBox{
+    position: absolute;
+    top:20%; right:10%;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+
+    &::before{
+      content: "";
+      height: 4rem; width: 4rem;
+      position: absolute;
+      top:-0.9rem; left:-1.6rem;
+      display: block;
+      background: url(../img/icon1.png) center no-repeat;
+      background-size: cover;
+    }
+
+    %lineTmp{
+      background-color: rgba(255,255,255, 0.3);
+      letter-spacing: 0.25rem;
+      font-size: 1rem;
+      white-space: nowrap;
+    }
+    &--line1{
+      @extend %lineTmp;
+    }
+    &--line2{
+      @extend %lineTmp;
+      position: absolute;
+      top: 2rem; right:-2rem;
     }
   }
 }
@@ -263,50 +262,42 @@ li{
       }
     }
   
-     &_mainArea{
-       color: $textColor;
-     }
+    &_mainArea{
+      color: $textColor;
+    }
      
-     &_footerArea{
+    &_footerArea{
       height: 3rem; width: 7rem;
       position: absolute;
       top: -1.7rem; right: 0rem;
       background-color: #fff;
       text-align: right;
-  
-      &_link{
-        height: 2rem; width: 6rem;
-        margin-top: 0.5rem;
-        display: inline-block;
-        white-space: nowrap;
-        font-family: $serifFont;
-        color: $mainColor;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .5);
-        
-        &:hover{
-          color: $mainColor;
-        }
-
-        span{
-          position: relative;
-          top:0.2rem; left: -0.6rem;
-        }
-        .arrow{
-          height: 1rem; width: 2rem;
-          top:0.5rem; left: -0.6rem;
-          display: inline-block;
-          background:url(../img/arrow.png) left top no-repeat;
-          background-size: contain;
-          background-color:none;
-        }
-      }  
     }
   }
 }
 
+.s-moreButton{
+  height: 2rem; width: 6rem;
+  margin-top: 0.5rem;
+
+  span{
+    position: relative;
+    top:0.2rem; left: -0.6rem;
+    font-family: $serifFont;
+  }
+  .arrow{
+    height: 1rem; width: 2rem;
+    top:0.6rem; left: -0.6rem;
+    display: inline-block;
+    background:url(../img/arrow.png) left top no-repeat;
+    background-size: contain;
+    background-color:none;
+  }
+}  
+
+
 .s-newsList{
   &_news{
-
     &_link{
       height: auto; width: 100%;
       display: flex;
@@ -391,7 +382,6 @@ li{
   }
 }
 
-
 /*about*/
 .s-about{
   %parts{
@@ -445,7 +435,6 @@ li{
   }
 }
 
-
 /*Lineup*/
 .s-menuList{
   display: flex;
@@ -477,7 +466,6 @@ li{
     }
   }
 }
-
 
 /*Shopinfo*/
 .s-shopinfoContainer{
@@ -518,6 +506,8 @@ li{
     .shopAddress{
       font-size: 1rem;
       margin: 1rem 0;
+      font-style: normal;
+      line-height: inherit;
     }
     .shopAccess{
       font-size: 0.9rem;
@@ -526,6 +516,7 @@ li{
     .shopInfo{
       margin-top: 1rem;
       display: inline-block;
+      border-collapse: collapse;
       th{
         height: auto; width: 6rem;
         padding: 0.2rem 0;
@@ -573,7 +564,8 @@ li{
 }
 
 
-/*サブページクラス*/
+/*記事一覧ページ*/
+// トップイメージ
 .s-topArea{
   height: 13rem; width: auto;
   margin:0;
@@ -602,17 +594,7 @@ li{
   }
 }
 
-.s-archivesArea{
-  .s-newsArchives{
-    display: flex;
-    flex-direction: row;
-    li{
-      text-decoration: none;
-      list-style: none;
-    }
-  };
-}
-
+//blogのカテゴリ一覧エリア
 .s-categoryArea{
   margin: 2rem auto 0;
   display: flex;
@@ -630,105 +612,115 @@ li{
   }
 }
 
+//ページネーション
+.pagination h2.screen-reader-text { display: none; }
+.s-pagenation{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 1.2rem;
+  a{display: inline;}
+}
+
+
+/*記事ページ*/
 .s-single{
   display: flex;
   flex-direction: row;
+}
+.s-singleArea{
+  height: auto; width: 60%;
 
-  .s-singleArea{
-    height: auto; width: 60%;
+  &_titleArea{
+    margin-bottom: 2rem;
+    border-bottom: $mainColor 1.5px solid;
+    position: relative;
 
-    &_titleArea{
-      margin-bottom: 2rem;
-      border-bottom: $mainColor 1.5px solid;
-      position: relative;
-
-      &_category{
-        padding: 0.1rem 0.3rem;
-        background-color: $mainColor;
-        border-radius: 3px;
-        color: #fff;
-      }
-      &_date{
-        position: absolute;
-        right: 0;
-        font-size: 0.7rem;
-      }
-      &_title{
-        margin-top: 1rem;
-        font-size: 1.2rem;
-        font-weight: bold;
-        line-height: 2;
-        color: $mainColor;
-      }
+    &_category{
+      padding: 0.1rem 0.3rem;
+      background-color: $mainColor;
+      border-radius: 3px;
+      color: #fff;
     }
-
-    &_mainArea{
-
+    &_date{
+      position: absolute;
+      right: 0;
+      font-size: 0.7rem;
     }
+    &_title{
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      line-height: 2;
+      color: $mainColor;
+    }
+  }
+  &_mainArea{}
+  &_footer{}
+}
 
-    &_footer{
-      .s-backbutton{
-        display: inline-block;
-        height: 2rem; width: 100%;
-        margin: 2rem 0;
-        background-color: $mainColor;
-        color: #fff;
-        text-align: center;
-        align-items: center;
-      }
-      .s-nextandprev{
-        height: 10vh; width: 100%;
-        display: flex;
-        justify-content: space-between;
-        a{
-          height: auto; width: 40%;
-          display: flex;
-          overflow: hidden;
-        }
-        .prev::before{
-          height: 1.5rem; width: 1.5rem;
-          display: inline-block;
-          content: "";
-          background:url(../img/prev.png) center no-repeat;
-          background-size: contain;
-        }
-        .next::after{
-          height: 1.5rem; width: 1.5rem;
-          display: inline-block;
-          content: "";
-          background:url(../img/next.png) center no-repeat;
-          background-size: contain;
-        }
-        a:nth-child(2){
-          text-align: right;
-        }
-      }
+.s-backbutton{
+  display: inline-block;
+  height: 2rem; width: 100%;
+  margin: 2rem 0;
+  background-color: $mainColor;
+  color: #fff;
+  text-align: center;
+  align-items: center;
+}
+.s-nextandprev{
+  height: 10vh; width: 100%;
+  display: flex;
+  justify-content: space-between;
+  a{
+    height: auto; width: 40%;
+    display: flex;
+    overflow: hidden;
+  }
+  a:nth-child(2){
+    text-align: right;
+  }
+  .prev::before{
+    height: 1.5rem; width: 1.5rem;
+    display: inline-block;
+    content: "";
+    background:url(../img/prev.png) center no-repeat;
+    background-size: contain;
+  }
+  .next::after{
+    height: 1.5rem; width: 1.5rem;
+    display: inline-block;
+    content: "";
+    background:url(../img/next.png) center no-repeat;
+    background-size: contain;
+  }
+}
+
+/*ウィジェット関連*/
+.s-widgetArea{
+  height: auto; width: 40%;
+  padding: 1.5rem 0 0 4rem;
+  display: flex;
+  flex-direction: column;
+}
+.s-widget{
+  margin-bottom: 2.5rem;
+
+  ul{
+    margin: 0.5rem 0 1rem;
+    padding: 0;
+    li{
+      margin-bottom: 0.7rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    img{
+      margin: 0 0.8rem 0.3rem 0;
+      padding: 0;
     }
   }
 }
 
-.s-widgetArea{
-    height: auto; width: 40%;
-    padding: 1.5rem 0 0 4rem;
-    display: flex;
-    flex-direction: column;
-    .s-widget{
-      margin-bottom: 2.5rem;
-
-      ul{
-        padding: 0;
-        list-style: none;
-        li{
-          margin-bottom: 0.7rem;
-          display: flex;
-          justify-content: space-between;
-        }
-        img{
-          margin: 0 0.8rem 0.3rem 0;
-          padding: 0;
-        }
-      }
-} }
 .s-archive{
   &_button{}
   &_year{
@@ -744,14 +736,6 @@ li{
   &_button + &_year::after{content: "▼";}
 }
 
-
-.pagination h2.screen-reader-text { display: none; }
-.s-pagenation{
-  display: flex;
-  justify-content: center;
-  font-size: 1.2rem;
-  
-}
 
 /*各種jsアニメーション*/
 .s-js_fadeIn{

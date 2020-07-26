@@ -12,17 +12,16 @@
 
       <div class="s-blogList_blog">
         <a class="s-blogList_blog_link" href="<?php the_permalink(); ?>">
-          <?php // サムネイルの有無チェック
-          echo '<div class="s-blogList_blog_link_image s-aspectFixed--4-3" style="max-width:100%;">';
-          echo '<div class="s-aspectFixed_frame">';
-          if (has_post_thumbnail()) {
-            echo get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 's-aspectFixed_frame_image'));
-          } else {
-            echo '<div class="s-aspectFixed_frame_image" style="background-color:gray;"></div>';
-          }
-          echo '<span class="s-blogList_blog_link_image_category">' . get_the_category()[0]->name . '</span>';
-          echo '</div></div>';
-          ?>
+          <div class="s-blogList_blog_link_image s-aspectFixed--4-3" style="max-width:100%;">
+            <div class="s-aspectFixed_frame">
+              <?php if (has_post_thumbnail()) {
+                echo get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 's-aspectFixed_frame_image'));
+              } else {
+                echo '<div class="s-aspectFixed_frame_image" style="background-color:gray;"></div>';
+              } ?>
+              <span class="s-blogList_blog_link_image_category"><?= get_the_category()[0]->name ?></span>
+            </div>
+          </div>
           <div class="s-blogList_blog_link_textBox">
             <p class="s-blogList_blog_link_textBox--date"><?php the_time('Y/m/d') ?></p>
             <p class="s-blogList_blog_link_textBox--title"><?php the_title(); ?></p>

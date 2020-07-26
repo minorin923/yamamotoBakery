@@ -10,25 +10,23 @@ Template Name: home
 <?php get_template_part('template/header'); ?>
 
 <main class="main">
+
   <!-- start:s-topSection -->
-
-  <section id="s-top" class="s-topSection s-js">
-    <div class="s-mainArea">
-      <div class="s-pictureContainer s-aspectFixed--16-9">
-        <div class="s-pictureContainer_frame s-aspectFixed_frame">
-          <div class="s-pictureContainer_frame_textBox"><span class="s-pictureContainer_frame_textBox--line1">白に包まれた優しい空間で</span>
-            <span class="s-pictureContainer_frame_textBox--line2">優雅な朝のひと時を。</span>
-            <img class="s-pictureContainer_frame_textBox--image" src="/wp-content/themes/yamamotobakery/img/icon1.png" alt=""></div>
-          <img class="s-pictureContainer_frame_image s-aspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/cafeSpace1.png" alt="">
-
-        </div>
+  <section id="s-top" class="s-topSection s-js_fadeIn">
+    <div class="s-picture s-aspectFixed--16-9">
+      <div class="s-picture_frame s-aspectFixed_frame">
+        <img class="s-picture_frame_image s-aspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/cafeSpace1.png" alt="">
+      </div>
+      <div class="s-picture_textBox">
+        <span class="s-picture_textBox--line1">白に包まれた優しい空間で</span>
+        <span class="s-picture_textBox--line2">優雅な朝のひと時を。</span>
       </div>
     </div>
-  </section><!-- end:s-topSection -->
+  </section>
+  <!-- end:s-topSection -->
 
   <!-- start:s-newsSection -->
-
-  <section id="s-news" class="s-section s-js">
+  <section id="s-news" class="s-section s-js_fadeIn">
     <div class="s-section_container">
       <div class="s-section_container_titleArea">
         <h2 class="s-section_container_titleArea_title">News Topics</h2>
@@ -36,18 +34,19 @@ Template Name: home
       <div class="s-section_container_mainArea">
         <div class="s-newsList">
           [getArticleList count="3" category_id="5" classname="s-newsList_news"]
-
         </div>
       </div>
-      <div class="s-section_container_footerArea"><a class="s-section_container_footerArea_link " href="/news" role="button">
+      <div class="s-section_container_footerArea">
+        <a class="s-moreButton s-button" href="/news">
           <span>more</span> <span class="arrow"></span>
-        </a></div>
+        </a>
+      </div>
     </div>
   </section><!-- end:s-newsSection -->
 
   <!-- start:s-blogSection -->
 
-  <section id="s-blog" class=" s-section s-js"> 
+  <section id="s-blog" class=" s-section s-js">
     <div class="s-section_container">
       <div class="s-section_container_titleArea">
         <h2 class="s-section_container_titleArea_title">blog</h2>
@@ -56,9 +55,11 @@ Template Name: home
         <div class="s-blogList">
           [getArticleList count="4" category_id="4" classname="s-blogList_blog"]</div>
       </div>
-      <div class="s-section_container_footerArea"><a class="s-section_container_footerArea_link s-button" href="/blog" role="button">
+      <div class="s-section_container_footerArea">
+        <a class="s-moreButton s-button" href="/blog">
           <span>more</span> <span class="arrow"></span>
-        </a></div>
+        </a>
+      </div>
     </div>
   </section><!-- end:s-blogSection -->
 
@@ -73,19 +74,20 @@ Template Name: home
         <div class="s-about">
           <div class="s-about_parts ">
             <div class="s-about_parts_image s-aspectFixed--16-9">
-              <div class="s-aspectFixed_frame"><img class="s-aspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/shopPic1.jpg" alt=""></div>
+              <div class="s-aspectFixed_frame">
+                <img class="s-aspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/shopPic1.jpg" alt=""></div>
             </div>
             <div class="s-about_parts_textBox">
               <h3 class="s-about_parts_textBox--title" data-cat="～安心安全へのこだわり～">山本ベーカリーについて</h3>
               <p class="s-about_parts_textBox--text">当店山本ベーカリーでは、こだわり抜いた最高の一品をお客様に
                 お召し上がり頂くために、原料、製法など、あらゆる角度から品質の向上に
                 努めております。</p>
-
             </div>
           </div>
           <div class="s-about_parts--reverse">
             <div class="s-about_parts_image s-aspectFixed--16-9">
-              <div class="s-aspectFixed_frame"><img class="s-aspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/cafeSpace1.png" alt=""></div>
+              <div class="s-aspectFixed_frame">
+                <img class="s-aspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/cafeSpace1.png" alt=""></div>
             </div>
             <div class="s-about_parts_textBox">
               <h3 class="s-about_parts_textBox--title" data-cat="～優雅なひと時を～">カフェスペース</h3>
@@ -117,7 +119,6 @@ Template Name: home
               <p class="itemName">十勝生クリーム食パン</p>
               <p class="itemInfo">1斤：500円（税別)</p>
               <p class="itemInfo">1本(2斤)：1,000円(税別)</p>
-
             </div>
           </div>
           <div class="s-menuList_menu">
@@ -128,7 +129,6 @@ Template Name: home
               <p class="itemName">十勝生クリーム食パン</p>
               <p class="itemInfo">1斤：500円（税別)</p>
               <p class="itemInfo">1本(2斤)：1,000円(税別)</p>
-
             </div>
           </div>
           <div class="s-menuList_menu">
@@ -139,7 +139,6 @@ Template Name: home
               <p class="itemName">十勝生クリーム食パン</p>
               <p class="itemInfo">1斤：500円（税別)</p>
               <p class="itemInfo">1本(2斤)：1,000円(税別)</p>
-
             </div>
           </div>
           <div class="s-menuList_menu">
@@ -150,7 +149,6 @@ Template Name: home
               <p class="itemName">十勝生クリーム食パン</p>
               <p class="itemInfo">1斤：500円（税別)</p>
               <p class="itemInfo">1本(2斤)：1,000円(税別)</p>
-
             </div>
           </div>
         </div>
