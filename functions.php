@@ -140,13 +140,14 @@ add_action('restrict_manage_posts', 'add_post_taxonomy_restrict_filter');
 
 /*(4) ショートコード定義  */
 //[1] 記事一覧を表示させるショートコード
-// ショートコード: [getArticleList count="x" category="y" classname="z"]
-// "count" = 表示記事数, "category" = カテゴリ番号 "classname" = 付与クラス
+// ショートコード: [getArticleList count="a" post_type="b" eyecatch="c" classname="d"]
+// "count" = 表示記事数, "post_type" = 投稿記事タイプ "eyecatch"=アイキャッチ画像の有無 "classname" = 付与クラス
 function getCatItems($atts, $content = null)
 {
   extract(shortcode_atts(array(
     "count" => '4',
-    "category_id" => '12',
+    "post_type" => 'post',
+    "eyecatch" => false,
     "classname" => 's-'
   ), $atts));
 
@@ -155,7 +156,7 @@ function getCatItems($atts, $content = null)
   $oldpost = $post;
 
   // カテゴリーの記事データ取得
-  $myposts = get_posts('numberposts=' . $count . '&order=DESC&orderby=post_date&category=' . $category_id);
+  $myposts = get_posts('numberposts=' . $count . '&order=DESC&orderby=post_date&post_type=' . $post_type);
 
   if (!$myposts){
     $post = $oldpost;
@@ -170,10 +171,14 @@ function getCatItems($atts, $content = null)
     $retHtml .= '<div class="' . $classname . '">';
     $retHtml .= '<a class="' . $classname . '_link" href="' . get_permalink() . '">';
 
-    if (has_post_thumbnail()) {
+    if($eyecatch){
       // サムネイルがある場合↓
-      $retHtml .= '<div class="' . $classname . '_link_image s-aspectFixed--4-3">';
-      $retHtml .= '<div class=" s-aspectFixed_frame">' . get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 's-aspectFixed_frame_image'));
+      $retHtml .= '<div class="' . $classname . '_link_image s-aspectFixed--4-3"><div class=" s-aspectFixed_frame">';
+      if (has_post_thumbnail()) {
+        $retHtml .=  get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 's-aspectFixed_frame_image'));
+      }else {
+        $retHtml.= '<div class="s-aspectFixed_frame_image" style="background-color:gray;"></div>';
+      }
       $retHtml .= '<span class="' . $classname . '_link_image_category">' . get_the_category()[0]->name . '</span>';
       $retHtml .= '</div></div>';
     }

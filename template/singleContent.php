@@ -13,14 +13,6 @@ while (have_posts()) :
   </div>
   <div class="s-singleArea_mainArea">
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-      <?php if (has_post_thumbnail()) : ?>
-        <div class="s-aspectFixed--16-9" style="max-width:100%;">
-          <div class="s-aspectFixed_frame">
-            <?= get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 's-aspectFixed_frame_image')); ?>
-          </div>
-        </div>
-      <?php endif; ?>
-
       <div class="s-single_content">
         <?php the_content(); ?>
       </div>
