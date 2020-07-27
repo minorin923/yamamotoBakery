@@ -1,111 +1,147 @@
-<?php //子テーマ用関数
+<?php
+// 親テーマがある場合、子テーマのfunction.phpは親テーマの同ファイルよりも先に読み込まれる
 
-/*デフォルトではサムネ表示できないので有効化する。*/
+
+//index
+/*(1) 各種機能アクティベート */
+/*(2) CSSファイル読み込み*/
+/*(3) カスタム投稿タイプの追加*/
+/*(4) ショートコード定義  */
+/*(5) ウィジェット定義*/
+/*(6) サイドバー・ウィジェット登録*/
+/*(7) ナビゲーションバー周りの設定*/
+/*(8) wordpressの自動整形機能の制御*/
+
+
+
+/*(1) 各種機能アクティベート */
+//[1]サムネ表示有効化
 add_theme_support('post-thumbnails');
 
-/*子テーマのFunction.phpは親テーマの同ファイルよりも先に読み込まれる*/
-/*PHP動作に以下の定義関数を追加*/
-add_action('wp_enqueue_scripts', 'theme_enqueue_styles');
 
+
+/*(2) CSSファイル読み込み*/
+//[1]テーマのCSSファイル読み込み設定
 function theme_enqueue_styles()
 {
-  /*ファイル読み込みキュー「parent-style」を作成して親テーマのCSSファイルを指定する。*/
+  // ファイル読み込みキュー「parent-style」を作成して親テーマのCSSファイルを指定する。
+  // (親テーマがない場合は自身のCSSファイルを指定する)
   wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
   wp_enqueue_style('child-style', get_template_directory_uri() . '/css/style.css', array('parent-style'));
 }
+add_action('wp_enqueue_scripts', 'theme_enqueue_styles');
 
-function twpp_setup_theme()
+
+
+/*(3) カスタム投稿タイプの追加*/
+//[1] カスタム投稿タイプとカテゴリ・タグの定義
+function create_post_type()
 {
-  register_nav_menu('header-navigation', 'Header Navigation');
+  register_post_type(
+    'news', // 投稿タイプ名の定義
+    array(
+      'label' => 'お知らせ', //WP管理画面の表示名
+      'labels' => array(
+        'name' => __('ニュース'), // 表示する投稿タイプ名
+        'singular_name' => __('新着情報'),
+        'all_items' => 'お知らせ一覧', //記事一覧ページの名前。
+      ),
+      'public' => true,
+      'has_archive' => true, /* アーカイブページを持つ */
+      'menu_position' => 5, //管理画面のメニュー順位
+      'supports' => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'comments'),
+    )
+  );
+
+  register_taxonomy(
+    'news-cat', //カテゴリ名
+    'news', //カスタム投稿名
+    array(
+      'hierarchical' => true, //階層構造を持つかの指定
+      'update_count_callback' => '_update_post_term_count',
+      'label' => 'カテゴリー', //WP管理画面のサイドバーに表示する名前。自由指定可。
+      'labels' => array(
+        'add_new_item' => '新規追加', //WP管理画面のサイドバーに表示する新規追加ボタンの名前。自由指定可。
+      ),
+      'public' => true,
+      'show_ui' => true
+    )
+  );
+  register_taxonomy(
+    'news-tag', //カテゴリ名
+    'news', //カスタム投稿名
+    array(
+      'hierarchical' => false, //階層構造を持つかの指定
+      'update_count_callback' => '_update_post_term_count',
+      'label' => 'タグ', //WP管理画面のサイドバーに表示する名前。自由指定可。
+      'labels' => array(
+        'add_new_item' => '新規追加', //WP管理画面のサイドバーに表示する新規追加ボタンの名前。自由指定可。
+      ),
+      'public' => true,
+      'show_ui' => true
+    )
+  );
 }
+add_action('init', 'create_post_type');
 
-add_action('after_setup_theme', 'twpp_setup_theme');
-
-
-//liの「CSS class (オプション)」と余計なコード削除するコード
-add_filter('nav_menu_css_class', 'my_css_attributes_filter', 100, 1);
-// add_filter( 'nav_menu_item_id', 'my_css_attributes_filter', 100, 1 );
-// add_filter( 'page_css_class', 'my_css_attributes_filter', 100, 1 );
-function my_css_attributes_filter($var)
-{
-  //クラス配列に'nav-item'追加してその後
-  return is_array($var) ? array_intersect(array_merge($var, array('nav-item')), array('nav-item', 'current-menu-item')) : '';
-}
-
-//aタグに「CSS class (オプション)」を反映するコード
-add_filter('walker_nav_menu_start_el', 'add_class_on_link', 10, 4);
-function add_class_on_link($item_output, $item)
-{
-  return preg_replace('/(<a.*?)/', '$1' . " class='nav-link s-js_scroll'", $item_output);
-}
-// var_dump($item->classes[1]);
-// $css_class = esc_attr( $item->classes[1] );
-// if ($css_class) {
-// return preg_replace('/(<a.*?)/', '$1' . " class='" . $css_class . "'", $item_output);
-// }else{
-// return $item_output;
-// }
-// }
-
-//スラッグ表示
+//[2-1] 管理画面にカテゴリ・タグを表示(DBにカテゴリ・タグの定義を追加)
 function add_page_columns_name($columns)
 {
-  $columns['slug'] = "スラッグ";
+  $columns['news-cat'] = "カテゴリ";
+  $columns['news-tag'] = "タグ";
   return $columns;
 }
+add_filter('manage_news_posts_columns', 'add_page_columns_name');
+
+//[2-2] 管理画面にカテゴリ・タグを表示(管理画面にカラム名を追加)
 function add_page_column($column_name, $post_id)
 {
-  if ($column_name == 'slug') {
-    $post = get_post($post_id);
-    $slug = $post->post_name;
-    echo attribute_escape($slug);
+  if ($column_name == 'news-cat') {
+    echo get_the_term_list($id, 'news-cat', '', ', ');
+  }
+  if ($column_name == 'news-tag') {
+    echo get_the_term_list($id, 'news-tag', '', ', ');
   }
 }
-add_filter('manage_pages_columns', 'add_page_columns_name');
-add_action('manage_pages_custom_column', 'add_page_column', 10, 2);
+add_action('manage_news_posts_custom_column', 'add_page_column', 10, 2);
 
-
-//固定ページを表示させる際の自動整形(pタグ挿入処理など)を無効にする
-add_filter('the_content', 'wpautop_filter', 9);
-function wpautop_filter($content)
+//[3] 管理画面の要素名を並び替える
+function sort_custom_columns($columns)
 {
-  global $post;
-  $remove_filter = false;
+  $columns = array(
+    'cb'     => '<input type="checkbox" />',
+    'title'  => 'タイトル',
+    'auther' => '投稿者',
+    'news-cat' => 'カテゴリー',
+    'news-tag' => 'タグ',
+    'date'   => '日付'
+  );
+  return $columns;
+}
+add_filter('manage_news_posts_columns', 'sort_custom_columns');
 
-  $arr_types = array('page'); //自動整形を無効にする投稿タイプを記述
-  $post_type = get_post_type($post->ID);
-  if (in_array($post_type, $arr_types)) $remove_filter = true;
-
-  if ($remove_filter) {
-    remove_filter('the_content', 'wpautop');
-    remove_filter('the_excerpt', 'wpautop');
+//[4] 管理画面にカテゴリ毎でのソートボタンを追加
+function add_post_taxonomy_restrict_filter()
+{
+  global $post_type;
+  if ($post_type  == 'news') {
+    echo '<select name="news-cat">';
+    echo  '<option value="">カテゴリー一覧</option>';
+    $terms = get_terms('news-cat');
+    foreach ($terms as $term) {
+      echo '<option value="' . $term->slug . '">' . $term->name . '</option>';
+    }
+    echo '</select>';
   }
-
-  return $content;
 }
-
-//テキストエディタの自動整形処理を制御する(整形を無効にする)
-function my_customize_mce_options($init)
-{
-  global $allowedposttags;
-
-  $init['valid_elements']          = '*[*]';
-  $init['extended_valid_elements'] = '*[*]';
-  $init['valid_children']          = '+a[' . implode('|', array_keys($allowedposttags)) . ']';
-  $init['indent']                  = true;
-  $init['wpautop']                 = false;
-  $init['force_p_newlines'] = false;
-  $init['force_br_newlines'] = true;
-  $init['forced_root_block'] = '';
-
-  return $init;
-}
-add_filter('tiny_mce_before_init', 'my_customize_mce_options');
+add_action('restrict_manage_posts', 'add_post_taxonomy_restrict_filter');
 
 
-//　一覧記事取得関数 --------------------------------------------------------------------------------
+
+/*(4) ショートコード定義  */
+//[1] 記事一覧を表示させるショートコード
+// ショートコード: [getArticleList count="x" category="y" classname="z"]
 // "count" = 表示記事数, "category" = カテゴリ番号 "classname" = 付与クラス
-// 呼び出し元での指定も可能 -> [getArticleList count="x" category="y" classname="z"]
 function getCatItems($atts, $content = null)
 {
   extract(shortcode_atts(array(
@@ -121,136 +157,47 @@ function getCatItems($atts, $content = null)
   // カテゴリーの記事データ取得
   $myposts = get_posts('numberposts=' . $count . '&order=DESC&orderby=post_date&category=' . $category_id);
 
-  if ($myposts) {
-    // 記事がある場合↓
-    // $retHtml = '<div class="getPostDispArea">';
-    // 取得した記事の個数分繰り返す
-    foreach ($myposts as $post) :
-      // 投稿ごとの区切りのdiv
-      $retHtml .= '<div class="' . $classname . '">';
-      $retHtml .= '<a class="' . $classname . '_link" href="' . get_permalink() . '">';
-      // 記事オブジェクトの整形
-      setup_postdata($post);
-
-      // サムネイルの有無チェック
-      if (has_post_thumbnail()) {
-        // サムネイルがある場合↓
-        $retHtml .= '<div class="' . $classname . '_link_image s-aspectFixed--4-3">';
-        $retHtml .= '<div class=" s-aspectFixed_frame">' . get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 's-aspectFixed_frame_image'));
-        $retHtml .= '<span class="' . $classname . '_link_image_category">' . get_the_category()[0]->name . '</span>';
-        $retHtml .= '</div></div>';
-      } else {
-        // サムネイルがない場合↓※何も表示しない
-        $retHtml .= '';
-      }
-
-      // 文章のみのエリアをdivで囲う
-      $retHtml .= '<div class="' . $classname . '_link_textBox">';
-      $retHtml .= '<p class="' . $classname . '_link_textBox--date">' . get_the_date() . '</p>';
-      $retHtml .= '<p class="' . $classname . '_link_textBox--title">' .  the_title("", "", false)  . '</p>';
-
-      $retHtml .= '</div></a></div>';
-    endforeach;
-  } else {
-    // 記事がない場合↓
-    $retHtml = '<p>記事がありません。</p>';
+  if (!$myposts){
+    $post = $oldpost;
+    return '<p>記事がありません。</p>';
   }
 
+  foreach ($myposts as $post) {
+    // 記事オブジェクトの整形
+    setup_postdata($post);
+
+    // 投稿ごとの区切りのdiv
+    $retHtml .= '<div class="' . $classname . '">';
+    $retHtml .= '<a class="' . $classname . '_link" href="' . get_permalink() . '">';
+
+    if (has_post_thumbnail()) {
+      // サムネイルがある場合↓
+      $retHtml .= '<div class="' . $classname . '_link_image s-aspectFixed--4-3">';
+      $retHtml .= '<div class=" s-aspectFixed_frame">' . get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 's-aspectFixed_frame_image'));
+      $retHtml .= '<span class="' . $classname . '_link_image_category">' . get_the_category()[0]->name . '</span>';
+      $retHtml .= '</div></div>';
+    }
+
+    // 文章のみのエリアをdivで囲う
+    $retHtml .= '<div class="' . $classname . '_link_textBox">';
+    $retHtml .= '<p class="' . $classname . '_link_textBox--date">' . get_the_date() . '</p>';
+    $retHtml .= '<p class="' . $classname . '_link_textBox--title">' .  the_title("", "", false)  . '</p>';
+    $retHtml .= '</div></a></div>';
+  }
+  
   // oldpost変数をpost変数に戻す
   $post = $oldpost;
-
   return $retHtml;
 }
 // 呼び出しの指定
 add_shortcode("getArticleList", "getCatItems");
 
 
-/*アーカイブのDB参照変更 */
-add_filter('getarchives_where', 'custom_archives_where', 10, 2);
-add_filter('getarchives_join', 'custom_archives_join', 10, 2);
-function custom_archives_join($x, $r)
-{
-  global $wpdb;
-  $cat_ID = $r['cat'];
-  if (isset($cat_ID)) {
-    return $x . " INNER JOIN $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id) INNER JOIN $wpdb->term_taxonomy ON ($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id)";
-  } else {
-    return $x;
-  }
-}
-function custom_archives_where($x, $r)
-{
-  global $wpdb;
-  $cat_ID = $r['cat'];
-  if (isset($cat_ID)) {
-    return $x . " AND $wpdb->term_taxonomy.taxonomy = 'category' AND $wpdb->term_taxonomy.term_id IN ($cat_ID)";
-  } else {
-    $x;
-  }
-}
 
-/*カテゴリ別アーカイブ出力メソッド定義 */
-function wp_get_cat_archives($opts, $cat)
-{
-  $args = wp_parse_args($opts, array('echo' => '1')); // default echo is 1.
-  $echo = $args['echo'] != '0'; // remember the original echo flag.
-  $args['echo'] = 0;
-  $args['cat'] = $cat;
-  $tag = ($args['format'] === 'option') ? 'option' : 'li';
-  $archives = wp_get_archives(build_query($args));
-  $archs = explode('</' . $tag . '>', $archives);
-  $links = array();
-  foreach ($archs as $archive) {
-    $link = preg_replace("/='([^']+)'/", "='$1?cat={$cat}'", $archive);
-    array_push($links, $link);
-  }
-  $result = implode('</' . $tag . '>', $links);
-  if ($echo) {
-    echo $result;
-  } else {
-    return $result;
-  }
-}
-
-// カスタム投稿タイプの追加
-add_action('init', 'create_post_type');
-
-function create_post_type()
-{
-  register_post_type(
-    'news', // 投稿タイプ名の定義
-    array(
-      'label' => 'お知らせ', //WP管理画面の表示名
-      'labels' => array(
-        'name' => __('news'), // 表示する投稿タイプ名
-        'singular_name' => __('新着情報'),
-        'all_items' => 'お知らせ一覧', //記事一覧ページの名前。
-      ),
-      'public' => true,
-      'has_archive' => true, /* アーカイブページを持つ */
-      'menu_position' => 5, //管理画面のメニュー順位
-      'supports' => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'comments'),
-    )
-  );
-
-  register_taxonomy(
-    'news-cat', //備考1：のちほど「archive-event.php」にも必要です
-    'news', //カテゴリのスラッグ
-    array(
-      'label' => 'カテゴリ一覧', //WP管理画面のサイドバーに表示する名前。自由指定可。
-      'labels' => array(
-        'add_new_item' => '新規追加', //WP管理画面のサイドバーに表示する新規追加ボタンの名前。自由指定可。
-      ),
-      'hierarchical' => true
-    )
-  );
-}
-
-
-/*ウィジェット定義*/
+/*(5) ウィジェット定義*/
+//[1] 年別->月別アーカイブウィジェット
 class customarchive extends WP_Widget
 {
-
   /*コンストラクタ*/
   function __construct()
   {
@@ -333,9 +280,11 @@ class customarchive extends WP_Widget
 }
 
 
-/*ウィジェット登録・ウィジェット用サイドバー追加*/
+
+/*(6) サイドバー・ウィジェット登録*/
 add_action('widgets_init', function () {
-  register_sidebar(array(  //「サイドバー」を登録する
+  //[1] サイドバーの登録
+  register_sidebar(array(
     'name'          => 'サイドバー1',
     'id'            => 'widgetarea-1',
     'before_widget' => '<div class="s-section_container s-widget">',
@@ -343,7 +292,7 @@ add_action('widgets_init', function () {
     'before_title'  => '<div class="s-section_container_titleArea"><h2 class="s-section_container_titleArea_title">',
     'after_title'   => '</h2></div><div class="s-section_container_mainArea">',
   ));
-  register_sidebar(array(  //「サイドバー」を登録する
+  register_sidebar(array(
     'name'          => 'サイドバー2',
     'id'            => 'widgetarea-2',
     'before_widget' => '<div class="s-section_container s-widget">',
@@ -351,7 +300,7 @@ add_action('widgets_init', function () {
     'before_title'  => '<div class="s-section_container_titleArea"><h2 class="s-section_container_titleArea_title">',
     'after_title'   => '</h2></div><div class="s-section_container_mainArea">',
   ));
-  register_sidebar(array(  //「サイドバー」を登録する
+  register_sidebar(array(
     'name'          => 'サイドバー3',
     'id'            => 'widgetarea-3',
     'before_widget' => '<div class="s-section_container s-widget">',
@@ -359,5 +308,76 @@ add_action('widgets_init', function () {
     'before_title'  => '<div class="s-section_container_titleArea"><h2 class="s-section_container_titleArea_title">',
     'after_title'   => '</h2></div><div class="s-section_container_mainArea">',
   ));
+
+  //[2] ウィジェットの追加
   register_widget('customarchive');  //WidgetをWordPressに登録する
 });
+
+
+
+/*(7) ナビゲーションバー周りの設定*/
+//[1]ナビゲーションバーの登録
+function twpp_setup_theme()
+{
+  //ナビゲーションバー「'header-navigation'」を登録する
+  register_nav_menu('header-navigation', 'Header Navigation');
+}
+add_action('after_setup_theme', 'twpp_setup_theme');
+
+//[2]ナビゲーションバーのliの余計なclass名を削除する
+function my_css_attributes_filter($var)
+{
+  $addClassName = 'nav-item';
+  //1. li要素に$addClassName追加する
+  //2. その後$addClassName,'current-menu-item'を除くすべてのclass名を削除する
+  return is_array($var) ? array_intersect(array_merge($var, array($addClassName)), array($addClassName, 'current-menu-item')) : '';
+}
+add_filter('nav_menu_css_class', 'my_css_attributes_filter', 100, 1);
+
+//[3]ナビゲーションバーのaタグにclassを追加するコード
+function add_class_on_link($item_output, $item)
+{
+  $addClassName = 'nav-link s-js_scroll';
+  return preg_replace('/(<a.*?)/', '$1' . ' class="' . $addClassName . '"', $item_output);
+}
+add_filter('walker_nav_menu_start_el', 'add_class_on_link', 10, 4);
+
+
+
+/*(8) wordpressの自動整形機能の制御*/
+//[1] 固定ページを表示させる際の自動整形(pタグ挿入処理など)を無効にする
+function wpautop_filter($content)
+{
+  global $post;
+  $remove_filter = false;
+
+  $arr_types = array('page'); //自動整形を無効にする投稿タイプを記述
+  $post_type = get_post_type($post->ID);
+  if (in_array($post_type, $arr_types)) $remove_filter = true;
+
+  if ($remove_filter) {
+    remove_filter('the_content', 'wpautop');
+    remove_filter('the_excerpt', 'wpautop');
+  }
+
+  return $content;
+}
+add_filter('the_content', 'wpautop_filter', 9);
+
+//[2] テキストエディタの自動整形処理を制御する(整形を無効にする)
+function my_customize_mce_options($init)
+{
+  global $allowedposttags;
+
+  $init['valid_elements']          = '*[*]';
+  $init['extended_valid_elements'] = '*[*]';
+  $init['valid_children']          = '+a[' . implode('|', array_keys($allowedposttags)) . ']';
+  $init['indent']                  = true;
+  $init['wpautop']                 = false;
+  $init['force_p_newlines'] = false;
+  $init['force_br_newlines'] = true;
+  $init['forced_root_block'] = '';
+
+  return $init;
+}
+add_filter('tiny_mce_before_init', 'my_customize_mce_options');
