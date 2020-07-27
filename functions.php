@@ -140,16 +140,17 @@ add_action('restrict_manage_posts', 'add_post_taxonomy_restrict_filter');
 
 /*(4) ショートコード定義  */
 //[1] 記事一覧を表示させるショートコード
-// ショートコード: [getArticleList count="a" post_type="b" eyecatch="c" classname="d"]
-// "count" = 表示記事数, "post_type" = 投稿記事タイプ "eyecatch"=アイキャッチ画像の有無 "classname" = 付与クラス
+// ショートコード: [getArticleList count="a"  listtype="b"  post_type="c" taxonomy_"d"]
+// "count" = 表示記事数,  "listtype"=リストの形式指定(blog/news)  "post_type" = 投稿記事タイプ "taxonomy" = カスタム投稿タイプのカテゴリのタクソノミー名
 function getCatItems($atts, $content = null)
 {
   extract(shortcode_atts(array(
     "count" => '4',
+    "listtype" => 'blog',
     "post_type" => 'post',
-    "eyecatch" => false,
-    "classname" => 's-'
+    "taxonomy" => ''
   ), $atts));
+
 
   // 処理中のpost変数をoldpost変数に退避
   global $post;
@@ -158,38 +159,54 @@ function getCatItems($atts, $content = null)
   // カテゴリーの記事データ取得
   $myposts = get_posts('numberposts=' . $count . '&order=DESC&orderby=post_date&post_type=' . $post_type);
 
-  if (!$myposts){
+  if (!$myposts) {
     $post = $oldpost;
     return '<p>記事がありません。</p>';
   }
 
+  $itemClassName = 's-postItem--' . $listtype;
   foreach ($myposts as $post) {
     // 記事オブジェクトの整形
     setup_postdata($post);
 
-    // 投稿ごとの区切りのdiv
-    $retHtml .= '<div class="' . $classname . '">';
-    $retHtml .= '<a class="' . $classname . '_link" href="' . get_permalink() . '">';
+    if ($taxonomy !== '') {
+      $taxonomyArray = wp_get_object_terms($post->ID, $taxonomy);
+      if (is_wp_error($taxonomyArray)) {
+        //該当タクソノミーがない場合のWPError回避処理
+        $taxonomyArray = array(new class{ public $name = 'unKnown'; public $description = '';});
+      } 
+    } else {
+      $categoryArray = get_the_category();
+    }
 
-    if($eyecatch){
-      // サムネイルがある場合↓
-      $retHtml .= '<div class="' . $classname . '_link_image s-aspectFixed--4-3"><div class=" s-aspectFixed_frame">';
+    $retHtml .= '<div class="' . $itemClassName . '">';
+    $retHtml .= '<a class="' . $itemClassName . '_link" href="' . get_permalink() . '">';
+
+    if ($listtype === 'blog') {
+      $retHtml .= '<div class="' . $itemClassName . '_link_image s-aspectFixed--4-3"><div class=" s-aspectFixed_frame">';
       if (has_post_thumbnail()) {
         $retHtml .=  get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 's-aspectFixed_frame_image'));
-      }else {
-        $retHtml.= '<div class="s-aspectFixed_frame_image" style="background-color:gray;"></div>';
+      } else {
+        $retHtml .= '<div class="s-aspectFixed_frame_image" style="background-color:gray;"></div>';
       }
-      $retHtml .= '<span class="' . $classname . '_link_image_category">' . get_the_category()[0]->name . '</span>';
+    }
+
+    if ($taxonomy !== '') {
+      $retHtml .= '<span class="' . $itemClassName . '_link_category"' . $taxonomyArray[0]->description . '>'  . $taxonomyArray[0]->name . '</span>';
+    } else {
+      $retHtml .= '<span class="' . $itemClassName . '_link_category"' . $categoryArray[0]->description . '>' . $categoryArray[0]->name . '</span>';
+    }
+
+    if ($listtype === 'blog') {
       $retHtml .= '</div></div>';
     }
 
-    // 文章のみのエリアをdivで囲う
-    $retHtml .= '<div class="' . $classname . '_link_textBox">';
-    $retHtml .= '<p class="' . $classname . '_link_textBox--date">' . get_the_date() . '</p>';
-    $retHtml .= '<p class="' . $classname . '_link_textBox--title">' .  the_title("", "", false)  . '</p>';
+    $retHtml .= '<div class="' . $itemClassName . '_link_textBox">';
+    $retHtml .= '<span class="' . $itemClassName . '_link_textBox--date">' . get_the_date() . '</span>';
+    $retHtml .= '<p class="' . $itemClassName . '_link_textBox--title">' .  the_title("", "", false)  . '</p>';
     $retHtml .= '</div></a></div>';
   }
-  
+
   // oldpost変数をpost変数に戻す
   $post = $oldpost;
   return $retHtml;
