@@ -1,14 +1,27 @@
 /*コーディングルール
-(1)クラス命名規則
-  wordpressのクラスと区別するために
-  クラス名、ID名に接頭辞「s-」を付ける
-(2)書式記載順
+1. クラス命名規則
+  1-1.wordpressのクラスと区別するために
+      ・クラス名、ID名に接頭辞を付ける
+          (1) l-  Layout     :レイアウト指定クラス
+          (2) d-  Decoration :デザイン装飾クラス
+          (3) m-  Motion     :モーション付与クラス
+      ・特定のWebページに依存しない汎用的な書式は汎用クラスとして
+        上記接頭辞に g を付与する(例: gl-xxx など)
+      ・通常のクラス書式を、汎用クラスの書式より高いCSS優先度にするため
+        通常のクラスはbody要素の子要素クラスとして定義する。(ネスト階層を+1して通常クラスのCSSを優先させる)
+  1-2.階層構造をとるhtml要素に対して付与するクラスは
+      ・最高階層のみ先頭大文字で命名する。
+      ・2階層目以降は (最高階層の親要素のクラス名)_(子要素のクラス名) のように指定する。
+        htmlの階層の深さに関わらず対応するCSCCクラスのネスト構造は単純化の為に第3階層以上にはしない。
+        (↑1-1の命名方針より、1つのHTML要素に複数クラスを指定する事を想定しており、クラス名を長くすることを避けたい意図がある)
+      ・同じ目的のクラスで名複数のタイプを作成する場合はタイプ別に (クラス名)--(タイプ名) のように指定する。
+2. クラス書式の記載順
   height width
   magin 
   padding
   position
   top bottom left right
-(3)メディアクエリ
+3. メディアクエリ
   PC書式->他書式で記述
   PC用書式
   @media (スマホ画面サイズ)
@@ -63,705 +76,861 @@ li{
 }
 
 
-/*汎用クラス*/
-/*(1)要素のアスペクト比固定*/
-.s-aspectFixed{
-  &--16-9{
-    position: relative;
-    /*アスペクト非固定用疑似要素*/
-    &::before{
-    content:"";
-    display: block;
-    /*padding-topの高さは元要素のwidthで決まる*/
-    padding-top: 56.25%;
-    }
-  }
-  &--4-3{
-    position: relative;
-    &::before{
+
+/*1-1. 汎用クラス定義*/
+/*(1) Gl-  General Layout     :レイアウト指定クラス*/
+.Gl-{
+  /*[1]要素のアスペクト比固定*/
+  &AspectFixed{
+    &--16-9{
+      position: relative;
+      /*アスペクト非固定用疑似要素*/
+      &::before{
       content:"";
       display: block;
-      padding-top: 75%;
-    }
-  }
-  &_frame{
-    /*absluteで親要素のbeforeに貼り付ける*/
-    position: absolute;
-    top: 0; bottom: 0; left: 0; right: 0;
-    &_image{
-     height: 100%; width: 100%;
-     object-fit: cover;
-    }
-  }
-}
-
-/*(2)ボタンによる要素の表示切替*/
-.s-toggle{
-  //<input id="toggle" class="s-toggle--buton" type="checkbox" ></input>
-  &_button{display: none;}
-  //<label class="s-toggle-label" for="toggle"></label>
-  &_label{cursor: pointer;}
-  //表示非表示を切り替える任意の要素に以下のクラスを付ける
-  &_target{display: none;}
-  &_button:checked + &_label + &_target{
-    display: block;
-  }
-}
-
-/*(3)ボタン要素*/
-.s-button{
-  display: inline-block;
-  cursor: pointer;
-  color: $mainColor;
-  white-space: nowrap;
-  border-color: #f8f9fa;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .5);
-}
-
-/*(4)記事一覧の基本書式*/
-.s-postItem--news{
-  &_link{
-    height: auto; width: 100%;
-    display: flex;
-    justify-content: start;
-    text-decoration: none;
-    color: $textColor;
-    position: relative;
-
-    &_image{
-      display: none;
-    }
-
-    &_category{
-      height: auto; width: 5rem;
-      padding: 0.1rem 0 0.1rem 0;
-      position: absolute;
-      bottom: 1rem; left: 7rem;
-      background-color: rgba(255, 255,255, 0.9);
-      text-align: center;
-      font-size: 0.8rem;
-      border-radius: 3px;
-      border: $textColor 1px solid;
-    }
-
-    &_textBox{
-      display: flex;
-      flex-direction: row;
-      justify-content: start;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      &--date{
-        padding-right: 8rem;
-        letter-spacing: 0.1rem;
+      /*padding-topの高さは元要素のwidthで決まる*/
+      padding-top: 56.25%;
       }
-      &--title{
-        display: inline-block;
-        text-decoration: underline;
-        letter-spacing: 0.3rem;
+    }
+    &--4-3{
+      position: relative;
+      &::before{
+        content:"";
+        display: block;
+        padding-top: 75%;
+      }
+    }
+    &_frame{
+      /*absluteで親要素のbeforeに貼り付ける*/
+      position: absolute;
+      top: 0; bottom: 0; left: 0; right: 0;
+      &_image{
+      height: 100%; width: 100%;
+      object-fit: cover;
+      }
+    }
+  }
+  /*[2]記事一覧の基本書式*/
+  &PostItem--news{
+    &_link{
+      height: auto; width: 100%;
+      display: flex;
+      justify-content: start;
+      text-decoration: none;
+      color: $textColor;
+      position: relative;
+
+      &_image{
+        display: none;
+      }
+
+      &_category{
+        height: auto; width: 5rem;
+        padding: 0.1rem 0 0.1rem 0;
+        position: absolute;
+        bottom: 1rem; left: 7rem;
+        background-color: rgba(255, 255,255, 0.9);
+        text-align: center;
+        font-size: 0.8rem;
+        border-radius: 3px;
+        border: $textColor 1px solid;
+      }
+
+      &_textBox{
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        &--date{
+          padding-right: 8rem;
+          letter-spacing: 0.1rem;
+        }
+        &--title{
+          display: inline-block;
+          text-decoration: underline;
+          letter-spacing: 0.3rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
-    }
-  } 
-}
-.s-postItem--blog{
-  height: auto; width: 22%;
-  min-width: 140px;
-  margin: 0 1% 1%;
-  display: flex;
-  flex-direction: column;
-
-  &_link{
-    display: block;
-    color: $textColor;
-    
-    &_image{
-      height: auto; width: 100%;
-      position: relative;
-    }
-
-    &_category{
-      height: auto; width: 40%;
-      padding: 0.5rem 0 0.4rem 0;
-      position: absolute;
-      bottom: 0; right: 0;
-      background-color: rgba(255, 255,255, 0.9);
-      text-align: center;
-      font-size: 0.8rem;
-    }
-    
-    &_textBox{
-      height: 7rem; width: 100%;
-      margin-top: 1rem;
-
-      &--date{
-        margin-bottom: 0.8rem;
-        font-size: 0.8rem;
-      } 
-      &--title{
-        margin-bottom: 0;
-        font-weight: bold;
-      }
-    }
+    } 
   }
-}
-
-
-/*Header*/
-.s-header{ position: absolute;}
-.s-navArea{
-  &--sub{
-    &::before{
-      content: "";
-      height: 4.5rem; width: 100vw;
-      position: fixed;
-      top:0; left:0;
-      z-index: 99;
-      background-color: #fff;
-    }  
-  }
-}
-.s-logoMark{
-  position: fixed;
-  top:1.5rem; left: 0.5rem;
-  z-index: 100;
-  img{
-    height: 2.5rem; width: auto;
-    object-fit: contain;
-  }
-}
-.s-menuBar{
-  &_button{}
-  &_label{
-    height: 1.5rem; width: 1.5rem; 
-    display: none;
-    position: fixed;
-    top: 5rem; right: 0.5rem;
-    z-index: 100;
-    background-color: #fff;
-    border: $mainColor 1px solid;
-    @media screen and (max-width:$mdScreen) {
-      display: block;
-    }
-  }
-  &_menu{
-    @media screen and (max-width:$mdScreen) {display: none;}
-    @media screen and (min-width:$mdScreen) {display: block;}
-
-    %list{
-      position: fixed;
-      z-index: 100;
-      display: flex;
-      font-family: $serifFont;
-      a{
-        color: $mainColor;
-        padding: 0.5rem 1rem;
-      }
-    }
-    &_list{
-      @extend %list;
-      padding-left: 0; 
-      top:5rem; left: 0.5rem;
-      flex-direction: column;
-      li:nth-last-child(2){ margin-top: 6rem;}
-    }
-    &_list--sub{
-      @extend %list;
-      height: 1.7rem; width: 100vw;
-      top:2rem; left:20rem;
-    }
-  }
-}
-
-
-/*topSection*/
-.s-picture{
-  height: auto; width: 92.5vw;
-  margin: 0 0 0 auto;
-  position: relative;
- 
-  &_frame{
-    &_image{
-      object-position: top left;
-    }
-  } 
-
-  &_textBox{
-    position: absolute;
-    top:20%; right:10%;
-    z-index: 3;
+  &PostItem--blog{
+    height: auto; width: 22%;
+    min-width: 140px;
+    margin: 0 1% 1%;
     display: flex;
     flex-direction: column;
 
-    &::before{
-      content: "";
-      height: 4rem; width: 4rem;
-      position: absolute;
-      top:-0.9rem; left:-1.6rem;
+    &_link{
       display: block;
-      background: url(../img/icon1.png) center no-repeat;
-      background-size: cover;
-    }
-
-    %lineTmp{
-      background-color: rgba(255,255,255, 0.3);
-      letter-spacing: 0.25rem;
-      font-size: 1rem;
-      white-space: nowrap;
-    }
-    &--line1{
-      @extend %lineTmp;
-    }
-    &--line2{
-      @extend %lineTmp;
-      position: absolute;
-      top: 2rem; right:-2rem;
-    }
-  }
-}
-
-/*各セクション共通クラス*/
-.s-section{
-  height: auto; width: 85vw;
-  margin: 4rem auto;
-  padding: 1.5rem 0 0 1.5rem;
-
-  &_container{
-    padding: 1.8rem 0 0 1.5rem;
-    position: relative;
-    border-top:solid 1pt $mainColor;
-    border-left:solid 1pt $mainColor;
-
-    &_titleArea{
-      height: 3rem; width: auto;
-      padding-right: 0.8rem;
-      position: absolute;
-      top: -1.5rem; left: -1.5rem;
-      background: url(../img/icon2.png) left top no-repeat;
-      background-size: contain;
-      background-color: #fff;
-     
-      &_title{
-      padding: 0.7rem 0 0 1.5rem;
-      font-family: $serifFont;
-      font-size: 1.3rem;
-      letter-spacing: 0.2rem;
-      color: $mainColor;
-      }
-    }
-  
-    &_mainArea{
       color: $textColor;
-    }
-     
-    &_footerArea{
-      height: 3rem; width: 7rem;
-      position: absolute;
-      top: -1.7rem; right: 0rem;
-      background-color: #fff;
-      text-align: right;
-    }
-  }
-}
-
-.s-moreButton{
-  height: 2rem; width: 6rem;
-  margin-top: 0.5rem;
-
-  span{
-    position: relative;
-    top:0.2rem; left: -0.6rem;
-    font-family: $serifFont;
-  }
-  .arrow{
-    height: 1rem; width: 2rem;
-    top:0.6rem; left: -0.6rem;
-    display: inline-block;
-    background:url(../img/arrow.png) left top no-repeat;
-    background-size: contain;
-    background-color:none;
-  }
-}  
-
-/*news*/
-.s-newsList{
-}
-
-/*Blog*/
-.s-blogList{
-  display: flex;
-  flex-wrap: wrap;
-}
-
-/*about*/
-.s-about{
-  %parts{
-    height: auto; width: 100%;
-    padding-bottom: 3rem;
-    display: flex;
-    @media screen and (max-width:$mdScreen){
-      display: block;
-    }
-  }
-
-  &_parts{
-    @extend %parts;
-    &--reverse{
-      @extend %parts;
-      flex-direction: row-reverse;
-    }
-   
-    &_image{
-      height: auto; width: 60%;
-      @media screen and (max-width:$mdScreen){
-        height: 100%; width: 100%;
-      }
-      img{
-        object-position: center center;
-      }
-    }
-
-    &_textBox{
-      height: auto; width: 40%;
-      padding: 1rem 1rem;
-      @media screen and (max-width:$mdScreen){
-        height: 100%; width: 100%;
+      
+      &_image{
+        height: auto; width: 100%;
+        position: relative;
       }
 
-      &--title{
-        font-size: 1.5rem;
+      &_category{
+        height: auto; width: 40%;
+        padding: 0.5rem 0 0.4rem 0;
+        position: absolute;
+        bottom: 0; right: 0;
+        background-color: rgba(255, 255,255, 0.9);
         text-align: center;
-        margin-bottom: 1rem;
+        font-size: 0.8rem;
+      }
+      
+      &_textBox{
+        height: 7rem; width: 100%;
+        margin-top: 1rem;
 
-        &::before{
-          content: attr(data-cat) "\A";
-          white-space: pre;
+        &--date{
+          margin-bottom: 0.8rem;
           font-size: 0.8rem;
+        } 
+        &--title{
+          margin-bottom: 0;
+          font-weight: bold;
         }
       }
-      &--text{
+    }
+  }
+  /*[3]複数カラム*/
+  &MultiColumn{
+    display: flex;
+    flex-direction: row;
+  }
+
+}
+
+/*(2) Gd-  General Decoration :デザイン装飾クラス*/
+.Gd-{
+  /*start: General Class*/
+  /*[1]ボタン要素*/
+  &ButtonDesign{
+    display: inline-block;
+    cursor: pointer;
+    color: $mainColor;
+    white-space: nowrap;
+    border-color: #f8f9fa;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .5);
+  }
+  
+  /*end: General Class*/
+}
+
+/*(3) Gm-  General Motion     :モーション付与クラス*/
+.Gm-{
+  /*start: General Class*/
+  /*(1)ボタンによる要素の表示切替*/
+  &Toggle{
+    //<input id="toggle" class="s-toggle--buton" type="checkbox" ></input>
+    &_button{display: none;}
+    //<label class="s-toggle-label" for="toggle"></label>
+    &_label{cursor: pointer;}
+    //表示非表示を切り替える任意の要素に以下のクラスを付ける
+    &_target{display: none;}
+    &_button:checked + &_label + &_target{
+      display: block;
+    }
+  }
+
+  /*各種jsアニメーション*/
+  &js_fadeIn{
+    &_action{
+      animation: fade 2s 0s 1 ;
+    } 
+  }
+  @keyframes fade {
+    from{opacity: 0; transform: translateY(30px);}
+      to{opacity: 1;transform: translateY(0);}   
+  }
+
+  &js_scroll{}
+
+  /*end: General Class*/
+}
+
+
+
+/*1-2. 通常クラス定義*/
+body{
+/*(1) l-  Layout     :レイアウト指定クラス*/
+  .l-{
+
+    /*Header*/
+    &HeaderArea{ position: absolute;}
+    &NavArea{
+      &--sub{
+        &::before{
+          content: "";
+          height: 4.5rem; width: 100vw;
+          position: fixed;
+          top:0; left:0;
+          z-index: 99;
+          background-color: #fff;
+        }  
+      }
+    }
+    &LogoMark{
+      position: fixed;
+      top:1.5rem; left: 0.5rem;
+      z-index: 100;
+      img{
+        height: 2.5rem; width: auto;
+        object-fit: contain;
+      }
+    }
+    &MenuBar{
+      &_label{
+        height: 1.5rem; width: 1.5rem; 
+        display: none;
+        position: fixed;
+        top: 5rem; right: 0.5rem;
+        z-index: 100;
+        @media screen and (max-width:$mdScreen) {
+          display: block;
+        }
+      }
+      &_menu{
+        @media screen and (max-width:$mdScreen) {display: none;}
+        @media screen and (min-width:$mdScreen) {display: block;}
+      }
+      @mixin l-list{
+        position: fixed;
+        z-index: 100;
+        display: flex;
+        a{
+          padding: 0.5rem 1rem;
+        }
+      }
+      &_list{
+        @include l-list;
+        padding-left: 0; 
+        top:5rem; left: 0.5rem;
+        flex-direction: column;
+        li:nth-last-child(2){ margin-top: 6rem;}
+      }
+      &_list--sub{
+        @include l-list;
+        height: 1.7rem; width: 100vw;
+        top:2rem; left:20rem;
+      }
+    }
+
+    /*MainPage*/
+    // topSection
+    &MainImageArea{
+      height: auto; width: 92.5vw;
+      margin: 0 0 0 auto;
+      position: relative;
+     
+      &_frame{
+        &_image{
+          object-position: top left;
+        }
+      }
+    }
+    &MainImageText{
+      position: absolute;
+      top:20%; right:10%;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+  
+      &::before{
+        content: "";
+        height: 4rem; width: 4rem;
+        position: absolute;
+        top:-0.9rem; left:-1.6rem;
+        display: block;
+      }
+      &_line1{
+        letter-spacing: 0.25rem;
+        font-size: 1rem;
+        white-space: nowrap;
+      }
+      &_line2{
+        letter-spacing: 0.25rem;
+        font-size: 1rem;
+        white-space: nowrap;
+
+        position: absolute;
+        top: 2rem; right:-2rem;
+      }
+    }
+
+    //各セクション共通
+    &SectionArea{
+      height: auto; width: 85vw;
+      margin: 4rem auto;
+      padding: 1.5rem 0 0 1.5rem;
+    
+      &_frame{
+        padding: 1.8rem 0 0 1.5rem;
+        position: relative; 
+        &_titleArea{
+          height: 3rem; width: auto;
+          padding-right: 0.8rem;
+          position: absolute;
+          top: -1.5rem; left: -1.5rem;
+         
+          &_title{
+          padding: 0.7rem 0 0 1.5rem;
+          }
+        }
+        &_footerArea{
+          height: 3rem; width: 7rem;
+          position: absolute;
+          top: -1.7rem; right: 0rem;
+        }
+      }
+    }
+    &MoreButton{
+      height: 2rem; width: 6rem;
+      margin-top: 0.5rem;
+    
+      span{
+        position: relative;
+        top:0.2rem; left: -0.6rem;
+      }
+      .arrow{
+        height: 1rem; width: 2rem;
+        top:0.6rem; left: -0.6rem;
+        display: inline-block;
+      }
+    }
+    
+    // newsSection
+    &NewsList{}
+
+    // blogSection
+    &BlogList{
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    // aboutSection
+    &AboutContents{
+      %parts{
+        height: auto; width: 100%;
+        padding-bottom: 3rem;
+        display: flex;
+        @media screen and (max-width:$mdScreen){
+          display: block;
+        }
+      }
+      &_parts{
+        @extend %parts;
+        &--reverse{
+          @extend %parts;
+          flex-direction: row-reverse;
+        }
+      
+        &_image{
+          height: auto; width: 60%;
+          @media screen and (max-width:$mdScreen){
+            height: 100%; width: 100%;
+          }
+          img{
+            object-position: center center;
+          }
+        }
+
+        &_textBox{
+          height: auto; width: 40%;
+          padding: 1rem 1rem;
+          @media screen and (max-width:$mdScreen){
+            height: 100%; width: 100%;
+          }
+
+          &--title{
+            margin-bottom: 1rem;
+          }
+        }
+      }
+    }
+
+    //LineupSection
+    &MenuLineUp{
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      &_menu{
+        height: auto; width: 22%;
+        display: flex;
+        flex-direction: column;
+        min-width: 140px;
+        margin-bottom: 1rem;
+
+        &_image{
+          height: auto; width: 100%;
+
+          img{
+            object-position: center center; 
+          }
+        }
+        &_textBox{
+          .itemName{
+            margin-bottom: 0.3rem;
+          }
+          .itemInfo{
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
+    //ShopinfoSection
+    &ShopInfomation{
+      height: auto; width: 100%; 
+      display: flex;
+      @media screen and (max-width:$mdScreen){
+        display: block;
+      }
+
+      &_shopImage{
+        height: auto; width: 58.2%;
+        @media screen and (max-width:$mdScreen){
+          height: auto; width: 100%;
+        }
+        &_frame{
+          &_image{
+            object-position: center center;
+          }
+        }
+      }
+
+      &_textContainer{
+        margin-left: 3%;
+
+        .shopType{}
+        .shopName{
+          margin: 0.5rem 0;
+        }
+        .shopAddress{
+          margin: 1rem 0;
+        }
+        .shopAccess{
+          margin-bottom: 0;
+        }
+        .shopInfo{
+          margin-top: 1rem;
+          display: inline-block;
+          th{
+            height: auto; width: 6rem;
+            padding: 0.2rem 0;
+          }
+        }
+      }
+    }
+
+    //googleMap
+    &GoogleMap{
+      height: 40vh; width: 100%;
+      margin-top: 3%;
+      img{
+        height: 100%; width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    //footer
+    &FooterArea{
+      height:auto; width: auto;
+
+      &_link{
+        height: auto; width: 20rem;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+
+    /*記事一覧ページ*/
+    // トップイメージ
+    &TopImageArea{
+      height: 13rem; width: auto;
+      margin:0;
+      position: relative;
+      &::before{
+        content:"";
+        height: 100%; width: 100%;
+        display: block;
+      }
+      
+      &_title{
+        height: auto; width: auto;
+        margin: 0;
+        display: inline-block;
+        position: absolute;
+        top:50%; right: 10%;
+      }
+    }
+
+    //blogのカテゴリ一覧エリア
+    &CategoryArea{
+      margin: 2rem auto 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+      a{
+        height: auto; width: 20%;
+      }
+    }
+
+    //ページネーション
+    .pagination h2.screen-reader-text { display: none; }
+    &Pagenation{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      a{display: inline;}
+    }
+
+    //記事
+    &SingleArea{
+      height: auto; width: 60%;
+    
+      &_titleArea{
+        margin-bottom: 2rem;
+        position: relative;
+    
+        &_category{
+          left: 0;
+          padding: 0.1rem 0.3rem;
+          position: static;
+        }
+        &_date{
+           position: absolute;
+           right: 0;
+        }
+        &_title{
+          margin-top: 1.1rem;
+        }
+      }
+      &_mainArea{}
+      &_footer{}
+    }
+
+    &SingleContentArea{}
+
+    //戻るボタン
+    &BackButton{
+      display: inline-block;
+      height: 2rem; width: 100%;
+      margin: 2rem 0;
+    }
+
+    //前と次の記事情報
+    &NextandPrevPosts{
+      height: 10vh; width: 100%;
+      display: flex;
+      justify-content: space-between;
+      a{
+        height: auto; width: 40%;
+        display: flex;
+        overflow: hidden;
+      }
+      a:nth-child(2){
+        text-align: right;
+      }
+      .prev::before{
+        height: 1.5rem; width: 1.5rem;
+        display: inline-block;
+        content: "";
+      }
+      .next::after{
+        height: 1.5rem; width: 1.5rem;
+        display: inline-block;
+        content: "";
+      }
+    }
+
+    //ウィジェット関連
+    &WidgetArea{
+      height: auto; width: 40%;
+      padding: 1.5rem 0 0 4rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    &WidgetItems{
+      margin-bottom: 2.5rem;
+    
+      ul{
+        margin: 0.5rem 0 1rem;
+        padding: 0;
+        li{
+          margin-bottom: 0.7rem;
+          display: flex;
+          justify-content: space-between;
+        }
+        img{
+          margin: 0 0.8rem 0.3rem 0;
+          padding: 0;
+        }
+      }
+    }
+
+    &WidgetItem--Archive{
+      &_button{}
+      &_year{
+        display: flex;
+        justify-content: space-between;
+      }
+      &_menu{
+        display: none;
+        padding-left: 1.5rem;
+      }
+    }
+
+  }
+
+
+/*(2) d-  Decoration :デザイン装飾クラス*/
+  .d-{
+    /*Header*/
+    &MenuBar{
+      &_label{
+        background-color: #fff;
+        border: $mainColor 1px solid;
+      }
+      &_list{
+        font-family: $serifFont;
+        a{
+          color: $mainColor;
+        }
+      }
+
+    }
+
+    /*MainPage*/
+    // topSection
+    &MainImageText{
+      &::before{
+        background: url(../img/icon1.png) center no-repeat;
+        background-size: cover;
+      }
+      &_line{
+        background-color: rgba(255,255,255, 0.3);
+      }
+    }
+
+    //各セクション共通
+    &SectionArea{
+      &_frame{
+        border-top:solid 1pt $mainColor;
+        border-left:solid 1pt $mainColor;     
+        &_titleArea{
+          background: url(../img/icon2.png) left top no-repeat;
+          background-size: contain;
+          background-color: #fff;           
+          &_title{
+          font-family: $serifFont;
+          font-size: 1.3rem;
+          letter-spacing: 0.2rem;
+          color: $mainColor;
+          }
+        }        
+        &_mainArea{
+          color: $textColor;
+        }        
+        &_footerArea{
+          background-color: #fff;
+          text-align: right;
+        }
+      }
+    }
+    &MoreButton{
+      span{
+        font-family: $serifFont;
+      }
+      .arrow{
+        background:url(../img/arrow.png) left top no-repeat;
+        background-size: contain;
+        background-color:none;
+      }
+    }
+    
+    // newsSection
+    // blogSection
+
+    // aboutSection
+    &AboutContents{
+      &_parts{   
+        &_textBox{
+          &_title{
+            font-size: 1.5rem;
+            text-align: center;
+            &::before{
+              content: attr(data-cat) "\A";
+              white-space: pre;
+              font-size: 0.8rem;
+            }
+          }
+          &_text{
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+
+    //LineupSection
+    &MenuLineUp{
+      .itemInfo{
+        font-size: 0.8rem;
+      }
+    }
+    
+    //ShopinfoSection
+    &ShopInfomation{
+      &_textContainer{
+        text-align: left;
+        @media screen and (max-width:$mdScreen){
+          text-align: center;
+        }
+
+        .shopType{
+          color: $mainColor;
+          font-size: 0.9rem;
+          font-weight: bold;
+        }
+        .shopName{
+          font-size: 1.2rem;
+        }
+        .shopAddress{
+          font-size: 1rem;
+          font-style: normal;
+          line-height: inherit;
+        }
+        .shopAccess{
+          font-size: 0.9rem;
+        }
+        .shopInfo{
+          border-collapse: collapse;
+          .tel{
+            //PCサイズレイアウト時はリンクを無効にする。
+            @media screen and (min-width:$mdScreen){
+              pointer-events: none;
+              cursor: default;
+            }
+          }
+        }
+      }
+    }
+
+    //footer
+    &FooterArea{
+      text-align: center;
+      color: $mainColor;
+
+      &_link{
+        font-size: 1rem;
+        a{
+          color: $mainColor;
+        }
+      }
+      &_copyRight{
         font-size: 1rem;
       }
     }
-  }
-}
 
-/*Lineup*/
-.s-menuList{
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
 
-  &_menu{
-    height: auto; width: 22%;
-    display: flex;
-    flex-direction: column;
-    min-width: 140px;
-    margin-bottom: 1rem;
-
-    &_image{
-      height: auto; width: 100%;
-
-      img{
-        object-position: center center; 
+    /*記事一覧ページ*/
+    // トップイメージ
+    &TopImageArea{
+      background-position: left bottom;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-color: gray;
+      &::before{
+        background:linear-gradient(to right,rgba(255,255,255,0) 40%,rgba(255,255,255,0.7) 60%);
+      }
+      
+      &_title{
+        font-size: 2.5rem;
+        font-family: $serifFont;
+        color: $mainColor;
       }
     }
-    &_textBox{
-      .itemName{
-        margin-bottom: 0.3rem;
-      }
-      .itemInfo{
-        font-size: 0.8rem;
-        margin-bottom: 0;
-      }
-    }
-  }
-}
 
-/*Shopinfo*/
-.s-shopinfoContainer{
-  height: auto; width: 100%; 
-  display: flex;
-  @media screen and (max-width:$mdScreen){
-    display: block;
-  }
-
-  &_shopImage{
-    height: auto; width: 58.2%;
-    @media screen and (max-width:$mdScreen){
-      height: auto; width: 100%;
-    }
-    &_frame{
-      &_image{
-        object-position: center center;
+    //blogのカテゴリ一覧エリア
+    &CategoryArea{
+      a:first-child{
+        border-left: solid 1px $mainColor;
+      }
+      a{
+        text-align: center;
+        font-size: 1.2rem;
+        border-right: $mainColor 1px solid;
       }
     }
-  }
 
-  &_textContainer{
-    margin-left: 3%;
-    text-align: left;
-    @media screen and (max-width:$mdScreen){
-      text-align: center;
-    }
-
-    .shopType{
-      color: $mainColor;
-      font-size: 0.9rem;
-      font-weight: bold;
-    }
-    .shopName{
+    //ページネーション
+    &Pagenation{
       font-size: 1.2rem;
-      margin: 0.5rem 0;
     }
-    .shopAddress{
-      font-size: 1rem;
-      margin: 1rem 0;
-      font-style: normal;
-      line-height: inherit;
-    }
-    .shopAccess{
-      font-size: 0.9rem;
-      margin-bottom: 0;
-    }
-    .shopInfo{
-      margin-top: 1rem;
-      display: inline-block;
-      border-collapse: collapse;
-      th{
-        height: auto; width: 6rem;
-        padding: 0.2rem 0;
-      }
-      .tel{
-        //PCサイズレイアウト時はリンクを無効にする。
-        @media screen and (min-width:$mdScreen){
-          pointer-events: none;
-          cursor: default;
+
+    //記事
+    &SingleArea{
+      &_titleArea{
+        border-bottom: $mainColor 1.5px solid;
+    
+        &_category{
+          border-color: #ccc;
+        }
+        &_date{
+          font-size: 0.7rem;
+        }
+        &_title{
+          font-size: 1.2rem;
+          font-weight: bold;
+          line-height: 2;
+          color: $mainColor;
         }
       }
     }
-  }
-}
 
-.googlemap{
-  height: 40vh; width: 100%;
-  margin-top: 3%;
-  img{
-    height: 100%; width: 100%;
-    object-fit: cover;
-  }
-}
-
-/* footer*/
-.s-footer{
-  height:auto; width: auto;
-  text-align: center;
-  color: $mainColor;
-
-  &_link{
-    height: auto; width: 20rem;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    font-size: 1rem;
-    a{
-      color: $mainColor;
-    }
-  }
-
-  &_copyRight{
-    font-size: 1rem;
-  }
-}
-
-
-/*記事一覧ページ*/
-// トップイメージ
-.s-topArea{
-  height: 13rem; width: auto;
-  margin:0;
-  position: relative;
-  background-position: left bottom;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: gray;
-
-  &::before{
-    content:"";
-    height: 100%; width: 100%;
-    display: block;
-    background:linear-gradient(to right,rgba(255,255,255,0) 40%,rgba(255,255,255,0.7) 60%);
-  }
-  
-  &_title{
-    height: auto; width: auto;
-    margin: 0;
-    display: inline-block;
-    position: absolute;
-    top:50%; right: 10%;
-    font-size: 2.5rem;
-    font-family: $serifFont;
-    color: $mainColor;
-  }
-}
-
-//blogのカテゴリ一覧エリア
-.s-categoryArea{
-  margin: 2rem auto 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  a:first-child{
-    border-left: solid 1px $mainColor;
-  }
-  a{
-    height: auto; width: 20%;
-    text-align: center;
-    font-size: 1.2rem;
-    border-right: $mainColor 1px solid;
-  }
-}
-
-//ページネーション
-.pagination h2.screen-reader-text { display: none; }
-.s-pagenation{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  font-size: 1.2rem;
-  a{display: inline;}
-}
-
-
-/*記事ページ*/
-.s-single{
-  display: flex;
-  flex-direction: row;
-}
-.s-singleArea{
-  height: auto; width: 60%;
-
-  &_titleArea{
-    margin-bottom: 2rem;
-    border-bottom: $mainColor 1.5px solid;
-    position: relative;
-
-    &_category{
-      padding: 0.1rem 0.3rem;
+    //戻るボタン
+    &BackButton{
       background-color: $mainColor;
-      border-radius: 3px;
       color: #fff;
+      text-align: center;
+      align-items: center;
     }
-    &_date{
-      position: absolute;
-      right: 0;
-      font-size: 0.7rem;
+
+    //前と次の記事情報
+    &NextandPrevPosts{
+      .prev::before{
+        background:url(../img/prev.png) center no-repeat;
+        background-size: contain;
+      }
+      .next::after{
+        background:url(../img/next.png) center no-repeat;
+        background-size: contain;
+      }
     }
-    &_title{
-      margin-top: 1rem;
-      font-size: 1.2rem;
-      font-weight: bold;
-      line-height: 2;
-      color: $mainColor;
+
+    &WidgetItem--Archive{
+      &_button{}
+      &_year{
+        font-size: 1.1rem;
+      }
+      &_menu{}
+      &_button:checked + .d-WidgetItem--Archive_year::after{content: "▲";}
+      &_button + .d-WidgetItem--Archive_year::after{content: "▼";}
     }
-  }
-  &_mainArea{}
-  &_footer{}
-}
 
-.s-backbutton{
-  display: inline-block;
-  height: 2rem; width: 100%;
-  margin: 2rem 0;
-  background-color: $mainColor;
-  color: #fff;
-  text-align: center;
-  align-items: center;
-}
-.s-nextandprev{
-  height: 10vh; width: 100%;
-  display: flex;
-  justify-content: space-between;
-  a{
-    height: auto; width: 40%;
-    display: flex;
-    overflow: hidden;
   }
-  a:nth-child(2){
-    text-align: right;
-  }
-  .prev::before{
-    height: 1.5rem; width: 1.5rem;
-    display: inline-block;
-    content: "";
-    background:url(../img/prev.png) center no-repeat;
-    background-size: contain;
-  }
-  .next::after{
-    height: 1.5rem; width: 1.5rem;
-    display: inline-block;
-    content: "";
-    background:url(../img/next.png) center no-repeat;
-    background-size: contain;
-  }
-}
-
-/*ウィジェット関連*/
-.s-widgetArea{
-  height: auto; width: 40%;
-  padding: 1.5rem 0 0 4rem;
-  display: flex;
-  flex-direction: column;
-}
-.s-widget{
-  margin-bottom: 2.5rem;
-
-  ul{
-    margin: 0.5rem 0 1rem;
-    padding: 0;
-    li{
-      margin-bottom: 0.7rem;
-      display: flex;
-      justify-content: space-between;
-    }
-    img{
-      margin: 0 0.8rem 0.3rem 0;
-      padding: 0;
-    }
-  }
-}
-
-.s-archive{
-  &_button{}
-  &_year{
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.1rem;
-  }
-  &_menu{
-    display: none;
-    padding-left: 1.5rem;
-  }
-  &_button:checked + &_year::after{content: "▲";}
-  &_button + &_year::after{content: "▼";}
-}
-
-
-/*各種jsアニメーション*/
-.s-js_fadeIn{
-  &_action{
-    animation: fade 2s 0s 1 ;
-  } 
-}
-@keyframes fade {
-  from{opacity: 0; transform: translateY(30px);}
-    to{opacity: 1;transform: translateY(0);}   
-}
-
-.s-js_scroll{
 
 }
+

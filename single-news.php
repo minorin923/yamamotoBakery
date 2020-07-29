@@ -2,8 +2,8 @@
 
 <?php get_template_part('template/header'); ?>
 
-<section class="s-single s-section">
-	<div class="s-singleArea">
+<section class="l-SectionArea Gl-MultiColumn ">
+	<div class="l-SingleArea">
 		<?php get_template_part('template/singleContent'); ?>
 	</div>
 	<!-- end:singleArea -->

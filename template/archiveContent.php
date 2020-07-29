@@ -7,24 +7,24 @@
     <h2> <?= get_the_category()[0]->name ?> カテゴリの記事一覧</h2>
   <?php endif; ?>
 
-  <div class="s-blogList s-section">
+  <div class="l-BlogList l-SectionArea">
     <?php while (have_posts()) : the_post(); ?>
 
-      <div class="s-postItem--blog">
-        <a class="s-postItem--blog_link" href="<?php the_permalink(); ?>">
-          <div class="s-postItem--blog_link_image s-aspectFixed--4-3" style="max-width:100%;">
-            <div class="s-aspectFixed_frame">
+      <div class="Gl-PostItem--blog">
+        <a class="Gl-PostItem--blog_link" href="<?php the_permalink(); ?>">
+          <div class="Gl-PostItem--blog_link_image Gl-AspectFixed--4-3" style="max-width:100%;">
+            <div class="Gl-AspectFixed_frame">
               <?php if (has_post_thumbnail()) {
-                echo get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 's-aspectFixed_frame_image'));
+                echo get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 'Gl-AspectFixed_frame_image'));
               } else {
-                echo '<div class="s-aspectFixed_frame_image" style="background-color:gray;"></div>';
+                echo '<div class="Gl-AspectFixed_frame_image" style="background-color:gray;"></div>';
               } ?>
-              <span class="s-postItem--blog_link_category"><?= get_the_category()[0]->name ?></span>
+              <span class="Gl-PostItem--blog_link_category" <?= get_the_category()[0]->description; ?> ><?= get_the_category()[0]->name ?></span>
             </div>
           </div>
-          <div class="s-postItem--blog_link_textBox">
-            <p class="s-postItem--blog_link_textBox--date"><?php the_time('Y/m/d') ?></p>
-            <p class="s-postItem--blog_link_textBox--title"><?php the_title(); ?></p>
+          <div class="Gl-PostItem--blog_link_textBox">
+            <p class="Gl-PostItem--blog_link_textBox--date"><?php the_time('Y/m/d') ?></p>
+            <p class="Gl-PostItem--blog_link_textBox--title"><?php the_title(); ?></p>
           </div>
         </a>
       </div>

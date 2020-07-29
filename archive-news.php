@@ -11,8 +11,8 @@ Template Name: newslist
 
 <?php get_template_part('template/topImage'); ?>
 
-<section class="s-single  s-section">
-  <div class="s-singleArea">
+<section class="l-SectionArea Gl-MultiColumn">
+  <div class="l-SingleArea">
     <!-- 固定ページ本文の出力 -->
     <?php get_template_part('template/archiveContent','news'); ?>
   </div>
@@ -20,7 +20,7 @@ Template Name: newslist
 
   <!-- サイドバー読み込み -->
   <?php if (is_active_sidebar('widgetarea-3')) : ?>
-    <div class="widget-column s-widgetArea">
+    <div class="widget-column l-WidgetArea">
       <?php dynamic_sidebar('widgetarea-3'); ?>
     </div><!-- .widget-area -->
   <?php endif; ?>

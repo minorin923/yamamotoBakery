@@ -11,7 +11,7 @@ Template Name: home2
 
 <?php if ( have_posts() ) : ?>
   <?php while( have_posts() ) : the_post(); ?>
-      <p><?php the_content(); ?></p>
+      <?php the_content(); ?>
   <?php endwhile;?>
 <?php endif; ?>
 

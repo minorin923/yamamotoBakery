@@ -12,7 +12,7 @@ Template Name: index
 <?php get_template_part('template/topImage'); ?>
 
 <!-- サイドバー読み込み -->
-<div class="s-categoryArea">
+<div class="l-CategoryArea d-CategoryArea">
   <a href="/blog">All</a><br>
   <?php wp_list_categories('style=none'); ?>
 </div>

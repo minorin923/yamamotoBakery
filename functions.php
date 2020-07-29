@@ -164,7 +164,7 @@ function getCatItems($atts, $content = null)
     return '<p>記事がありません。</p>';
   }
 
-  $itemClassName = 's-postItem--' . $listtype;
+  $itemClassName = 'Gl-PostItem--' . $listtype;
   foreach ($myposts as $post) {
     // 記事オブジェクトの整形
     setup_postdata($post);
@@ -183,11 +183,11 @@ function getCatItems($atts, $content = null)
     $retHtml .= '<a class="' . $itemClassName . '_link" href="' . get_permalink() . '">';
 
     if ($listtype === 'blog') {
-      $retHtml .= '<div class="' . $itemClassName . '_link_image s-aspectFixed--4-3"><div class=" s-aspectFixed_frame">';
+      $retHtml .= '<div class="' . $itemClassName . '_link_image Gl-AspectFixed--4-3"><div class=" Gl-AspectFixed_frame">';
       if (has_post_thumbnail()) {
-        $retHtml .=  get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 's-aspectFixed_frame_image'));
+        $retHtml .=  get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 'Gl-AspectFixed_frame_image'));
       } else {
-        $retHtml .= '<div class="s-aspectFixed_frame_image" style="background-color:gray;"></div>';
+        $retHtml .= '<div class="Gl-AspectFixed_frame_image" style="background-color:gray;"></div>';
       }
     }
 
@@ -265,9 +265,9 @@ class customarchive extends WP_Widget
         if ($year_prev != null) {
           echo  '</ul></div>';
         }
-        echo '<div><input id="menuToggle' . $count . '" class="s-archive_button s-toggle_button " type="checkbox" ></input>';
-        echo '<label class="s-archive_year s-toggle_label" for="menuToggle' . $count . '">' . $month->year . '年</label>';
-        echo '<ul class="s-archive_menu s-toggle_target">';
+        echo '<div><input id="menuToggle' . $count . '" class="l-WidgetItem--Archive_button d-WidgetItem--Archive_button Gm-Toggle_button " type="checkbox" ></input>';
+        echo '<label class="l-WidgetItem--Archive_year d-WidgetItem--Archive_year Gm-Toggle_label" for="menuToggle' . $count . '">' . $month->year . '年</label>';
+        echo '<ul class="l-WidgetItem--Archive_menu d-WidgetItem--Archive_menu Gm-Toggle_target">';
       }
       echo '<li><a href="/' . $month->year . '/' . date("m", mktime(0, 0, 0, $month->month, 1, $month->year)) . $posttype . '">';
       echo date("n", mktime(0, 0, 0, $month->month, 1, $month->year)) . '月';
@@ -309,26 +309,26 @@ add_action('widgets_init', function () {
   register_sidebar(array(
     'name'          => 'サイドバー1',
     'id'            => 'widgetarea-1',
-    'before_widget' => '<div class="s-section_container s-widget">',
+    'before_widget' => '<div class="l-SectionArea_frame d-SectionArea_frame l-WidgetItems">',
     'after_widget'  => '</div></div>',
-    'before_title'  => '<div class="s-section_container_titleArea"><h2 class="s-section_container_titleArea_title">',
-    'after_title'   => '</h2></div><div class="s-section_container_mainArea">',
+    'before_title'  => '<div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea"><h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">',
+    'after_title'   => '</h2></div><div class="d-SectionArea_frame_mainArea">',
   ));
   register_sidebar(array(
     'name'          => 'サイドバー2',
     'id'            => 'widgetarea-2',
-    'before_widget' => '<div class="s-section_container s-widget">',
+    'before_widget' => '<div class="l-SectionArea_frame d-SectionArea_frame l-WidgetItems">',
     'after_widget'  => '</div></div>',
-    'before_title'  => '<div class="s-section_container_titleArea"><h2 class="s-section_container_titleArea_title">',
-    'after_title'   => '</h2></div><div class="s-section_container_mainArea">',
+    'before_title'  => '<div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea"><h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">',
+    'after_title'   => '</h2></div><div class="d-SectionArea_frame_mainArea">',
   ));
   register_sidebar(array(
     'name'          => 'サイドバー3',
     'id'            => 'widgetarea-3',
-    'before_widget' => '<div class="s-section_container s-widget">',
+    'before_widget' => '<div class="l-SectionArea_frame d-SectionArea_frame l-WidgetItems">',
     'after_widget'  => '</div></div>',
-    'before_title'  => '<div class="s-section_container_titleArea"><h2 class="s-section_container_titleArea_title">',
-    'after_title'   => '</h2></div><div class="s-section_container_mainArea">',
+    'before_title'  => '<div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea"><h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">',
+    'after_title'   => '</h2></div><div class="d-SectionArea_frame_mainArea">',
   ));
 
   //[2] ウィジェットの追加
@@ -368,21 +368,17 @@ add_filter('walker_nav_menu_start_el', 'add_class_on_link', 10, 4);
 
 /*(8) wordpressの自動整形機能の制御*/
 //[1] 固定ページを表示させる際の自動整形(pタグ挿入処理など)を無効にする
-function wpautop_filter($content)
-{
-  global $post;
-  $remove_filter = false;
-
-  $arr_types = array('page'); //自動整形を無効にする投稿タイプを記述
-  $post_type = get_post_type($post->ID);
-  if (in_array($post_type, $arr_types)) $remove_filter = true;
-
-  if ($remove_filter) {
-    remove_filter('the_content', 'wpautop');
-    remove_filter('the_excerpt', 'wpautop');
-  }
-
-  return $content;
+function wpautop_filter($content) {
+global $post;
+$remove_filter = false;
+$arr_types = array('page'); //適用させる投稿タイプを指定
+$post_type = get_post_type( $post->ID );
+if (in_array($post_type, $arr_types)) $remove_filter = true;
+if ( $remove_filter ) {
+remove_filter('the_content', 'wpautop');
+remove_filter('the_excerpt', 'wpautop');
+}
+return $content;
 }
 add_filter('the_content', 'wpautop_filter', 9);
 
