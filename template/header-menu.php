@@ -1,6 +1,6 @@
 
 <input id="menuBarToggle" class=" Gm-Toggle_button" type="checkbox" ></input>
-<label class="l-MenuBar_label d-MenuBar_label Gm-Toggle_label" for="menuBarToggle">Button</label>
+<label class="l-MenuBar_label d-MenuBar_label Gd-ButtonDesign Gm-Toggle_label" for="menuBarToggle"><i class="fa fa-bars"></i></label>
 
 <?php
 // if ( has_nav_menu( 'Header Navigation' ) ) {

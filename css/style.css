@@ -242,6 +242,15 @@ li {
           flex-direction: row;
 }
 
+@media screen and (max-width: 768px) {
+  .Gl-MultiColumn {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
 /*(2) Gd-  General Decoration :デザイン装飾クラス*/
 .Gd- {
   /*start: General Class*/
@@ -252,9 +261,13 @@ li {
 .Gd-ButtonDesign {
   display: inline-block;
   cursor: pointer;
-  color: #f8145b;
   white-space: nowrap;
+  text-align: center;
+  font-size: medium;
+  color: #f8145b;
+  background-color: #f8f9fa;
   border-color: #f8f9fa;
+  border-radius: 2px;
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
           box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
 }
@@ -330,20 +343,53 @@ body .l-HeaderArea {
   position: absolute;
 }
 
-body .l-NavArea--sub::before {
-  content: "";
-  height: 4.5rem;
-  width: 100vw;
+body .l-MenuButton {
+  height: 2rem;
+  width: 2rem;
+  display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 99;
-  background-color: #fff;
+  top: 3rem;
+  right: 0.5rem;
+  z-index: 100;
+}
+
+@media screen and (max-width: 768px) {
+  body .l-MenuButton {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  body .l-NavArea {
+    display: block;
+  }
+  body .l-NavArea--sub::before {
+    content: "";
+    height: 4.5rem;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    background-color: #fff;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  body .l-NavArea {
+    display: none;
+    height: 100vh;
+    width: 60vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+  }
 }
 
 body .l-LogoMark {
   position: fixed;
-  top: 1.5rem;
+  top: 0.5rem;
   left: 0.5rem;
   z-index: 100;
 }
@@ -355,41 +401,13 @@ body .l-LogoMark img {
      object-fit: contain;
 }
 
-body .l-MenuBar_label {
-  height: 1.5rem;
-  width: 1.5rem;
-  display: none;
-  position: fixed;
-  top: 5rem;
-  right: 0.5rem;
-  z-index: 100;
-}
-
-@media screen and (max-width: 768px) {
-  body .l-MenuBar_label {
-    display: block;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  body .l-MenuBar_menu {
-    display: none;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  body .l-MenuBar_menu {
-    display: block;
-  }
-}
-
 body .l-MenuBar_list {
+  padding-left: 0;
   position: fixed;
-  z-index: 100;
+  z-index: 99;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding-left: 0;
   top: 5rem;
   left: 0.5rem;
   -webkit-box-orient: vertical;
@@ -407,8 +425,9 @@ body .l-MenuBar_list li:nth-last-child(2) {
 }
 
 body .l-MenuBar_list--sub {
+  padding-left: 0;
   position: fixed;
-  z-index: 100;
+  z-index: 99;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -420,6 +439,19 @@ body .l-MenuBar_list--sub {
 
 body .l-MenuBar_list--sub a {
   padding: 0.5rem 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  body .l-MenuBar_list--sub {
+    height: auto;
+    width: 60vw;
+    top: 5rem;
+    left: 0.5rem;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
 }
 
 body .l-MainImageArea {
@@ -514,15 +546,14 @@ body .l-MoreButton {
 
 body .l-MoreButton span {
   position: relative;
-  top: 0.2rem;
-  left: -0.6rem;
+  top: 0.1rem;
 }
 
 body .l-MoreButton .arrow {
   height: 1rem;
   width: 2rem;
-  top: 0.6rem;
-  left: -0.6rem;
+  top: 0.2rem;
+  left: 0.1rem;
   display: inline-block;
 }
 
@@ -764,10 +795,6 @@ body .l-CategoryArea a {
   width: 20%;
 }
 
-body .l- .pagination h2.screen-reader-text {
-  display: none;
-}
-
 body .l-Pagenation {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -785,9 +812,19 @@ body .l-Pagenation a {
   display: inline;
 }
 
+body .l-Pagenation .pagination h2.screen-reader-text {
+  display: none;
+}
+
 body .l-SingleArea {
   height: auto;
   width: 60%;
+}
+
+@media screen and (max-width: 768px) {
+  body .l-SingleArea {
+    width: 100%;
+  }
 }
 
 body .l-SingleArea_titleArea {
@@ -868,6 +905,12 @@ body .l-WidgetArea {
           flex-direction: column;
 }
 
+@media screen and (max-width: 768px) {
+  body .l-WidgetArea {
+    display: none;
+  }
+}
+
 body .l-WidgetItems {
   margin-bottom: 2.5rem;
 }
@@ -901,9 +944,8 @@ body .l-WidgetItem--Archive_year {
           justify-content: space-between;
 }
 
-body .l-WidgetItem--Archive_menu {
-  display: none;
-  padding-left: 1.5rem;
+body .l-WidgetItem--Archive_menu li {
+  padding-left: 0.8rem;
 }
 
 body .d- {
@@ -912,9 +954,15 @@ body .d- {
   /*記事一覧ページ*/
 }
 
-body .d-MenuBar_label {
+body .d-NavArea--sub::before {
   background-color: #fff;
-  border: #f8145b 1px solid;
+}
+
+@media screen and (max-width: 768px) {
+  body .d-NavArea {
+    background-color: #fff;
+    border: #f8145b 2px solid;
+  }
 }
 
 body .d-MenuBar_list {
@@ -923,6 +971,20 @@ body .d-MenuBar_list {
 
 body .d-MenuBar_list a {
   color: #f8145b;
+}
+
+body .d-MenuBar_list--sub {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+body .d-MenuBar_list--sub a {
+  color: #f8145b;
+}
+
+@media screen and (max-width: 768px) {
+  body .d-MenuBar_list--sub a {
+    color: #fff;
+  }
 }
 
 body .d-MainImageText::before {
@@ -963,6 +1025,8 @@ body .d-SectionArea_frame_footerArea {
 
 body .d-MoreButton span {
   font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: small;
+  vertical-align: bottom;
 }
 
 body .d-MoreButton .arrow {

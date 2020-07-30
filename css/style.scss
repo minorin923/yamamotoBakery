@@ -204,6 +204,9 @@ li{
   &MultiColumn{
     display: flex;
     flex-direction: row;
+    @media screen and (max-width:$mdScreen){
+      flex-direction: column;
+    }
   }
 
 }
@@ -215,9 +218,13 @@ li{
   &ButtonDesign{
     display: inline-block;
     cursor: pointer;
-    color: $mainColor;
     white-space: nowrap;
+    text-align: center;
+    font-size: medium;
+    color: $mainColor;
+    background-color: #f8f9fa;
     border-color: #f8f9fa;
+    border-radius: 2px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .5);
   }
   
@@ -265,21 +272,40 @@ body{
 
     /*Header*/
     &HeaderArea{ position: absolute;}
+    &MenuButton{
+      height: 2rem; width: 2rem; 
+      display: none;
+      position: fixed;
+      top: 3rem; right: 0.5rem;
+      z-index: 100;
+      @media screen and (max-width:$mdScreen) {
+        display: block;
+      }
+    }
     &NavArea{
-      &--sub{
-        &::before{
+      @media screen and (min-width:$mdScreen) {
+        display: block;
+
+        &--sub::before{
           content: "";
           height: 4.5rem; width: 100vw;
           position: fixed;
           top:0; left:0;
           z-index: 99;
-          background-color: #fff;
-        }  
+          background-color: #fff; 
+        }
+      }
+      @media screen and (max-width:$mdScreen) {
+        display: none;
+        height: 100vh; width: 60vw;
+        position: fixed;
+        top:0; left:0;
+        z-index: 99;
       }
     }
     &LogoMark{
       position: fixed;
-      top:1.5rem; left: 0.5rem;
+      top:0.5rem; left: 0.5rem;
       z-index: 100;
       img{
         height: 2.5rem; width: auto;
@@ -287,23 +313,10 @@ body{
       }
     }
     &MenuBar{
-      &_label{
-        height: 1.5rem; width: 1.5rem; 
-        display: none;
-        position: fixed;
-        top: 5rem; right: 0.5rem;
-        z-index: 100;
-        @media screen and (max-width:$mdScreen) {
-          display: block;
-        }
-      }
-      &_menu{
-        @media screen and (max-width:$mdScreen) {display: none;}
-        @media screen and (min-width:$mdScreen) {display: block;}
-      }
       @mixin l-list{
+        padding-left: 0; 
         position: fixed;
-        z-index: 100;
+        z-index: 99;
         display: flex;
         a{
           padding: 0.5rem 1rem;
@@ -311,7 +324,6 @@ body{
       }
       &_list{
         @include l-list;
-        padding-left: 0; 
         top:5rem; left: 0.5rem;
         flex-direction: column;
         li:nth-last-child(2){ margin-top: 6rem;}
@@ -320,6 +332,11 @@ body{
         @include l-list;
         height: 1.7rem; width: 100vw;
         top:2rem; left:20rem;
+        @media screen and (max-width:$mdScreen){
+          height: auto; width: 60vw;
+          top:5rem; left:0.5rem;
+          flex-direction: column;
+        }
       }
     }
 
@@ -394,14 +411,14 @@ body{
     &MoreButton{
       height: 2rem; width: 6rem;
       margin-top: 0.5rem;
-    
+      
       span{
         position: relative;
-        top:0.2rem; left: -0.6rem;
+        top:0.1rem
       }
       .arrow{
         height: 1rem; width: 2rem;
-        top:0.6rem; left: -0.6rem;
+        top:0.2rem; left: 0.1rem;
         display: inline-block;
       }
     }
@@ -588,18 +605,21 @@ body{
     }
 
     //ページネーション
-    .pagination h2.screen-reader-text { display: none; }
     &Pagenation{
       display: flex;
       flex-direction: row;
       justify-content: center;
       a{display: inline;}
+      .pagination h2.screen-reader-text { display: none; }
     }
 
     //記事
     &SingleArea{
       height: auto; width: 60%;
-    
+      @media screen and (max-width:$mdScreen){
+       width: 100%; 
+      }
+
       &_titleArea{
         margin-bottom: 2rem;
         position: relative;
@@ -661,6 +681,10 @@ body{
       padding: 1.5rem 0 0 4rem;
       display: flex;
       flex-direction: column;
+
+      @media screen and (max-width:$mdScreen){
+        display: none;
+      }
     }
 
     &WidgetItems{
@@ -688,8 +712,9 @@ body{
         justify-content: space-between;
       }
       &_menu{
-        display: none;
-        padding-left: 1.5rem;
+        li{
+          padding-left: 0.8rem;
+        }
       }
     }
 
@@ -699,15 +724,31 @@ body{
 /*(2) d-  Decoration :デザイン装飾クラス*/
   .d-{
     /*Header*/
-    &MenuBar{
-      &_label{
-        background-color: #fff;
-        border: $mainColor 1px solid;
+    &NavArea{
+      &--sub::before{
+        background-color: #fff; 
       }
+      @media screen and (max-width:$mdScreen) {
+        background-color: #fff;
+        border: $mainColor 2px solid;
+      }
+    }
+    &MenuBar{
       &_list{
         font-family: $serifFont;
         a{
           color: $mainColor;
+        }
+      }
+      &_list--sub{
+        font-family: $serifFont;
+        a{
+          color: $mainColor;
+        }
+        @media screen and (max-width:$mdScreen) {
+          a{
+            color: #fff;
+          }
         }
       }
 
@@ -753,6 +794,8 @@ body{
     &MoreButton{
       span{
         font-family: $serifFont;
+        font-size: small;
+        vertical-align: bottom;
       }
       .arrow{
         background:url(../img/arrow.png) left top no-repeat;

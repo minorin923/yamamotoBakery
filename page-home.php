@@ -33,7 +33,7 @@ Template Name: home
       </div>
       <div class="d-SectionArea_frame_mainArea">
         <div class="l-NewsList">
-          [getArticleList count="3" category_id="5" classname="s-newsList_news"]
+         <?= getCatItems(array("count"=>"3","listtype"=>"news", "post_type"=>"news", "taxonomy"=>"news-cat")) ?>
         </div>
       </div>
       <div class="l-SectionArea_frame_footerArea d-SectionArea_frame_footerArea ">
@@ -46,14 +46,15 @@ Template Name: home
   <!-- end:newsSection -->
 
   <!-- start:blogSection -->
-  <section id="blogSection" class=" l-SectionArea Gm-js">
+  <section id="blogSection" class=" l-SectionArea Gm-js_fadeIn">
     <div class="l-SectionArea_frame d-SectionArea_frame">
       <div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea">
         <h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">blog</h2>
       </div>
       <div class="d-SectionArea_frame_mainArea">
         <div class="l-BlogList">
-          [getArticleList count="4" category_id="4" classname="s-blogList_blog"]</div>
+        <?= getCatItems(array("count"=>"4")) ?>
+        </div>
       </div>
       <div class="l-SectionArea_frame_footerArea d-SectionArea_frame_footerArea">
         <a class="l-MoreButton d-MoreButton Gd-ButtonDesign" href="/blog">
@@ -65,7 +66,7 @@ Template Name: home
   <!-- end:blogSection -->
 
   <!-- start:AboutSection -->
-  <section id="aboutSection" class=" l-SectionArea Gm-js">
+  <section id="aboutSection" class=" l-SectionArea Gm-js_fadeIn">
     <div class="l-SectionArea_frame d-SectionArea_frame">
       <div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea">
         <h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">About Yamamoto Bakery</h2>
@@ -103,7 +104,7 @@ Template Name: home
   <!-- end:l-AboutSection -->
 
   <!-- start:menuLineUpSection -->
-  <section id="menuLineUpSection" class="l-SectionArea Gm-js">
+  <section id="menuLineUpSection" class="l-SectionArea Gm-js_fadeIn">
     <div class="l-SectionArea_frame d-SectionArea_frame">
       <div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea">
         <h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">Menu LineUp</h2>
@@ -157,7 +158,7 @@ Template Name: home
   <!-- end:MenuLineUpSection -->
 
   <!-- start:shopinfoSection -->
-  <section id="shopInfoSection" class="l-SectionArea Gm-js">
+  <section id="shopInfoSection" class="l-SectionArea Gm-js_fadeIn">
     <div class="l-SectionArea_frame">
       <div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea">
         <h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">Shop Info</h2>
@@ -168,28 +169,27 @@ Template Name: home
             <div class="l-ShopInfomation_shopImage_frame Gl-AspectFixed_frame"><img class="l-ShopInfomation_shopImage_frame_image Gl-AspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/shop1.png" alt=""></div>
           </div>
           <div class="l-ShopInfomation_textContainer d-ShopInfomation_textContainer"><span class="shopType">Cafe&amp;Bakery</span>
-            <h3 class="shopName">Yamamoto Bakery (山本ベーカリー)</h3>
-            <address class="shopAddress">〒666-0000 東京都23区某所某町目1-12-1</address>
-            <p class="shopAccess">東京都心地下鉄 某駅から徒歩5分</p>
-            <p class="shopAccess">東京私鉄某線 某駅から徒歩4分</p>
+            <h3 class="shopName"><?= $cfs->get('name'); ?></h3>
+            <address class="shopAddress"><?= $cfs->get('address'); ?></address>
+            <p class="shopAccess"><?= $cfs->get('access'); ?></p>
 
             <table class="shopInfo">
               <tbody>
                 <tr>
                   <th>電話番号</th>
-                  <td><a class="tel" href="tel:0123-45-6789">0123-45-6789</a></td>
+                  <td><a class="tel" href="tel:<?= $cfs->get('tel'); ?>"><?= $cfs->get('tel'); ?></a></td>
                 </tr>
                 <tr>
                   <th>営業時間</th>
-                  <td>9:00~17:00</td>
+                  <td><?= $cfs->get('time'); ?></td>
                 </tr>
                 <tr>
                   <th>定休日</th>
-                  <td>土曜日・日曜日</td>
+                  <td><?= $cfs->get('holiday'); ?></td>
                 </tr>
                 <tr>
                   <th>駐車場</th>
-                  <td>5台まで</td>
+                  <td><?= $cfs->get('parking'); ?></td>
                 </tr>
               </tbody>
             </table>

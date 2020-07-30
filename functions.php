@@ -342,14 +342,14 @@ add_action('widgets_init', function () {
 function twpp_setup_theme()
 {
   //ナビゲーションバー「'header-navigation'」を登録する
-  register_nav_menu('header-navigation', 'Header Navigation');
+  register_nav_menu('header-navigation', 'HeaderNavigation');
 }
 add_action('after_setup_theme', 'twpp_setup_theme');
 
 //[2]ナビゲーションバーのliの余計なclass名を削除する
 function my_css_attributes_filter($var)
 {
-  $addClassName = 'nav-item';
+  $addClassName = '';
   //1. li要素に$addClassName追加する
   //2. その後$addClassName,'current-menu-item'を除くすべてのclass名を削除する
   return is_array($var) ? array_intersect(array_merge($var, array($addClassName)), array($addClassName, 'current-menu-item')) : '';
@@ -359,7 +359,7 @@ add_filter('nav_menu_css_class', 'my_css_attributes_filter', 100, 1);
 //[3]ナビゲーションバーのaタグにclassを追加するコード
 function add_class_on_link($item_output, $item)
 {
-  $addClassName = 'nav-link s-js_scroll';
+  $addClassName = 'Gm-js_scroll';
   return preg_replace('/(<a.*?)/', '$1' . ' class="' . $addClassName . '"', $item_output);
 }
 add_filter('walker_nav_menu_start_el', 'add_class_on_link', 10, 4);

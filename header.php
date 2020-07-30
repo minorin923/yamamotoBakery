@@ -10,6 +10,9 @@
     <link href="<?= get_template_directory_uri(); ?>/css/normalize.css" rel="stylesheet">
     <!--fontAwasome利用-->
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="<?= get_template_directory_uri(); ?>/js/animation.js"></script>
+
 		<?php wp_head(); ?>
 	</head>
 

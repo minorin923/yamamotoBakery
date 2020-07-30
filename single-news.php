@@ -2,7 +2,7 @@
 
 <?php get_template_part('template/header'); ?>
 
-<section class="l-SectionArea Gl-MultiColumn ">
+<section class="l-SectionArea Gl-MultiColumn">
 	<div class="l-SingleArea">
 		<?php get_template_part('template/singleContent'); ?>
 	</div>
