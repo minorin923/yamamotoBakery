@@ -343,6 +343,7 @@ function twpp_setup_theme()
 {
   //ナビゲーションバー「'header-navigation'」を登録する
   register_nav_menu('header-navigation', 'HeaderNavigation');
+  register_nav_menu('header-navigation-SNS', 'HeaderNavigation-SNS');
 }
 add_action('after_setup_theme', 'twpp_setup_theme');
 

@@ -36,7 +36,8 @@ $serifFont:Georgia, 'Times New Roman', Times, serif;
 
 html{
   /*基礎フォント設定(画面600pxで12px,100pxで16px)*/
-  font-size: calc(calc(12/16*100%) + 4 * (100vw - 600px) / 400)
+  //font-size: calc(calc(12/16*100%) + 4 * (100vw - 600px) / 400)
+  font-size: 10pt;
 }
 body{
   color: $textColor;
@@ -297,7 +298,7 @@ body{
       }
       @media screen and (max-width:$mdScreen) {
         display: none;
-        height: 100vh; width: 60vw;
+        height: 100vh; width: 100vw;
         position: fixed;
         top:0; left:0;
         z-index: 99;
@@ -305,37 +306,74 @@ body{
     }
     &LogoMark{
       position: fixed;
-      top:0.5rem; left: 0.5rem;
       z-index: 100;
+      top:1.5rem; left: 0.5rem;
+      margin: 0;
       img{
-        height: 2.5rem; width: auto;
+        height: 2.5rem; width: 10rem;
         object-fit: contain;
+      }
+      @media screen and (max-width:$mdScreen){
+        top:5vh;
+        left:calc(50% - 10rem/2);
       }
     }
     &MenuBar{
+      &--sub{
+        top:1.4rem; left: 15rem;
+        display: flex;
+        flex-direction: row;
+      }
+      height: auto; width: 10vw;
+      position: fixed;
+      top:6.5rem; left: 0.5rem;
+      z-index: 100;
+      @media screen and (max-width:$mdScreen){
+        height: auto; width: 20rem;
+        top:15vh;
+        left:calc(57.5% - 20rem/2);
+        flex-direction: column;
+      }
+
       @mixin l-list{
         padding-left: 0; 
-        position: fixed;
-        z-index: 99;
         display: flex;
         a{
-          padding: 0.5rem 1rem;
+          padding: 0.75rem 1rem;
+        }
+        @media screen and (max-width:$mdScreen){
+          height: auto; width: 40vw;
+          top:10rem; left:30vw;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: start;
+          li{
+            height: auto; width: 50%;
+          }
         }
       }
       &_list{
         @include l-list;
-        top:5rem; left: 0.5rem;
         flex-direction: column;
-        li:nth-last-child(2){ margin-top: 6rem;}
       }
       &_list--sub{
         @include l-list;
-        height: 1.7rem; width: 100vw;
         top:2rem; left:20rem;
+      }
+      &_list--SNS{
+        @include l-list;
+        margin-top: 10rem;
+        flex-direction: column;
         @media screen and (max-width:$mdScreen){
-          height: auto; width: 60vw;
-          top:5rem; left:0.5rem;
-          flex-direction: column;
+          margin-top: 2rem;
+        }
+      }
+      &_list--SNS--sub{
+        @include l-list;
+        margin-left: 5rem;
+        @media screen and (max-width:$mdScreen){
+          margin-left: 0;
+          margin-top: 2rem;
         }
       }
     }
@@ -730,7 +768,10 @@ body{
       }
       @media screen and (max-width:$mdScreen) {
         background-color: #fff;
-        border: $mainColor 2px solid;
+        opacity: 0.8;
+        a{
+         // font-size: 1.3rem;
+        }
       }
     }
     &MenuBar{
@@ -745,14 +786,9 @@ body{
         a{
           color: $mainColor;
         }
-        @media screen and (max-width:$mdScreen) {
-          a{
-            color: #fff;
-          }
-        }
       }
-
     }
+
 
     /*MainPage*/
     // topSection

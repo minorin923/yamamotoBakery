@@ -30,7 +30,7 @@
 /*固定変数*/
 html {
   /*基礎フォント設定(画面600pxで12px,100pxで16px)*/
-  font-size: calc(calc(12/16*100%) + 4 * (100vw - 600px) / 400);
+  font-size: 10pt;
 }
 
 body {
@@ -379,7 +379,7 @@ body .l-MenuButton {
   body .l-NavArea {
     display: none;
     height: 100vh;
-    width: 60vw;
+    width: 100vw;
     position: fixed;
     top: 0;
     left: 0;
@@ -389,27 +389,65 @@ body .l-MenuButton {
 
 body .l-LogoMark {
   position: fixed;
-  top: 0.5rem;
-  left: 0.5rem;
   z-index: 100;
+  top: 1.5rem;
+  left: 0.5rem;
+  margin: 0;
 }
 
 body .l-LogoMark img {
   height: 2.5rem;
-  width: auto;
+  width: 10rem;
   -o-object-fit: contain;
      object-fit: contain;
 }
 
-body .l-MenuBar_list {
-  padding-left: 0;
+@media screen and (max-width: 768px) {
+  body .l-LogoMark {
+    top: 5vh;
+    left: calc(50% - 10rem/2);
+  }
+}
+
+body .l-MenuBar {
+  height: auto;
+  width: 10vw;
   position: fixed;
-  z-index: 99;
+  top: 6.5rem;
+  left: 0.5rem;
+  z-index: 100;
+}
+
+body .l-MenuBar--sub {
+  top: 1.4rem;
+  left: 15rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  top: 5rem;
-  left: 0.5rem;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+@media screen and (max-width: 768px) {
+  body .l-MenuBar {
+    height: auto;
+    width: 20rem;
+    top: 15vh;
+    left: calc(57.5% - 20rem/2);
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+body .l-MenuBar_list {
+  padding-left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -417,40 +455,148 @@ body .l-MenuBar_list {
 }
 
 body .l-MenuBar_list a {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
 }
 
-body .l-MenuBar_list li:nth-last-child(2) {
-  margin-top: 6rem;
+@media screen and (max-width: 768px) {
+  body .l-MenuBar_list {
+    height: auto;
+    width: 40vw;
+    top: 10rem;
+    left: 30vw;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: start;
+  }
+  body .l-MenuBar_list li {
+    height: auto;
+    width: 50%;
+  }
 }
 
 body .l-MenuBar_list--sub {
   padding-left: 0;
-  position: fixed;
-  z-index: 99;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 1.7rem;
-  width: 100vw;
   top: 2rem;
   left: 20rem;
 }
 
 body .l-MenuBar_list--sub a {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
 }
 
 @media screen and (max-width: 768px) {
   body .l-MenuBar_list--sub {
     height: auto;
-    width: 60vw;
-    top: 5rem;
-    left: 0.5rem;
-    -webkit-box-orient: vertical;
+    width: 40vw;
+    top: 10rem;
+    left: 30vw;
+    -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: start;
+  }
+  body .l-MenuBar_list--sub li {
+    height: auto;
+    width: 50%;
+  }
+}
+
+body .l-MenuBar_list--SNS {
+  padding-left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 10rem;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+body .l-MenuBar_list--SNS a {
+  padding: 0.75rem 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  body .l-MenuBar_list--SNS {
+    height: auto;
+    width: 40vw;
+    top: 10rem;
+    left: 30vw;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: start;
+  }
+  body .l-MenuBar_list--SNS li {
+    height: auto;
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  body .l-MenuBar_list--SNS {
+    margin-top: 2rem;
+  }
+}
+
+body .l-MenuBar_list--SNS--sub {
+  padding-left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: 5rem;
+}
+
+body .l-MenuBar_list--SNS--sub a {
+  padding: 0.75rem 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  body .l-MenuBar_list--SNS--sub {
+    height: auto;
+    width: 40vw;
+    top: 10rem;
+    left: 30vw;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: start;
+  }
+  body .l-MenuBar_list--SNS--sub li {
+    height: auto;
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  body .l-MenuBar_list--SNS--sub {
+    margin-left: 0;
+    margin-top: 2rem;
   }
 }
 
@@ -961,7 +1107,7 @@ body .d-NavArea--sub::before {
 @media screen and (max-width: 768px) {
   body .d-NavArea {
     background-color: #fff;
-    border: #f8145b 2px solid;
+    opacity: 0.8;
   }
 }
 
@@ -979,12 +1125,6 @@ body .d-MenuBar_list--sub {
 
 body .d-MenuBar_list--sub a {
   color: #f8145b;
-}
-
-@media screen and (max-width: 768px) {
-  body .d-MenuBar_list--sub a {
-    color: #fff;
-  }
 }
 
 body .d-MainImageText::before {
