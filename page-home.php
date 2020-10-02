@@ -147,18 +147,6 @@ Template Name: home
               <p class="itemInfo">1本(2斤)：1,000円(税別)</p>
             </div>
           </div>
-          <div class="menuLineUp_menu">
-            <div class="menuLineUp_menu_image">
-              <div class="imageFrame">
-                <img class="image" src="/wp-content/themes/yamamotobakery/img/bleed.png" alt="">
-              </div>
-            </div>
-            <div class="menuLineUp_menu_textBox">
-              <p class="itemName">十勝生クリーム食パン</p>
-              <p class="itemInfo">1斤：500円（税別)</p>
-              <p class="itemInfo">1本(2斤)：1,000円(税別)</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>

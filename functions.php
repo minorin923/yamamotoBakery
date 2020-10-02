@@ -183,11 +183,11 @@ function getCatItems($atts, $content = null)
     $retHtml .= '<a class="' . $itemClassName . '_link" href="' . get_permalink() . '">';
 
     if ($listtype === 'blog') {
-      $retHtml .= '<div class="' . $itemClassName . '_link_image Gl-AspectFixed--4-3"><div class=" Gl-AspectFixed_frame">';
+      $retHtml .= '<div class="' . $itemClassName . '_link_image "><div class=" imageFrame">';
       if (has_post_thumbnail()) {
-        $retHtml .=  get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 'Gl-AspectFixed_frame_image'));
+        $retHtml .=  get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 'image'));
       } else {
-        $retHtml .= '<div class="Gl-AspectFixed_frame_image" style="background-color:gray;"></div>';
+        $retHtml .= '<div class="image" style="background-color:gray;"></div>';
       }
     }
 
@@ -343,6 +343,7 @@ function twpp_setup_theme()
 {
   //ナビゲーションバー「'header-navigation'」を登録する
   register_nav_menu('header-navigation', 'HeaderNavigation');
+  register_nav_menu('header-navigation-sub', 'HeaderNavigation-sub');
   register_nav_menu('header-navigation-SNS', 'HeaderNavigation-SNS');
 }
 add_action('after_setup_theme', 'twpp_setup_theme');
