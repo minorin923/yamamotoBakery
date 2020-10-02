@@ -5,8 +5,6 @@
           (1) l-  Layout     :レイアウト指定クラス
           (2) d-  Decoration :デザイン装飾クラス
           (3) m-  Motion     :モーション付与クラス
-      ・特定のWebページに依存しない汎用的な書式は汎用クラスとして
-        上記接頭辞に g を付与する(例: gl-xxx など)
       ・通常のクラス書式を、汎用クラスの書式より高いCSS優先度にするため
         通常のクラスはbody要素の子要素クラスとして定義する。(ネスト階層を+1して通常クラスのCSSを優先させる)
   1-2.階層構造をとるhtml要素に対して付与するクラスは
@@ -31,7 +29,7 @@
 /*固定変数*/
 $textColor:#616161;
 $mainColor:#f8145b;
-$mdScreen:768px;
+$pcScreenSize:768px;
 $serifFont:Georgia, 'Times New Roman', Times, serif;
 
 html{
@@ -77,90 +75,92 @@ li{
 }
 
 
+@mixin scaleSet ($height:auto,$width:auto){
+  height: $height; width: $width;
+}
+@mixin absoluteItem ($top:auto,$bottom:auto,$left:auto,$right:auto){
+  top: $top; bottom:$bottom;
+  left: $left; right: $right;
+  position: absolute;
+}
+
+
 
 /*1-1. 汎用クラス定義*/
-/*(1) Gl-  General Layout     :レイアウト指定クラス*/
-.Gl-{
-  /*[1]要素のアスペクト比固定*/
-  &AspectFixed{
-    &--16-9{
-      position: relative;
-      /*アスペクト非固定用疑似要素*/
-      &::before{
-      content:"";
-      display: block;
-      /*padding-topの高さは元要素のwidthで決まる*/
-      padding-top: 56.25%;
-      }
-    }
-    &--4-3{
-      position: relative;
-      &::before{
-        content:"";
-        display: block;
-        padding-top: 75%;
-      }
-    }
-    &_frame{
-      /*absluteで親要素のbeforeに貼り付ける*/
-      position: absolute;
-      top: 0; bottom: 0; left: 0; right: 0;
-      &_image{
+/*(1) General Layout     :レイアウト指定クラス*/
+/*[1]要素のアスペクト比固定*/
+$aspectWidth-16-9:56.25%;
+$aspectWidth-4-3:75%;
+@mixin l-AspectFixed ($aspectWidthRate:$aspectWidth-16-9){
+  position: relative;
+  /*アスペクト非固定用疑似要素*/
+  &::before{
+    content:"";
+    display: block;
+    /*padding-topの高さは元要素のwidthで決まる*/
+    padding-top: $aspectWidthRate;
+  }
+  & > .imageFrame{
+    /*absluteで親要素のbeforeに貼り付ける*/
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    & > .image{
       height: 100%; width: 100%;
       object-fit: cover;
-      }
     }
   }
+}
+
   /*[2]記事一覧の基本書式*/
-  &PostItem--news{
-    &_link{
-      height: auto; width: 100%;
+@mixin ld-PostItem--news{
+  &_link{
+    height: auto; width: 100%;
+    display: flex;
+    justify-content: start;
+    text-decoration: none;
+    color: $textColor;
+    position: relative;
+
+    &_image{
+      display: none;
+    }
+
+    &_category{
+      height: auto; width: 5rem;
+      padding: 0.1rem 0 0.1rem 0;
+      position: absolute;
+      bottom: 1rem; left: 7rem;
+      background-color: rgba(255, 255,255, 0.9);
+      text-align: center;
+      font-size: 0.8rem;
+      border-radius: 3px;
+      border: $textColor 1px solid;
+    }
+
+    &_textBox{
       display: flex;
+      flex-direction: row;
       justify-content: start;
-      text-decoration: none;
-      color: $textColor;
-      position: relative;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
-      &_image{
-        display: none;
+      &--date{
+        padding-right: 8rem;
+        letter-spacing: 0.1rem;
       }
-
-      &_category{
-        height: auto; width: 5rem;
-        padding: 0.1rem 0 0.1rem 0;
-        position: absolute;
-        bottom: 1rem; left: 7rem;
-        background-color: rgba(255, 255,255, 0.9);
-        text-align: center;
-        font-size: 0.8rem;
-        border-radius: 3px;
-        border: $textColor 1px solid;
-      }
-
-      &_textBox{
-        display: flex;
-        flex-direction: row;
-        justify-content: start;
+      &--title{
+        display: inline-block;
+        text-decoration: underline;
+        letter-spacing: 0.3rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-
-        &--date{
-          padding-right: 8rem;
-          letter-spacing: 0.1rem;
-        }
-        &--title{
-          display: inline-block;
-          text-decoration: underline;
-          letter-spacing: 0.3rem;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
       }
-    } 
-  }
-  &PostItem--blog{
+    }
+  } 
+}
+@mixin ld-PostItem--blog{
     height: auto; width: 22%;
     min-width: 140px;
     margin: 0 1% 1%;
@@ -201,22 +201,25 @@ li{
       }
     }
   }
-  /*[3]複数カラム*/
-  &MultiColumn{
-    display: flex;
-    flex-direction: row;
-    @media screen and (max-width:$mdScreen){
-      flex-direction: column;
-    }
-  }
 
+  /*[3]複数カラム*/
+@mixin l-MultiColumn{
+  display: flex;
+  flex-direction: row;
+  @media screen and (max-width:$pcScreenSize){
+    flex-direction: column;
+  }
 }
 
+
 /*(2) Gd-  General Decoration :デザイン装飾クラス*/
-.Gd-{
-  /*start: General Class*/
+/*[0]ダミーデザイン*/
+@mixin d-dummyDesign {
+  background-color: #999;
+  border: solid 1px #09f;
+}
   /*[1]ボタン要素*/
-  &ButtonDesign{
+@mixin d-ButtonDesign{
     display: inline-block;
     cursor: pointer;
     white-space: nowrap;
@@ -227,391 +230,362 @@ li{
     border-color: #f8f9fa;
     border-radius: 2px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .5);
-  }
-  
-  /*end: General Class*/
 }
+
 
 /*(3) Gm-  General Motion     :モーション付与クラス*/
-.Gm-{
-  /*start: General Class*/
-  /*(1)ボタンによる要素の表示切替*/
-  &Toggle{
-    //<input id="toggle" class="s-toggle--buton" type="checkbox" ></input>
-    &_button{display: none;}
-    //<label class="s-toggle-label" for="toggle"></label>
-    &_label{cursor: pointer;}
-    //表示非表示を切り替える任意の要素に以下のクラスを付ける
-    &_target{display: none;}
-    &_button:checked + &_label + &_target{
-      display: block;
+  /*[1]ボタンによる要素の表示切替*/
+@mixin m-Toggle{
+  //<label class="s-toggle-label" for="toggle"></label>
+  & > .toggleLabel{cursor: pointer;}
+  //<input id="toggle" class="s-toggle--buton" type="checkbox" ></input>
+  & > .toggleButton{display: none;}
+  //表示非表示を切り替える任意の要素に以下のクラスを付ける
+  & > .toggleTarget{display: none;}
+  & > .toggleButton:checked + .toggleTarget{display: block;}
+}
+
+  /*[2]各種jsアニメーション*/
+@mixin m-Js_fadeIn{
+  &_action{
+    animation: fade 2s 0s 1 ;
+  } 
+}
+@keyframes fade {
+  from{opacity: 0; transform: translateY(30px);}
+    to{opacity: 1;transform: translateY(0);}   
+}
+@mixin m-Js_scroll{}
+
+
+
+  
+/*HTML要素特化 l-*/
+
+@mixin l-headerArea{
+  height: 5rem; width: 100vw; 
+  display: flex;
+  position: fixed;
+  z-index: 100;
+}
+@mixin l-menuButton{
+  height: 100%; width: 20%; 
+  @media screen and (min-width:$pcScreenSize) {
+    display: none;
+  }
+}
+@mixin l-logoMark{
+  height: 100%; width: 60%;
+  margin: 0;
+  img{
+    height: 3rem; width: 15rem;
+    object-fit: contain;
+  }
+  @media screen and (min-width:$pcScreenSize){
+    top:5vh;
+    left:calc(50% - 10rem/2);
+  }
+}
+@mixin l-navArea{
+  z-index: 101;
+  position: fixed;
+  @media screen and (max-width:$pcScreenSize) {
+    display: none;
+    height: 100vh; width: 80vw;
+    // position: fixed;
+    // top:0; left:0;
+  }
+  @media screen and (min-width:$pcScreenSize) {
+    display: block;
+    &--sub::before{
+      content: "";
+      height: 4.5rem; width: 100vw;
+      // position: fixed;
+      // top:0; left:0;
+      background-color: #fff; 
     }
   }
+}
+@mixin l-navArea_blankSpace {
+  height: 100%; width: 20%;
+  z-index: 100;
+  position: fixed;
+  top:0; right:0;
+}
 
-  /*各種jsアニメーション*/
-  &js_fadeIn{
-    &_action{
-      animation: fade 2s 0s 1 ;
-    } 
+@mixin l-menuBar{
+  &--sub{
+    top:1.4rem; left: 15rem;
+    display: flex;
+    flex-direction: row;
   }
-  @keyframes fade {
-    from{opacity: 0; transform: translateY(30px);}
-      to{opacity: 1;transform: translateY(0);}   
+  height: auto; width: 10vw;
+  position: fixed;
+  top:6.5rem; left: 0.5rem;
+  z-index: 100;
+  @media screen and (max-width:$pcScreenSize){
+    height: auto; width: 20rem;
+    top:15vh;
+    left:calc(57.5% - 20rem/2);
+    flex-direction: column;
   }
+}
+%l-list{
+  padding-left: 0; 
+  display: flex;
+  a{
+    padding: 0.75rem 1rem;
+  }
+  @media screen and (max-width:$pcScreenSize){
+    height: auto; width: 40vw;
+    top:10rem; left:30vw;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+    li{
+      height: auto; width: 50%;
+    }
+  }
+}
+@mixin l-menuBar_list{
+  @extend %l-list;
+  flex-direction: column;
+}
+@mixin l-menuBar_list--sub{
+  @extend %l-list;
+  top:2rem; left:20rem;
+}
+@mixin l-menuBar_list--SNS{
+  @extend %l-list;
+  margin-top: 10rem;
+  flex-direction: column;
+  @media screen and (max-width:$pcScreenSize){
+    margin-top: 2rem;
+  }
+}
+@mixin l-menuBar_list--SNS--sub{
+  @extend %l-list;
+  margin-left: 5rem;
+  @media screen and (max-width:$pcScreenSize){
+    margin-left: 0;
+    margin-top: 2rem;
+  }
+}
 
-  &js_scroll{}
-
-  /*end: General Class*/
+@mixin l-mainImageArea {
+  height: auto; width: 92.5vw;
+  margin: 0 0 0 auto;
+  position: relative;
+}
+@mixin l-mainImageArea_image{
+  object-position: top left;
+}
+  
+@mixin l-mainImageText {
+  position: absolute;
+  top:20%; right:10%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  &::before{
+    content: "";
+    height: 4rem; width: 4rem;
+    position: absolute;
+    top:-0.9rem; left:-1.6rem;
+    display: block;
+  }
+  & > .line1{
+    letter-spacing: 0.25rem;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+  & > .line2{
+    letter-spacing: 0.25rem;
+    font-size: 1rem;
+    white-space: nowrap;
+    position: absolute;
+    top: 2rem; right:-2rem;
+  }
 }
 
 
 
-/*1-2. 通常クラス定義*/
-body{
-/*(1) l-  Layout     :レイアウト指定クラス*/
-  .l-{
 
-    /*Header*/
-    &HeaderArea{ position: absolute;}
-    &MenuButton{
-      height: 2rem; width: 2rem; 
-      display: none;
-      position: fixed;
-      top: 3rem; right: 0.5rem;
-      z-index: 100;
-      @media screen and (max-width:$mdScreen) {
-        display: block;
-      }
-    }
-    &NavArea{
-      @media screen and (min-width:$mdScreen) {
-        display: block;
+@mixin l-sectionArea {
+  height: auto; width: 85vw;
+  margin: 4rem auto;
+  padding: 1.5rem 0 0 1.5rem;
+}
+@mixin l-sectionArea_frame{
+  padding: 1.8rem 0 0 1.5rem;
+  position: relative; 
+}
+@mixin l-sectionArea_frame_titleArea{
+  height: 3rem; width: auto;
+  @include absoluteItem($top:-1.5rem,$left:-1.5rem );
+  padding-right: 0.8rem;
+}
+@mixin l-sectionArea_frame_titleArea_title{
+  padding: 0.7rem 0 0 1.5rem;
+}
+@mixin l-sectionArea_frame_footerArea{
+  height: 3rem; width: 7rem;
+  @include absoluteItem($top:-1.7rem,$right:0rem );
+}
 
-        &--sub::before{
-          content: "";
-          height: 4.5rem; width: 100vw;
-          position: fixed;
-          top:0; left:0;
-          z-index: 99;
-          background-color: #fff; 
-        }
-      }
-      @media screen and (max-width:$mdScreen) {
-        display: none;
-        height: 100vh; width: 100vw;
-        position: fixed;
-        top:0; left:0;
-        z-index: 99;
-      }
-    }
-    &LogoMark{
-      position: fixed;
-      z-index: 100;
-      top:1.5rem; left: 0.5rem;
-      margin: 0;
-      img{
-        height: 2.5rem; width: 10rem;
-        object-fit: contain;
-      }
-      @media screen and (max-width:$mdScreen){
-        top:5vh;
-        left:calc(50% - 10rem/2);
-      }
-    }
-    &MenuBar{
-      &--sub{
-        top:1.4rem; left: 15rem;
-        display: flex;
-        flex-direction: row;
-      }
-      height: auto; width: 10vw;
-      position: fixed;
-      top:6.5rem; left: 0.5rem;
-      z-index: 100;
-      @media screen and (max-width:$mdScreen){
-        height: auto; width: 20rem;
-        top:15vh;
-        left:calc(57.5% - 20rem/2);
-        flex-direction: column;
-      }
 
-      @mixin l-list{
-        padding-left: 0; 
-        display: flex;
-        a{
-          padding: 0.75rem 1rem;
-        }
-        @media screen and (max-width:$mdScreen){
-          height: auto; width: 40vw;
-          top:10rem; left:30vw;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: start;
-          li{
-            height: auto; width: 50%;
-          }
-        }
-      }
-      &_list{
-        @include l-list;
-        flex-direction: column;
-      }
-      &_list--sub{
-        @include l-list;
-        top:2rem; left:20rem;
-      }
-      &_list--SNS{
-        @include l-list;
-        margin-top: 10rem;
-        flex-direction: column;
-        @media screen and (max-width:$mdScreen){
-          margin-top: 2rem;
-        }
-      }
-      &_list--SNS--sub{
-        @include l-list;
-        margin-left: 5rem;
-        @media screen and (max-width:$mdScreen){
-          margin-left: 0;
-          margin-top: 2rem;
-        }
-      }
-    }
+@mixin l-moreButton {
+  height: 2rem; width: 6rem;
+  margin-top: 0.5rem;
+  span{
+    position: relative;
+    top:0.1rem
+  }
+  .arrow{
+    height: 1rem; width: 2rem;
+    top:0.2rem; left: 0.1rem;
+    display: inline-block;
+  }
+}
 
-    /*MainPage*/
-    // topSection
-    &MainImageArea{
-      height: auto; width: 92.5vw;
-      margin: 0 0 0 auto;
-      position: relative;
-     
-      &_frame{
-        &_image{
-          object-position: top left;
-        }
-      }
-    }
-    &MainImageText{
-      position: absolute;
-      top:20%; right:10%;
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-  
-      &::before{
-        content: "";
-        height: 4rem; width: 4rem;
-        position: absolute;
-        top:-0.9rem; left:-1.6rem;
-        display: block;
-      }
-      &_line1{
-        letter-spacing: 0.25rem;
-        font-size: 1rem;
-        white-space: nowrap;
-      }
-      &_line2{
-        letter-spacing: 0.25rem;
-        font-size: 1rem;
-        white-space: nowrap;
+@mixin l-blogList{
+    display: flex;
+    flex-wrap: wrap;
+}
 
-        position: absolute;
-        top: 2rem; right:-2rem;
-      }
-    }
 
-    //各セクション共通
-    &SectionArea{
-      height: auto; width: 85vw;
-      margin: 4rem auto;
-      padding: 1.5rem 0 0 1.5rem;
+  // aboutSection
+@mixin l-aboutContents_parts($reverse:false){
+  height: auto; width: 100%;
+  padding-bottom: 3rem;
+  display: flex;
+  @media screen and (max-width:$pcScreenSize){
+    display: block;
+  }
+  @if $reverse {flex-direction: row-reverse;}
+}
+
     
-      &_frame{
-        padding: 1.8rem 0 0 1.5rem;
-        position: relative; 
-        &_titleArea{
-          height: 3rem; width: auto;
-          padding-right: 0.8rem;
-          position: absolute;
-          top: -1.5rem; left: -1.5rem;
-         
-          &_title{
-          padding: 0.7rem 0 0 1.5rem;
-          }
-        }
-        &_footerArea{
-          height: 3rem; width: 7rem;
-          position: absolute;
-          top: -1.7rem; right: 0rem;
-        }
-      }
-    }
-    &MoreButton{
-      height: 2rem; width: 6rem;
-      margin-top: 0.5rem;
-      
-      span{
-        position: relative;
-        top:0.1rem
-      }
-      .arrow{
-        height: 1rem; width: 2rem;
-        top:0.2rem; left: 0.1rem;
-        display: inline-block;
-      }
-    }
-    
-    // newsSection
-    &NewsList{}
+@mixin l-aboutContents_parts_image{
+  height: auto; width: 60%;
+  @media screen and (max-width:$pcScreenSize){
+    height: 100%; width: 100%;
+  }
+  img{
+    object-position: center center;
+  }
+}
 
-    // blogSection
-    &BlogList{
-      display: flex;
-      flex-wrap: wrap;
-    }
+@mixin l-aboutContents_parts_textBox{
+  height: auto; width: 40%;
+  padding: 1rem 1rem;
+  @media screen and (max-width:$pcScreenSize){
+    height: 100%; width: 100%;
+  }
+}
 
-    // aboutSection
-    &AboutContents{
-      %parts{
-        height: auto; width: 100%;
-        padding-bottom: 3rem;
-        display: flex;
-        @media screen and (max-width:$mdScreen){
-          display: block;
-        }
-      }
-      &_parts{
-        @extend %parts;
-        &--reverse{
-          @extend %parts;
-          flex-direction: row-reverse;
-        }
-      
-        &_image{
-          height: auto; width: 60%;
-          @media screen and (max-width:$mdScreen){
-            height: 100%; width: 100%;
-          }
-          img{
-            object-position: center center;
-          }
-        }
-
-        &_textBox{
-          height: auto; width: 40%;
-          padding: 1rem 1rem;
-          @media screen and (max-width:$mdScreen){
-            height: 100%; width: 100%;
-          }
-
-          &--title{
-            margin-bottom: 1rem;
-          }
-        }
-      }
-    }
+@mixin l-aboutContents_parts_textBox_title{
+  margin-bottom: 1rem;
+}
 
     //LineupSection
-    &MenuLineUp{
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
+@mixin l-menuLineUp{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+@mixin l-menuLineUp_menu{
+  height: auto; width: 22%;
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+  margin-bottom: 1rem;
+}
+@mixin l-menuLineUp_menu_image{
+  height: auto; width: 100%;
 
-      &_menu{
-        height: auto; width: 22%;
-        display: flex;
-        flex-direction: column;
-        min-width: 140px;
-        margin-bottom: 1rem;
-
-        &_image{
-          height: auto; width: 100%;
-
-          img{
-            object-position: center center; 
-          }
-        }
-        &_textBox{
-          .itemName{
-            margin-bottom: 0.3rem;
-          }
-          .itemInfo{
-            margin-bottom: 0;
-          }
-        }
-      }
-    }
+  img{
+    object-position: center center; 
+  }
+}
+@mixin l-menuLineUp_menu_image_textBox{
+  .itemName{
+    margin-bottom: 0.3rem;
+  }
+  .itemInfo{
+    margin-bottom: 0;
+  }
+}
 
     //ShopinfoSection
-    &ShopInfomation{
-      height: auto; width: 100%; 
-      display: flex;
-      @media screen and (max-width:$mdScreen){
-        display: block;
-      }
-
-      &_shopImage{
-        height: auto; width: 58.2%;
-        @media screen and (max-width:$mdScreen){
-          height: auto; width: 100%;
-        }
-        &_frame{
-          &_image{
-            object-position: center center;
-          }
-        }
-      }
-
-      &_textContainer{
-        margin-left: 3%;
-
-        .shopType{}
-        .shopName{
-          margin: 0.5rem 0;
-        }
-        .shopAddress{
-          margin: 1rem 0;
-        }
-        .shopAccess{
-          margin-bottom: 0;
-        }
-        .shopInfo{
-          margin-top: 1rem;
-          display: inline-block;
-          th{
-            height: auto; width: 6rem;
-            padding: 0.2rem 0;
-          }
-        }
-      }
+@mixin l-shopInfomation{
+  height: auto; width: 100%; 
+  display: flex;
+  @media screen and (max-width:$pcScreenSize){
+    display: block;
+  }
+}
+@mixin l-shopInfomation_shopImage{
+  height: auto; width: 58.2%;
+  @media screen and (max-width:$pcScreenSize){
+    height: auto; width: 100%;
+  }
+  &_frame{
+    &_image{
+      object-position: center center;
     }
+  }
+}
+
+@mixin l-shopInfomation_textContainer{
+  margin-left: 3%;
+
+  .shopType{}
+  .shopName{
+    margin: 0.5rem 0;
+  }
+  .shopAddress{
+    margin: 1rem 0;
+  }
+  .shopAccess{
+    margin-bottom: 0;
+  }
+  .shopInfo{
+    margin-top: 1rem;
+    display: inline-block;
+    th{
+      height: auto; width: 6rem;
+      padding: 0.2rem 0;
+    }
+  }
+}
+
 
     //googleMap
-    &GoogleMap{
-      height: 40vh; width: 100%;
-      margin-top: 3%;
-      img{
-        height: 100%; width: 100%;
-        object-fit: cover;
-      }
-    }
+@mixin l-googleMap{
+  height: 40vh; width: 100%;
+  margin-top: 3%;
+  img{
+    height: 100%; width: 100%;
+    object-fit: cover;
+  }
+}
 
     //footer
-    &FooterArea{
-      height:auto; width: auto;
+@mixin l-footerArea{
+  height:auto; width: auto;
 
-      &_link{
-        height: auto; width: 20rem;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-      }
-    }
-
+  &_link{
+    height: auto; width: 20rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+  }
+}
 
     /*記事一覧ページ*/
     // トップイメージ
-    &TopImageArea{
+@mixin l-topImageArea{
       height: 13rem; width: auto;
       margin:0;
       position: relative;
@@ -631,7 +605,7 @@ body{
     }
 
     //blogのカテゴリ一覧エリア
-    &CategoryArea{
+@mixin l-categoryArea{
       margin: 2rem auto 0;
       display: flex;
       flex-direction: row;
@@ -643,7 +617,7 @@ body{
     }
 
     //ページネーション
-    &Pagenation{
+@mixin l-pagenation{
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -652,9 +626,9 @@ body{
     }
 
     //記事
-    &SingleArea{
+@mixin l-singleArea{
       height: auto; width: 60%;
-      @media screen and (max-width:$mdScreen){
+      @media screen and (max-width:$pcScreenSize){
        width: 100%; 
       }
 
@@ -679,17 +653,17 @@ body{
       &_footer{}
     }
 
-    &SingleContentArea{}
+@mixin l-singleContentArea{}
 
     //戻るボタン
-    &BackButton{
+@mixin l-backButton{
       display: inline-block;
       height: 2rem; width: 100%;
       margin: 2rem 0;
     }
 
     //前と次の記事情報
-    &NextandPrevPosts{
+@mixin l-nextandPrevPosts{
       height: 10vh; width: 100%;
       display: flex;
       justify-content: space-between;
@@ -714,20 +688,19 @@ body{
     }
 
     //ウィジェット関連
-    &WidgetArea{
+@mixin l-widgetArea{
       height: auto; width: 40%;
       padding: 1.5rem 0 0 4rem;
       display: flex;
       flex-direction: column;
 
-      @media screen and (max-width:$mdScreen){
+      @media screen and (max-width:$pcScreenSize){
         display: none;
       }
     }
 
-    &WidgetItems{
-      margin-bottom: 2.5rem;
-    
+@mixin l-widgetItems{
+      margin-bottom: 2.5rem;  
       ul{
         margin: 0.5rem 0 1rem;
         padding: 0;
@@ -743,190 +716,178 @@ body{
       }
     }
 
-    &WidgetItem--Archive{
-      &_button{}
-      &_year{
-        display: flex;
-        justify-content: space-between;
-      }
-      &_menu{
-        li{
-          padding-left: 0.8rem;
-        }
-      }
+@mixin l-widgetItem--Archive{
+  &_button{}
+  &_year{
+    display: flex;
+    justify-content: space-between;
+  }
+  &_menu{
+    li{
+      padding-left: 0.8rem;
     }
+  }
+}
 
+
+
+
+
+    /*Header*/
+@mixin d-navArea{
+  &--sub::before{
+    background-color: #fff; 
+  }
+  @media screen and (max-width:$pcScreenSize) {
+    background-color: #fff;
+    opacity: 0.8;
+    a{
+      // font-size: 1.3rem;
+    }
+  }
+}
+@mixin d-menuBar_list{
+  font-family: $serifFont;
+  a{
+    color: $mainColor;
+  }
+}
+@mixin d-menuBar_list--sub{
+  font-family: $serifFont;
+  a{
+    color: $mainColor;
+  }
+}
+
+
+@mixin d-mainImageText {
+  &::before{
+    background: url(../img/icon1.png) center no-repeat;
+    background-size: cover;
+  }
+  & > .line1 ,& > .line2{
+    background-color: rgba(255,255,255, 0.3);
+  }
+}
+
+
+@mixin d-sectionArea_frame{
+  border-top:solid 1pt $mainColor;
+  border-left:solid 1pt $mainColor;     
+}
+@mixin d-sectionArea_frame_titleArea{
+  background: url(../img/icon2.png) left top no-repeat;
+  background-size: contain;
+  background-color: #fff;           
+}
+@mixin d-sectionArea_frame_titleArea_title{
+  font-family: $serifFont;
+  font-size: 1.3rem;
+  letter-spacing: 0.2rem;
+  color: $mainColor;
+}
+    
+@mixin d-sectionArea_frame_mainArea{
+  color: $textColor;
+}        
+@mixin d-sectionArea_frame_footerArea{
+  background-color: #fff;
+  text-align: right;
+}
+
+@mixin d-moreButton{
+  span{
+    font-family: $serifFont;
+    font-size: small;
+    vertical-align: bottom;
+  }
+  .arrow{
+    background:url(../img/arrow.png) left top no-repeat;
+    background-size: contain;
+    background-color:none;
+  }
+}
+
+
+ // aboutSection
+@mixin d-aboutContents_parts_textBox_title{
+  font-size: 1.5rem;
+  text-align: center;
+  &::before{
+    content: attr(data-cat) "\A";
+    white-space: pre;
+    font-size: 0.8rem;
+  }
+}
+@mixin d-aboutContents_parts_textBox_text{
+  font-size: 1rem;
+}
+
+  //LineupSection
+@mixin d-menuLineUp_menu_image_textBox{
+  .itemInfo{
+    font-size: 0.8rem;
+  }
+}
+
+
+    //ShopinfoSection
+@mixin d-shopInfomation_textContainer{
+  text-align: left;
+  @media screen and (max-width:$pcScreenSize){
+    text-align: center;
   }
 
+  .shopType{
+    color: $mainColor;
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+  .shopName{
+    font-size: 1.2rem;
+  }
+  .shopAddress{
+    font-size: 1rem;
+    font-style: normal;
+    line-height: inherit;
+  }
+  .shopAccess{
+    font-size: 0.9rem;
+  }
+  .shopInfo{
+    border-collapse: collapse;
+    .tel{
+      //PCサイズレイアウト時はリンクを無効にする。
+      @media screen and (min-width:$pcScreenSize){
+        pointer-events: none;
+        cursor: default;
+      }
+    }
+  }
+}
 
-/*(2) d-  Decoration :デザイン装飾クラス*/
-  .d-{
-    /*Header*/
-    &NavArea{
-      &--sub::before{
-        background-color: #fff; 
-      }
-      @media screen and (max-width:$mdScreen) {
-        background-color: #fff;
-        opacity: 0.8;
-        a{
-         // font-size: 1.3rem;
-        }
-      }
-    }
-    &MenuBar{
-      &_list{
-        font-family: $serifFont;
-        a{
-          color: $mainColor;
-        }
-      }
-      &_list--sub{
-        font-family: $serifFont;
-        a{
-          color: $mainColor;
-        }
-      }
-    }
-
-
-    /*MainPage*/
-    // topSection
-    &MainImageText{
-      &::before{
-        background: url(../img/icon1.png) center no-repeat;
-        background-size: cover;
-      }
-      &_line{
-        background-color: rgba(255,255,255, 0.3);
-      }
-    }
-
-    //各セクション共通
-    &SectionArea{
-      &_frame{
-        border-top:solid 1pt $mainColor;
-        border-left:solid 1pt $mainColor;     
-        &_titleArea{
-          background: url(../img/icon2.png) left top no-repeat;
-          background-size: contain;
-          background-color: #fff;           
-          &_title{
-          font-family: $serifFont;
-          font-size: 1.3rem;
-          letter-spacing: 0.2rem;
-          color: $mainColor;
-          }
-        }        
-        &_mainArea{
-          color: $textColor;
-        }        
-        &_footerArea{
-          background-color: #fff;
-          text-align: right;
-        }
-      }
-    }
-    &MoreButton{
-      span{
-        font-family: $serifFont;
-        font-size: small;
-        vertical-align: bottom;
-      }
-      .arrow{
-        background:url(../img/arrow.png) left top no-repeat;
-        background-size: contain;
-        background-color:none;
-      }
-    }
-    
-    // newsSection
-    // blogSection
-
-    // aboutSection
-    &AboutContents{
-      &_parts{   
-        &_textBox{
-          &_title{
-            font-size: 1.5rem;
-            text-align: center;
-            &::before{
-              content: attr(data-cat) "\A";
-              white-space: pre;
-              font-size: 0.8rem;
-            }
-          }
-          &_text{
-            font-size: 1rem;
-          }
-        }
-      }
-    }
-
-    //LineupSection
-    &MenuLineUp{
-      .itemInfo{
-        font-size: 0.8rem;
-      }
-    }
-    
-    //ShopinfoSection
-    &ShopInfomation{
-      &_textContainer{
-        text-align: left;
-        @media screen and (max-width:$mdScreen){
-          text-align: center;
-        }
-
-        .shopType{
-          color: $mainColor;
-          font-size: 0.9rem;
-          font-weight: bold;
-        }
-        .shopName{
-          font-size: 1.2rem;
-        }
-        .shopAddress{
-          font-size: 1rem;
-          font-style: normal;
-          line-height: inherit;
-        }
-        .shopAccess{
-          font-size: 0.9rem;
-        }
-        .shopInfo{
-          border-collapse: collapse;
-          .tel{
-            //PCサイズレイアウト時はリンクを無効にする。
-            @media screen and (min-width:$mdScreen){
-              pointer-events: none;
-              cursor: default;
-            }
-          }
-        }
-      }
-    }
 
     //footer
-    &FooterArea{
-      text-align: center;
+@mixin d-footerArea{
+  text-align: center;
+  color: $mainColor;
+}
+@mixin d-footerArea_link{
+    font-size: 1rem;
+    a{
       color: $mainColor;
-
-      &_link{
-        font-size: 1rem;
-        a{
-          color: $mainColor;
-        }
-      }
-      &_copyRight{
-        font-size: 1rem;
-      }
     }
+  }
+@mixin d-footerArea_link_copyRight{
+  font-size: 1rem;
+}
+
+
 
 
     /*記事一覧ページ*/
     // トップイメージ
-    &TopImageArea{
+ @mixin d-topImageArea{
       background-position: left bottom;
       background-size: cover;
       background-repeat: no-repeat;
@@ -943,7 +904,7 @@ body{
     }
 
     //blogのカテゴリ一覧エリア
-    &CategoryArea{
+@mixin d-categoryArea{
       a:first-child{
         border-left: solid 1px $mainColor;
       }
@@ -955,12 +916,12 @@ body{
     }
 
     //ページネーション
-    &Pagenation{
+@mixin d-pagenation{
       font-size: 1.2rem;
     }
 
     //記事
-    &SingleArea{
+@mixin d-singleArea{
       &_titleArea{
         border-bottom: $mainColor 1.5px solid;
     
@@ -980,7 +941,7 @@ body{
     }
 
     //戻るボタン
-    &BackButton{
+@mixin d-backButton{
       background-color: $mainColor;
       color: #fff;
       text-align: center;
@@ -988,7 +949,7 @@ body{
     }
 
     //前と次の記事情報
-    &NextandPrevPosts{
+@mixin d-nextandPrevPosts{
       .prev::before{
         background:url(../img/prev.png) center no-repeat;
         background-size: contain;
@@ -999,7 +960,7 @@ body{
       }
     }
 
-    &WidgetItem--Archive{
+ @mixin d-widgetItem--Archive{
       &_button{}
       &_year{
         font-size: 1.1rem;
@@ -1009,7 +970,165 @@ body{
       &_button + .d-WidgetItem--Archive_year::after{content: "▼";}
     }
 
+
+
+/*-------------------------------------*/
+.headerArea{
+  @include m-Toggle();
+  @include l-headerArea();
+  @include d-dummyDesign();
+  .toggleLabel{}
+  .menuButton{
+    @include d-dummyDesign();
+    // @include d-ButtonDesign();
+    @include l-menuButton();
+  }
+  .toggleButton{}
+  .toggleTarget{}
+  .navArea{
+    @include d-dummyDesign();
+    @include l-navArea();
+    @include d-navArea();
+  }
+  .navArea_blankSpace{
+    @include l-navArea_blankSpace();
+  }
+  .logoMark{
+    @include d-dummyDesign();
+    @include l-logoMark();
+  }
+  .menuBar{
+    @include d-dummyDesign();
+    @include l-menuBar();
+    &_list{
+      @include l-menuBar_list(); 
+      @include d-menuBar_list();
+      &_--sub{
+        @include l-menuBar_list--sub(); 
+        @include d-menuBar_list();
+      }
+      &--SNS{
+        @include l-menuBar_list--SNS(); 
+        @include d-menuBar_list();
+      }
+      &--SNS--sub{
+        @include l-menuBar_list--SNS--sub(); 
+        @include d-menuBar_list();
+      }
+    }
   }
 
 }
 
+
+#topSection{
+.mainImageArea{
+  @include l-mainImageArea();
+  @include l-AspectFixed($aspectWidth-16-9);
+  &_frame{
+    &_image{
+      @include l-mainImageArea_image();
+    }
+  }
+  &_text{
+    @include l-mainImageText;
+    @include d-mainImageText;
+    .line1{}
+    .line2{}
+  }
+}
+}
+
+.sectionContainer{
+  @include l-sectionArea;
+  &_frame{
+    @include l-sectionArea_frame;
+    @include d-sectionArea_frame;
+    &_titleArea{
+      @include l-sectionArea_frame_titleArea;
+      @include d-sectionArea_frame_titleArea;
+      &_title{
+        @include l-sectionArea_frame_titleArea_title;
+        @include d-sectionArea_frame_titleArea_title;
+      }
+    }
+    &_mainArea{}
+    &_footerArea{
+      @include l-sectionArea_frame_footerArea();
+      .moreButton{
+        @include l-moreButton;
+        @include d-moreButton;
+        @include d-ButtonDesign();
+      }
+    }
+  }
+}
+
+.blogList{
+  @include l-blogList();
+
+}
+
+.aboutContents{
+  &_parts{
+    @include l-aboutContents_parts;
+    &--reverse{
+      @include l-aboutContents_parts(true);
+    }
+    &_image{
+      @include l-aboutContents_parts_image;
+      @include l-AspectFixed($aspectWidth-16-9);
+    }
+    &_textBox{
+      @include l-aboutContents_parts_textBox;
+      &_title{
+        @include l-aboutContents_parts_textBox_title;
+        @include d-aboutContents_parts_textBox_title;
+      }
+      &_text{
+        @include d-aboutContents_parts_textBox_text;
+      }
+    }
+  }
+}
+
+.menuLineUp{
+  @include l-menuLineUp();
+  &_menu{
+    @include l-menuLineUp_menu();
+    &_image{
+      @include l-menuLineUp_menu_image();
+      @include l-AspectFixed($aspectWidth-4-3);
+    }
+    &_textBox{
+      @include l-menuLineUp_menu_image_textBox();
+      @include d-menuLineUp_menu_image_textBox();
+    }
+  }
+}
+.shopInfomation{
+  @include l-shopInfomation();
+  &_shopImage{
+    @include l-shopInfomation_shopImage();
+    @include l-AspectFixed($aspectWidth-16-9);
+  }
+  &_textContainer{
+    @include l-shopInfomation_textContainer();
+    @include d-shopInfomation_textContainer();
+  }
+}
+
+.googleMap{
+ @include l-googleMap();
+}
+
+.footerArea{
+  @include l-footerArea();
+  @include d-footerArea();
+  &_link{
+    @include d-footerArea_link();
+    &_copyRight{
+      @include d-footerArea_link_copyRight();
+    }
+  }
+}

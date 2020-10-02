@@ -1,9 +1,9 @@
-<footer class="l-FooterArea d-FooterArea">
-  <div class="l-FooterArea_link d-FooterArea_link">
+<footer class="footerArea">
+  <div class="footerArea_link">
     <a href="#">お問い合わせ</a>
     <a href="#">プライバシーポリシー</a>
   </div>
-  <div class="d-FooterArea_copyRight">
+  <div class="footerArea_copyRight">
     <p>CopyRight(C) 2020 YamamotoBakery All Rights Reserved.</p>
   </div>
 </footer>

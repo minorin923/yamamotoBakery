@@ -1,20 +1,20 @@
-<header class="l-HeaderArea">
+<header class="headerArea">
 
-  <input id="navAreaToggle" class="Gm-Toggle_button" type="checkbox"></input>
-  <label class="l-MenuButton d-MenuButton Gd-ButtonDesign Gm-Toggle_label" for="navAreaToggle"><i class="fa fa-bars"></i></label>
 
-  <nav class="l-NavArea d-NavArea <?= ((is_front_page()) ? '' : 'l-NavArea--sub d-NavArea--sub') ?>  Gm-Toggle_target">
-    <h1 class="l-LogoMark">
-      <a href="/#topSection"><img src="<?= get_template_directory_uri(); ?>/img/logo.png" alt=""></a>
-    </h1>
-
-    <div class="l-MenuBar <?= ((is_front_page()) ? '' : 'l-MenuBar--sub') ?>">
+  <label class="menuButton toggleLabel" for="navAreaToggle"><i class="fa fa-bars"></i></label>
+  <h1 class="logoMark">
+    <a href="/#topSection"><img src="<?= get_template_directory_uri(); ?>/img/logo.png" alt=""></a>
+  </h1>
+  <input id="navAreaToggle" class="toggleButton" type="checkbox"></input>
+  <nav class="navArea <?= ((is_front_page()) ? '' : 'navArea--sub') ?> toggleTarget">
+    <label class="navArea_blankSpace toggleLabel" for="navAreaToggle"></label>
+    <div class="menuBar <?= ((is_front_page()) ? '' : 'menuBar--sub') ?>">
       <?php
       if (has_nav_menu('header-navigation')) {
         wp_nav_menu(array(
           'theme_location'  => 'header-navigation',
           'container'       => '',
-          'menu_class'      => 'l-MenuBar_list' . ((is_front_page()) ? '' : '--sub') . ' d-MenuBar_list',
+          'menu_class'      => 'menuBar_list' . ((is_front_page()) ? '' : '--sub') ,
         ));
       }
 
@@ -22,7 +22,7 @@
         wp_nav_menu(array(
           'theme_location'  => 'header-navigation-SNS',
           'container'       => '',
-          'menu_class'      => 'l-MenuBar_list--SNS' . ((is_front_page()) ? '' : '--sub') . ' d-MenuBar_list',
+          'menu_class'      => 'menuBar_list--SNS' . ((is_front_page()) ? '' : '--sub') ,
         ));
       } ?>
 

@@ -12,32 +12,32 @@ Template Name: home
 <main class="main">
 
   <!-- start:topSection -->
-  <section id="topSection" class=" Gm-js_fadeIn">
-    <div class="l-MainImageArea Gl-AspectFixed--16-9">
-      <div class="l-MainImageArea_frame Gl-AspectFixed_frame">
-        <img class="l-MainImageArea_frame_image Gl-AspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/cafeSpace1.png" alt="">
+  <section id="topSection" class="js_fadeIn">
+    <div class="mainImageArea">
+      <div class="imageFrame">
+        <img class="image" src="/wp-content/themes/yamamotobakery/img/cafeSpace1.png" alt="">
       </div>
-      <div class="l-MainImageText d-MainImageText">
-        <span class="l-MainImageText_line1 d-MainImageText_line">白に包まれた優しい空間で</span>
-        <span class="l-MainImageText_line2 d-MainImageText_line">優雅な朝のひと時を。</span>
+      <div class="mainImageArea_text">
+        <span class="line1">白に包まれた優しい空間で</span>
+        <span class="line2">優雅な朝のひと時を。</span>
       </div>
     </div>
   </section>
   <!-- end:topSection -->
 
   <!-- start:newsSection -->
-  <section id="newsSection" class="l-SectionArea Gm-js_fadeIn">
-    <div class="l-SectionArea_frame d-SectionArea_frame">
-      <div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea">
-        <h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">News Topics</h2>
+  <section id="newsSection" class="sectionContainer Gm-js_fadeIn">
+    <div class="sectionContainer_frame">
+      <div class="sectionContainer_frame_titleArea">
+        <h2 class="sectionContainer_frame_titleArea_title">News Topics</h2>
       </div>
-      <div class="d-SectionArea_frame_mainArea">
-        <div class="l-NewsList">
+      <div class="sectionContainer_frame_mainArea">
+        <div class="newsList">
          <?= getCatItems(array("count"=>"3","listtype"=>"news", "post_type"=>"news", "taxonomy"=>"news-cat")) ?>
         </div>
       </div>
-      <div class="l-SectionArea_frame_footerArea d-SectionArea_frame_footerArea ">
-        <a class="l-MoreButton d-MoreButton  Gd-ButtonDesign" href="/news">
+      <div class="sectionContainer_frame_footerArea">
+        <a class="moreButton" href="/news">
           <span>more</span> <span class="arrow"></span>
         </a>
       </div>
@@ -46,18 +46,18 @@ Template Name: home
   <!-- end:newsSection -->
 
   <!-- start:blogSection -->
-  <section id="blogSection" class=" l-SectionArea Gm-js_fadeIn">
-    <div class="l-SectionArea_frame d-SectionArea_frame">
-      <div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea">
-        <h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">blog</h2>
+  <section id="blogSection" class="sectionContainer Gm-js_fadeIn">
+    <div class="sectionContainer_frame">
+      <div class="sectionContainer_frame_titleArea">
+        <h2 class="sectionContainer_frame_titleArea_title">blog</h2>
       </div>
-      <div class="d-SectionArea_frame_mainArea">
-        <div class="l-BlogList">
+      <div class="sectionContainer_frame_mainArea">
+        <div class="blogList">
         <?= getCatItems(array("count"=>"4")) ?>
         </div>
       </div>
-      <div class="l-SectionArea_frame_footerArea d-SectionArea_frame_footerArea">
-        <a class="l-MoreButton d-MoreButton Gd-ButtonDesign" href="/blog">
+      <div class="sectionContainer_frame_footerArea">
+        <a class="moreButton" href="/blog">
           <span>more</span> <span class="arrow"></span>
         </a>
       </div>
@@ -66,33 +66,33 @@ Template Name: home
   <!-- end:blogSection -->
 
   <!-- start:AboutSection -->
-  <section id="aboutSection" class=" l-SectionArea Gm-js_fadeIn">
-    <div class="l-SectionArea_frame d-SectionArea_frame">
-      <div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea">
-        <h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">About Yamamoto Bakery</h2>
+  <section id="aboutSection" class="sectionContainer Gm-js_fadeIn">
+    <div class="sectionContainer_frame">
+      <div class="sectionContainer_frame_titleArea">
+        <h2 class="sectionContainer_frame_titleArea_title">About Yamamoto Bakery</h2>
       </div>
-      <div class="d-SectionArea_frame_mainArea">
-        <div class="l-AboutContents">
-          <div class="l-AboutContents_parts ">
-            <div class="l-AboutContents_parts_image Gl-AspectFixed--16-9">
-              <div class="Gl-AspectFixed_frame">
-                <img class="Gl-AspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/shopPic1.jpg" alt=""></div>
+      <div class="sectionContainer_frame_mainArea">
+        <div class="aboutContents">
+          <div class="aboutContents_parts ">
+            <div class="aboutContents_parts_image">
+              <div class="imageFrame">
+                <img class="image" src="/wp-content/themes/yamamotobakery/img/shopPic1.jpg" alt=""></div>
             </div>
-            <div class="l-AboutContents_parts_textBox">
-              <h3 class="l-AboutContents_parts_textBox_title d-AboutContents_parts_textBox_title" data-cat="～安心安全へのこだわり～">山本ベーカリーについて</h3>
-              <p class="l-AboutContents_parts_textBox_text d-AboutContents_parts_textBox_text">当店山本ベーカリーでは、こだわり抜いた最高の一品をお客様に
+            <div class="aboutContents_parts_textBox">
+              <h3 class="aboutContents_parts_textBox_title" data-cat="～安心安全へのこだわり～">山本ベーカリーについて</h3>
+              <p class="aboutContents_parts_textBox_text">当店山本ベーカリーでは、こだわり抜いた最高の一品をお客様に
                 お召し上がり頂くために、原料、製法など、あらゆる角度から品質の向上に
                 努めております。</p>
             </div>
           </div>
-          <div class="l-AboutContents_parts--reverse">
-            <div class="l-AboutContents_parts_image Gl-AspectFixed--16-9">
-              <div class="Gl-AspectFixed_frame">
-                <img class="Gl-AspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/cafeSpace1.png" alt=""></div>
+          <div class="aboutContents_parts--reverse">
+            <div class="aboutContents_parts_image">
+              <div class="imageFrame">
+                <img class="image" src="/wp-content/themes/yamamotobakery/img/cafeSpace1.png" alt=""></div>
             </div>
-            <div class="l-AboutContents_parts_textBox">
-              <h3 class="l-AboutContents_parts_textBox_title d-AboutContents_parts_textBox_title" data-cat="～優雅なひと時を～">カフェスペース</h3>
-              <p class="l-AboutContents_parts_textBox_text d-AboutContents_parts_textBox_text">当店カフェスペースは、
+            <div class="aboutContents_parts_textBox">
+              <h3 class="aboutContents_parts_textBox_title" data-cat="～優雅なひと時を～">カフェスペース</h3>
+              <p class="aboutContents_parts_textBox_text">当店カフェスペースは、
                 最大4名様までご利用いただけるテーブル席が10席、大通りに面した解放的なカウンター席を10席ご用意しております。
                 イートインスペースとして是非ともご利用くださいませ。</p>
             </div>
@@ -101,51 +101,59 @@ Template Name: home
       </div>
     </div>
   </section>
-  <!-- end:l-AboutSection -->
+  <!-- end:AboutSection -->
 
   <!-- start:menuLineUpSection -->
-  <section id="menuLineUpSection" class="l-SectionArea Gm-js_fadeIn">
-    <div class="l-SectionArea_frame d-SectionArea_frame">
-      <div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea">
-        <h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">Menu LineUp</h2>
+  <section id="menuLineUpSection" class="sectionContainer Gm-js_fadeIn">
+    <div class="sectionContainer_frame">
+      <div class="sectionContainer_frame_titleArea">
+        <h2 class="sectionContainer_frame_titleArea_title">Menu LineUp</h2>
       </div>
-      <div class="d-SectionArea_frame_mainArea">
-        <div class="l-MenuLineUp d-MenuLineUp">
-          <div class="l-MenuLineUp_menu">
-            <div class="l-MenuLineUp_menu_image Gl-AspectFixed--4-3">
-              <div class="Gl-AspectFixed_frame"><img class="Gl-AspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/bleed.png" alt=""></div>
+      <div class="sectionContainer_frame_mainArea">
+        <div class="menuLineUp">
+          <div class="menuLineUp_menu">
+            <div class="menuLineUp_menu_image">
+              <div class="imageFrame">
+                <img class="image" src="/wp-content/themes/yamamotobakery/img/bleed.png" alt="">
+              </div>
             </div>
-            <div class="l-MenuLineUp_menu_textBox">
+            <div class="menuLineUp_menu_textBox">
               <p class="itemName">十勝生クリーム食パン</p>
               <p class="itemInfo">1斤：500円（税別)</p>
               <p class="itemInfo">1本(2斤)：1,000円(税別)</p>
             </div>
           </div>
-          <div class="l-MenuLineUp_menu">
-            <div class="l-MenuLineUp_menu_image Gl-AspectFixed--4-3">
-              <div class="Gl-AspectFixed_frame"><img class="Gl-AspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/bleed.png" alt=""></div>
+          <div class="menuLineUp_menu">
+            <div class="menuLineUp_menu_image">
+              <div class="imageFrame">
+                <img class="image" src="/wp-content/themes/yamamotobakery/img/bleed.png" alt="">
+              </div>
             </div>
-            <div class="l-MenuLineUp_menu_textBox">
+            <div class="menuLineUp_menu_textBox">
               <p class="itemName">十勝生クリーム食パン</p>
               <p class="itemInfo">1斤：500円（税別)</p>
               <p class="itemInfo">1本(2斤)：1,000円(税別)</p>
             </div>
           </div>
-          <div class="l-MenuLineUp_menu">
-            <div class="l-MenuLineUp_menu_image Gl-AspectFixed--4-3">
-              <div class="Gl-AspectFixed_frame"><img class="Gl-AspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/bleed.png" alt=""></div>
+          <div class="menuLineUp_menu">
+            <div class="menuLineUp_menu_image">
+              <div class="imageFrame">
+                <img class="image" src="/wp-content/themes/yamamotobakery/img/bleed.png" alt="">
+              </div>
             </div>
-            <div class="l-MenuLineUp_menu_textBox">
+            <div class="menuLineUp_menu_textBox">
               <p class="itemName">十勝生クリーム食パン</p>
               <p class="itemInfo">1斤：500円（税別)</p>
               <p class="itemInfo">1本(2斤)：1,000円(税別)</p>
             </div>
           </div>
-          <div class="l-MenuLineUp_menu">
-            <div class="l-MenuLineUp_menu_image Gl-AspectFixed--4-3">
-              <div class="Gl-AspectFixed_frame"><img class="Gl-AspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/bleed.png" alt=""></div>
+          <div class="menuLineUp_menu">
+            <div class="menuLineUp_menu_image">
+              <div class="imageFrame">
+                <img class="image" src="/wp-content/themes/yamamotobakery/img/bleed.png" alt="">
+              </div>
             </div>
-            <div class="l-MenuLineUp_menu_textBox">
+            <div class="menuLineUp_menu_textBox">
               <p class="itemName">十勝生クリーム食パン</p>
               <p class="itemInfo">1斤：500円（税別)</p>
               <p class="itemInfo">1本(2斤)：1,000円(税別)</p>
@@ -158,17 +166,19 @@ Template Name: home
   <!-- end:MenuLineUpSection -->
 
   <!-- start:shopinfoSection -->
-  <section id="shopInfoSection" class="l-SectionArea Gm-js_fadeIn">
-    <div class="l-SectionArea_frame">
-      <div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea">
-        <h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">Shop Info</h2>
+  <section id="shopInfoSection" class="sectionContainer Gm-js_fadeIn">
+    <div class="sectionContainer_frame">
+      <div class="sectionContainer_frame_titleArea">
+        <h2 class="sectionContainer_frame_titleArea_title">Shop Info</h2>
       </div>
-      <div class="d-SectionArea_frame_mainArea">
-        <div class="l-ShopInfomation">
-          <div class="l-ShopInfomation_shopImage Gl-AspectFixed--16-9">
-            <div class="l-ShopInfomation_shopImage_frame Gl-AspectFixed_frame"><img class="l-ShopInfomation_shopImage_frame_image Gl-AspectFixed_frame_image" src="/wp-content/themes/yamamotobakery/img/shop1.png" alt=""></div>
+      <div class="sectionContainer_frame_mainArea">
+        <div class="shopInfomation">
+          <div class="shopInfomation_shopImage">
+            <div class="imageFrame">
+              <img class="image" src="/wp-content/themes/yamamotobakery/img/shop1.png" alt="">
+            </div>
           </div>
-          <div class="l-ShopInfomation_textContainer d-ShopInfomation_textContainer"><span class="shopType">Cafe&amp;Bakery</span>
+          <div class="shopInfomation_textContainer"><span class="shopType">Cafe&amp;Bakery</span>
             <h3 class="shopName"><?= $cfs->get('name'); ?></h3>
             <address class="shopAddress"><?= $cfs->get('address'); ?></address>
             <p class="shopAccess"><?= $cfs->get('access'); ?></p>
@@ -195,7 +205,7 @@ Template Name: home
             </table>
           </div>
         </div>
-        <div class="l-GoogleMap"><img src="/wp-content/themes/yamamotobakery/img/googlemap.png" alt=""></div>
+        <div class="googleMap"><img src="/wp-content/themes/yamamotobakery/img/googlemap.png" alt=""></div>
       </div>
     </div>
   </section>

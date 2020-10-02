@@ -6,8 +6,6 @@
           (1) l-  Layout     :レイアウト指定クラス
           (2) d-  Decoration :デザイン装飾クラス
           (3) m-  Motion     :モーション付与クラス
-      ・特定のWebページに依存しない汎用的な書式は汎用クラスとして
-        上記接頭辞に g を付与する(例: gl-xxx など)
       ・通常のクラス書式を、汎用クラスの書式より高いCSS優先度にするため
         通常のクラスはbody要素の子要素クラスとして定義する。(ネスト階層を+1して通常クラスのCSSを優先させる)
   1-2.階層構造をとるhtml要素に対して付与するクラスは
@@ -72,235 +70,16 @@ li {
 }
 
 /*1-1. 汎用クラス定義*/
-/*(1) Gl-  General Layout     :レイアウト指定クラス*/
-.Gl- {
-  /*[1]要素のアスペクト比固定*/
-  /*[2]記事一覧の基本書式*/
-  /*[3]複数カラム*/
-}
-
-.Gl-AspectFixed--16-9 {
-  position: relative;
-  /*アスペクト非固定用疑似要素*/
-}
-
-.Gl-AspectFixed--16-9::before {
-  content: "";
-  display: block;
-  /*padding-topの高さは元要素のwidthで決まる*/
-  padding-top: 56.25%;
-}
-
-.Gl-AspectFixed--4-3 {
-  position: relative;
-}
-
-.Gl-AspectFixed--4-3::before {
-  content: "";
-  display: block;
-  padding-top: 75%;
-}
-
-.Gl-AspectFixed_frame {
-  /*absluteで親要素のbeforeに貼り付ける*/
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.Gl-AspectFixed_frame_image {
-  height: 100%;
-  width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
-.Gl-PostItem--news_link {
-  height: auto;
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: start;
-  text-decoration: none;
-  color: #616161;
-  position: relative;
-}
-
-.Gl-PostItem--news_link_image {
-  display: none;
-}
-
-.Gl-PostItem--news_link_category {
-  height: auto;
-  width: 5rem;
-  padding: 0.1rem 0 0.1rem 0;
-  position: absolute;
-  bottom: 1rem;
-  left: 7rem;
-  background-color: rgba(255, 255, 255, 0.9);
-  text-align: center;
-  font-size: 0.8rem;
-  border-radius: 3px;
-  border: #616161 1px solid;
-}
-
-.Gl-PostItem--news_link_textBox {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: start;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.Gl-PostItem--news_link_textBox--date {
-  padding-right: 8rem;
-  letter-spacing: 0.1rem;
-}
-
-.Gl-PostItem--news_link_textBox--title {
-  display: inline-block;
-  text-decoration: underline;
-  letter-spacing: 0.3rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.Gl-PostItem--blog {
-  height: auto;
-  width: 22%;
-  min-width: 140px;
-  margin: 0 1% 1%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-.Gl-PostItem--blog_link {
-  display: block;
-  color: #616161;
-}
-
-.Gl-PostItem--blog_link_image {
-  height: auto;
-  width: 100%;
-  position: relative;
-}
-
-.Gl-PostItem--blog_link_category {
-  height: auto;
-  width: 40%;
-  padding: 0.5rem 0 0.4rem 0;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(255, 255, 255, 0.9);
-  text-align: center;
-  font-size: 0.8rem;
-}
-
-.Gl-PostItem--blog_link_textBox {
-  height: 7rem;
-  width: 100%;
-  margin-top: 1rem;
-}
-
-.Gl-PostItem--blog_link_textBox--date {
-  margin-bottom: 0.8rem;
-  font-size: 0.8rem;
-}
-
-.Gl-PostItem--blog_link_textBox--title {
-  margin-bottom: 0;
-  font-weight: bold;
-}
-
-.Gl-MultiColumn {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-}
-
-@media screen and (max-width: 768px) {
-  .Gl-MultiColumn {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-  }
-}
-
+/*(1) General Layout     :レイアウト指定クラス*/
+/*[1]要素のアスペクト比固定*/
+/*[2]記事一覧の基本書式*/
+/*[3]複数カラム*/
 /*(2) Gd-  General Decoration :デザイン装飾クラス*/
-.Gd- {
-  /*start: General Class*/
-  /*[1]ボタン要素*/
-  /*end: General Class*/
-}
-
-.Gd-ButtonDesign {
-  display: inline-block;
-  cursor: pointer;
-  white-space: nowrap;
-  text-align: center;
-  font-size: medium;
-  color: #f8145b;
-  background-color: #f8f9fa;
-  border-color: #f8f9fa;
-  border-radius: 2px;
-  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
-          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
-}
-
+/*[0]ダミーデザイン*/
+/*[1]ボタン要素*/
 /*(3) Gm-  General Motion     :モーション付与クラス*/
-.Gm- {
-  /*start: General Class*/
-  /*(1)ボタンによる要素の表示切替*/
-  /*各種jsアニメーション*/
-  /*end: General Class*/
-}
-
-.Gm-Toggle_button {
-  display: none;
-}
-
-.Gm-Toggle_label {
-  cursor: pointer;
-}
-
-.Gm-Toggle_target {
-  display: none;
-}
-
-.Gm-Toggle_button:checked + .Gm-Toggle_label + .Gm-Toggle_target {
-  display: block;
-}
-
-.Gm-js_fadeIn_action {
-  -webkit-animation: fade 2s 0s 1;
-          animation: fade 2s 0s 1;
-}
-
+/*[1]ボタンによる要素の表示切替*/
+/*[2]各種jsアニメーション*/
 @-webkit-keyframes fade {
   from {
     opacity: 0;
@@ -313,7 +92,6 @@ li {
             transform: translateY(0);
   }
 }
-
 @keyframes fade {
   from {
     opacity: 0;
@@ -327,89 +105,157 @@ li {
   }
 }
 
-/*1-2. 通常クラス定義*/
-body {
-  /*(1) l-  Layout     :レイアウト指定クラス*/
-  /*(2) d-  Decoration :デザイン装飾クラス*/
+/*HTML要素特化 l-*/
+.headerArea .menuBar_list, .headerArea .menuBar_list_--sub, .headerArea .menuBar_list--SNS, .headerArea .menuBar_list--SNS--sub {
+  padding-left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
-body .l- {
-  /*Header*/
-  /*MainPage*/
-  /*記事一覧ページ*/
-}
-
-body .l-HeaderArea {
-  position: absolute;
-}
-
-body .l-MenuButton {
-  height: 2rem;
-  width: 2rem;
-  display: none;
-  position: fixed;
-  top: 3rem;
-  right: 0.5rem;
-  z-index: 100;
+.headerArea .menuBar_list a, .headerArea .menuBar_list_--sub a, .headerArea .menuBar_list--SNS a, .headerArea .menuBar_list--SNS--sub a {
+  padding: 0.75rem 1rem;
 }
 
 @media screen and (max-width: 768px) {
-  body .l-MenuButton {
-    display: block;
+  .headerArea .menuBar_list, .headerArea .menuBar_list_--sub, .headerArea .menuBar_list--SNS, .headerArea .menuBar_list--SNS--sub {
+    height: auto;
+    width: 40vw;
+    top: 10rem;
+    left: 30vw;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: start;
+  }
+  .headerArea .menuBar_list li, .headerArea .menuBar_list_--sub li, .headerArea .menuBar_list--SNS li, .headerArea .menuBar_list--SNS--sub li {
+    height: auto;
+    width: 50%;
+  }
+}
+
+/*記事一覧ページ*/
+/*Header*/
+/*記事一覧ページ*/
+/*-------------------------------------*/
+.headerArea {
+  height: 5rem;
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: fixed;
+  z-index: 100;
+  background-color: #999;
+  border: solid 1px #09f;
+}
+
+.headerArea > .toggleLabel {
+  cursor: pointer;
+}
+
+.headerArea > .toggleButton {
+  display: none;
+}
+
+.headerArea > .toggleTarget {
+  display: none;
+}
+
+.headerArea > .toggleButton:checked + .toggleTarget {
+  display: block;
+}
+
+.headerArea .menuButton {
+  background-color: #999;
+  border: solid 1px #09f;
+  height: 100%;
+  width: 20%;
+}
+
+@media screen and (min-width: 768px) {
+  .headerArea .menuButton {
+    display: none;
+  }
+}
+
+.headerArea .navArea {
+  background-color: #999;
+  border: solid 1px #09f;
+  z-index: 101;
+  position: fixed;
+}
+
+@media screen and (max-width: 768px) {
+  .headerArea .navArea {
+    display: none;
+    height: 100vh;
+    width: 80vw;
   }
 }
 
 @media screen and (min-width: 768px) {
-  body .l-NavArea {
+  .headerArea .navArea {
     display: block;
   }
-  body .l-NavArea--sub::before {
+  .headerArea .navArea--sub::before {
     content: "";
     height: 4.5rem;
     width: 100vw;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99;
     background-color: #fff;
   }
 }
 
+.headerArea .navArea--sub::before {
+  background-color: #fff;
+}
+
 @media screen and (max-width: 768px) {
-  body .l-NavArea {
-    display: none;
-    height: 100vh;
-    width: 100vw;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99;
+  .headerArea .navArea {
+    background-color: #fff;
+    opacity: 0.8;
   }
 }
 
-body .l-LogoMark {
-  position: fixed;
+.headerArea .navArea_blankSpace {
+  height: 100%;
+  width: 20%;
   z-index: 100;
-  top: 1.5rem;
-  left: 0.5rem;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.headerArea .logoMark {
+  background-color: #999;
+  border: solid 1px #09f;
+  height: 100%;
+  width: 60%;
   margin: 0;
 }
 
-body .l-LogoMark img {
-  height: 2.5rem;
-  width: 10rem;
+.headerArea .logoMark img {
+  height: 3rem;
+  width: 15rem;
   -o-object-fit: contain;
      object-fit: contain;
 }
 
-@media screen and (max-width: 768px) {
-  body .l-LogoMark {
+@media screen and (min-width: 768px) {
+  .headerArea .logoMark {
     top: 5vh;
     left: calc(50% - 10rem/2);
   }
 }
 
-body .l-MenuBar {
+.headerArea .menuBar {
+  background-color: #999;
+  border: solid 1px #09f;
   height: auto;
   width: 10vw;
   position: fixed;
@@ -418,7 +264,7 @@ body .l-MenuBar {
   z-index: 100;
 }
 
-body .l-MenuBar--sub {
+.headerArea .menuBar--sub {
   top: 1.4rem;
   left: 15rem;
   display: -webkit-box;
@@ -431,7 +277,7 @@ body .l-MenuBar--sub {
 }
 
 @media screen and (max-width: 768px) {
-  body .l-MenuBar {
+  .headerArea .menuBar {
     height: auto;
     width: 20rem;
     top: 15vh;
@@ -443,176 +289,101 @@ body .l-MenuBar--sub {
   }
 }
 
-body .l-MenuBar_list {
-  padding-left: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+.headerArea .menuBar_list {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-body .l-MenuBar_list a {
-  padding: 0.75rem 1rem;
+.headerArea .menuBar_list a {
+  color: #f8145b;
 }
 
-@media screen and (max-width: 768px) {
-  body .l-MenuBar_list {
-    height: auto;
-    width: 40vw;
-    top: 10rem;
-    left: 30vw;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: start;
-  }
-  body .l-MenuBar_list li {
-    height: auto;
-    width: 50%;
-  }
-}
-
-body .l-MenuBar_list--sub {
-  padding-left: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+.headerArea .menuBar_list_--sub {
   top: 2rem;
   left: 20rem;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-body .l-MenuBar_list--sub a {
-  padding: 0.75rem 1rem;
+.headerArea .menuBar_list_--sub a {
+  color: #f8145b;
 }
 
-@media screen and (max-width: 768px) {
-  body .l-MenuBar_list--sub {
-    height: auto;
-    width: 40vw;
-    top: 10rem;
-    left: 30vw;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: start;
-  }
-  body .l-MenuBar_list--sub li {
-    height: auto;
-    width: 50%;
-  }
-}
-
-body .l-MenuBar_list--SNS {
-  padding-left: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+.headerArea .menuBar_list--SNS {
   margin-top: 10rem;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-}
-
-body .l-MenuBar_list--SNS a {
-  padding: 0.75rem 1rem;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 @media screen and (max-width: 768px) {
-  body .l-MenuBar_list--SNS {
-    height: auto;
-    width: 40vw;
-    top: 10rem;
-    left: 30vw;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: start;
-  }
-  body .l-MenuBar_list--SNS li {
-    height: auto;
-    width: 50%;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  body .l-MenuBar_list--SNS {
+  .headerArea .menuBar_list--SNS {
     margin-top: 2rem;
   }
 }
 
-body .l-MenuBar_list--SNS--sub {
-  padding-left: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+.headerArea .menuBar_list--SNS a {
+  color: #f8145b;
+}
+
+.headerArea .menuBar_list--SNS--sub {
   margin-left: 5rem;
-}
-
-body .l-MenuBar_list--SNS--sub a {
-  padding: 0.75rem 1rem;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 @media screen and (max-width: 768px) {
-  body .l-MenuBar_list--SNS--sub {
-    height: auto;
-    width: 40vw;
-    top: 10rem;
-    left: 30vw;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: start;
-  }
-  body .l-MenuBar_list--SNS--sub li {
-    height: auto;
-    width: 50%;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  body .l-MenuBar_list--SNS--sub {
+  .headerArea .menuBar_list--SNS--sub {
     margin-left: 0;
     margin-top: 2rem;
   }
 }
 
-body .l-MainImageArea {
+.headerArea .menuBar_list--SNS--sub a {
+  color: #f8145b;
+}
+
+#topSection .mainImageArea {
   height: auto;
   width: 92.5vw;
   margin: 0 0 0 auto;
   position: relative;
+  position: relative;
+  /*アスペクト非固定用疑似要素*/
 }
 
-body .l-MainImageArea_frame_image {
+#topSection .mainImageArea::before {
+  content: "";
+  display: block;
+  /*padding-topの高さは元要素のwidthで決まる*/
+  padding-top: 56.25%;
+}
+
+#topSection .mainImageArea > .imageFrame {
+  /*absluteで親要素のbeforeに貼り付ける*/
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#topSection .mainImageArea > .imageFrame > .image {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+#topSection .mainImageArea_frame_image {
   -o-object-position: top left;
      object-position: top left;
 }
 
-body .l-MainImageText {
+#topSection .mainImageArea_text {
   position: absolute;
   top: 20%;
   right: 10%;
@@ -626,7 +397,7 @@ body .l-MainImageText {
           flex-direction: column;
 }
 
-body .l-MainImageText::before {
+#topSection .mainImageArea_text::before {
   content: "";
   height: 4rem;
   width: 4rem;
@@ -636,13 +407,13 @@ body .l-MainImageText::before {
   display: block;
 }
 
-body .l-MainImageText_line1 {
+#topSection .mainImageArea_text > .line1 {
   letter-spacing: 0.25rem;
   font-size: 1rem;
   white-space: nowrap;
 }
 
-body .l-MainImageText_line2 {
+#topSection .mainImageArea_text > .line2 {
   letter-spacing: 0.25rem;
   font-size: 1rem;
   white-space: nowrap;
@@ -651,51 +422,84 @@ body .l-MainImageText_line2 {
   right: -2rem;
 }
 
-body .l-SectionArea {
+#topSection .mainImageArea_text::before {
+  background: url(../img/icon1.png) center no-repeat;
+  background-size: cover;
+}
+
+#topSection .mainImageArea_text > .line1, #topSection .mainImageArea_text > .line2 {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.sectionContainer {
   height: auto;
   width: 85vw;
   margin: 4rem auto;
   padding: 1.5rem 0 0 1.5rem;
 }
 
-body .l-SectionArea_frame {
+.sectionContainer_frame {
   padding: 1.8rem 0 0 1.5rem;
   position: relative;
+  border-top: solid 1pt #f8145b;
+  border-left: solid 1pt #f8145b;
 }
 
-body .l-SectionArea_frame_titleArea {
+.sectionContainer_frame_titleArea {
   height: 3rem;
   width: auto;
-  padding-right: 0.8rem;
-  position: absolute;
   top: -1.5rem;
+  bottom: auto;
   left: -1.5rem;
+  right: auto;
+  position: absolute;
+  padding-right: 0.8rem;
+  background: url(../img/icon2.png) left top no-repeat;
+  background-size: contain;
+  background-color: #fff;
 }
 
-body .l-SectionArea_frame_titleArea_title {
+.sectionContainer_frame_titleArea_title {
   padding: 0.7rem 0 0 1.5rem;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.2rem;
+  color: #f8145b;
 }
 
-body .l-SectionArea_frame_footerArea {
+.sectionContainer_frame_footerArea {
   height: 3rem;
   width: 7rem;
-  position: absolute;
   top: -1.7rem;
+  bottom: auto;
+  left: auto;
   right: 0rem;
+  position: absolute;
 }
 
-body .l-MoreButton {
+.sectionContainer_frame_footerArea .moreButton {
   height: 2rem;
   width: 6rem;
   margin-top: 0.5rem;
+  display: inline-block;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: center;
+  font-size: medium;
+  color: #f8145b;
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
 }
 
-body .l-MoreButton span {
+.sectionContainer_frame_footerArea .moreButton span {
   position: relative;
   top: 0.1rem;
 }
 
-body .l-MoreButton .arrow {
+.sectionContainer_frame_footerArea .moreButton .arrow {
   height: 1rem;
   width: 2rem;
   top: 0.2rem;
@@ -703,7 +507,19 @@ body .l-MoreButton .arrow {
   display: inline-block;
 }
 
-body .l-BlogList {
+.sectionContainer_frame_footerArea .moreButton span {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: small;
+  vertical-align: bottom;
+}
+
+.sectionContainer_frame_footerArea .moreButton .arrow {
+  background: url(../img/arrow.png) left top no-repeat;
+  background-size: contain;
+  background-color: none;
+}
+
+.blogList {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -711,7 +527,7 @@ body .l-BlogList {
       flex-wrap: wrap;
 }
 
-body .l-AboutContents .l-AboutContents_parts, body .l-AboutContents .l-AboutContents_parts--reverse {
+.aboutContents_parts {
   height: auto;
   width: 100%;
   padding-bottom: 3rem;
@@ -721,53 +537,102 @@ body .l-AboutContents .l-AboutContents_parts, body .l-AboutContents .l-AboutCont
 }
 
 @media screen and (max-width: 768px) {
-  body .l-AboutContents .l-AboutContents_parts, body .l-AboutContents .l-AboutContents_parts--reverse {
+  .aboutContents_parts {
     display: block;
   }
 }
 
-body .l-AboutContents_parts--reverse {
+.aboutContents_parts--reverse {
+  height: auto;
+  width: 100%;
+  padding-bottom: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: reverse;
       -ms-flex-direction: row-reverse;
           flex-direction: row-reverse;
 }
 
-body .l-AboutContents_parts_image {
+@media screen and (max-width: 768px) {
+  .aboutContents_parts--reverse {
+    display: block;
+  }
+}
+
+.aboutContents_parts_image {
   height: auto;
   width: 60%;
+  position: relative;
+  /*アスペクト非固定用疑似要素*/
 }
 
 @media screen and (max-width: 768px) {
-  body .l-AboutContents_parts_image {
+  .aboutContents_parts_image {
     height: 100%;
     width: 100%;
   }
 }
 
-body .l-AboutContents_parts_image img {
+.aboutContents_parts_image img {
   -o-object-position: center center;
      object-position: center center;
 }
 
-body .l-AboutContents_parts_textBox {
+.aboutContents_parts_image::before {
+  content: "";
+  display: block;
+  /*padding-topの高さは元要素のwidthで決まる*/
+  padding-top: 56.25%;
+}
+
+.aboutContents_parts_image > .imageFrame {
+  /*absluteで親要素のbeforeに貼り付ける*/
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.aboutContents_parts_image > .imageFrame > .image {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.aboutContents_parts_textBox {
   height: auto;
   width: 40%;
   padding: 1rem 1rem;
 }
 
 @media screen and (max-width: 768px) {
-  body .l-AboutContents_parts_textBox {
+  .aboutContents_parts_textBox {
     height: 100%;
     width: 100%;
   }
 }
 
-body .l-AboutContents_parts_textBox--title {
+.aboutContents_parts_textBox_title {
   margin-bottom: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
-body .l-MenuLineUp {
+.aboutContents_parts_textBox_title::before {
+  content: attr(data-cat) "\a";
+  white-space: pre;
+  font-size: 0.8rem;
+}
+
+.aboutContents_parts_textBox_text {
+  font-size: 1rem;
+}
+
+.menuLineUp {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -778,7 +643,7 @@ body .l-MenuLineUp {
       flex-wrap: wrap;
 }
 
-body .l-MenuLineUp_menu {
+.menuLineUp_menu {
   height: auto;
   width: 22%;
   display: -webkit-box;
@@ -792,25 +657,54 @@ body .l-MenuLineUp_menu {
   margin-bottom: 1rem;
 }
 
-body .l-MenuLineUp_menu_image {
+.menuLineUp_menu_image {
   height: auto;
   width: 100%;
+  position: relative;
+  /*アスペクト非固定用疑似要素*/
 }
 
-body .l-MenuLineUp_menu_image img {
+.menuLineUp_menu_image img {
   -o-object-position: center center;
      object-position: center center;
 }
 
-body .l-MenuLineUp_menu_textBox .itemName {
+.menuLineUp_menu_image::before {
+  content: "";
+  display: block;
+  /*padding-topの高さは元要素のwidthで決まる*/
+  padding-top: 75%;
+}
+
+.menuLineUp_menu_image > .imageFrame {
+  /*absluteで親要素のbeforeに貼り付ける*/
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.menuLineUp_menu_image > .imageFrame > .image {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.menuLineUp_menu_textBox .itemName {
   margin-bottom: 0.3rem;
 }
 
-body .l-MenuLineUp_menu_textBox .itemInfo {
+.menuLineUp_menu_textBox .itemInfo {
   margin-bottom: 0;
 }
 
-body .l-ShopInfomation {
+.menuLineUp_menu_textBox .itemInfo {
+  font-size: 0.8rem;
+}
+
+.shopInfomation {
   height: auto;
   width: 100%;
   display: -webkit-box;
@@ -819,74 +713,139 @@ body .l-ShopInfomation {
 }
 
 @media screen and (max-width: 768px) {
-  body .l-ShopInfomation {
+  .shopInfomation {
     display: block;
   }
 }
 
-body .l-ShopInfomation_shopImage {
+.shopInfomation_shopImage {
   height: auto;
   width: 58.2%;
+  position: relative;
+  /*アスペクト非固定用疑似要素*/
 }
 
 @media screen and (max-width: 768px) {
-  body .l-ShopInfomation_shopImage {
+  .shopInfomation_shopImage {
     height: auto;
     width: 100%;
   }
 }
 
-body .l-ShopInfomation_shopImage_frame_image {
+.shopInfomation_shopImage_frame_image {
   -o-object-position: center center;
      object-position: center center;
 }
 
-body .l-ShopInfomation_textContainer {
-  margin-left: 3%;
+.shopInfomation_shopImage::before {
+  content: "";
+  display: block;
+  /*padding-topの高さは元要素のwidthで決まる*/
+  padding-top: 56.25%;
 }
 
-body .l-ShopInfomation_textContainer .shopName {
-  margin: 0.5rem 0;
+.shopInfomation_shopImage > .imageFrame {
+  /*absluteで親要素のbeforeに貼り付ける*/
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
-body .l-ShopInfomation_textContainer .shopAddress {
-  margin: 1rem 0;
-}
-
-body .l-ShopInfomation_textContainer .shopAccess {
-  margin-bottom: 0;
-}
-
-body .l-ShopInfomation_textContainer .shopInfo {
-  margin-top: 1rem;
-  display: inline-block;
-}
-
-body .l-ShopInfomation_textContainer .shopInfo th {
-  height: auto;
-  width: 6rem;
-  padding: 0.2rem 0;
-}
-
-body .l-GoogleMap {
-  height: 40vh;
-  width: 100%;
-  margin-top: 3%;
-}
-
-body .l-GoogleMap img {
+.shopInfomation_shopImage > .imageFrame > .image {
   height: 100%;
   width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
 }
 
-body .l-FooterArea {
-  height: auto;
-  width: auto;
+.shopInfomation_textContainer {
+  margin-left: 3%;
+  text-align: left;
 }
 
-body .l-FooterArea_link {
+.shopInfomation_textContainer .shopName {
+  margin: 0.5rem 0;
+}
+
+.shopInfomation_textContainer .shopAddress {
+  margin: 1rem 0;
+}
+
+.shopInfomation_textContainer .shopAccess {
+  margin-bottom: 0;
+}
+
+.shopInfomation_textContainer .shopInfo {
+  margin-top: 1rem;
+  display: inline-block;
+}
+
+.shopInfomation_textContainer .shopInfo th {
+  height: auto;
+  width: 6rem;
+  padding: 0.2rem 0;
+}
+
+@media screen and (max-width: 768px) {
+  .shopInfomation_textContainer {
+    text-align: center;
+  }
+}
+
+.shopInfomation_textContainer .shopType {
+  color: #f8145b;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.shopInfomation_textContainer .shopName {
+  font-size: 1.2rem;
+}
+
+.shopInfomation_textContainer .shopAddress {
+  font-size: 1rem;
+  font-style: normal;
+  line-height: inherit;
+}
+
+.shopInfomation_textContainer .shopAccess {
+  font-size: 0.9rem;
+}
+
+.shopInfomation_textContainer .shopInfo {
+  border-collapse: collapse;
+}
+
+@media screen and (min-width: 768px) {
+  .shopInfomation_textContainer .shopInfo .tel {
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+.googleMap {
+  height: 40vh;
+  width: 100%;
+  margin-top: 3%;
+}
+
+.googleMap img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.footerArea {
+  height: auto;
+  width: auto;
+  text-align: center;
+  color: #f8145b;
+}
+
+.footerArea_link {
   height: auto;
   width: 20rem;
   margin: 0 auto;
@@ -898,439 +857,15 @@ body .l-FooterArea_link {
           justify-content: space-between;
 }
 
-body .l-TopImageArea {
-  height: 13rem;
-  width: auto;
-  margin: 0;
-  position: relative;
-}
-
-body .l-TopImageArea::before {
-  content: "";
-  height: 100%;
-  width: 100%;
-  display: block;
-}
-
-body .l-TopImageArea_title {
-  height: auto;
-  width: auto;
-  margin: 0;
-  display: inline-block;
-  position: absolute;
-  top: 50%;
-  right: 10%;
-}
-
-body .l-CategoryArea {
-  margin: 2rem auto 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-body .l-CategoryArea a {
-  height: auto;
-  width: 20%;
-}
-
-body .l-Pagenation {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-body .l-Pagenation a {
-  display: inline;
-}
-
-body .l-Pagenation .pagination h2.screen-reader-text {
-  display: none;
-}
-
-body .l-SingleArea {
-  height: auto;
-  width: 60%;
-}
-
-@media screen and (max-width: 768px) {
-  body .l-SingleArea {
-    width: 100%;
-  }
-}
-
-body .l-SingleArea_titleArea {
-  margin-bottom: 2rem;
-  position: relative;
-}
-
-body .l-SingleArea_titleArea_category {
-  left: 0;
-  padding: 0.1rem 0.3rem;
-  position: static;
-}
-
-body .l-SingleArea_titleArea_date {
-  position: absolute;
-  right: 0;
-}
-
-body .l-SingleArea_titleArea_title {
-  margin-top: 1.1rem;
-}
-
-body .l-BackButton {
-  display: inline-block;
-  height: 2rem;
-  width: 100%;
-  margin: 2rem 0;
-}
-
-body .l-NextandPrevPosts {
-  height: 10vh;
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-body .l-NextandPrevPosts a {
-  height: auto;
-  width: 40%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  overflow: hidden;
-}
-
-body .l-NextandPrevPosts a:nth-child(2) {
-  text-align: right;
-}
-
-body .l-NextandPrevPosts .prev::before {
-  height: 1.5rem;
-  width: 1.5rem;
-  display: inline-block;
-  content: "";
-}
-
-body .l-NextandPrevPosts .next::after {
-  height: 1.5rem;
-  width: 1.5rem;
-  display: inline-block;
-  content: "";
-}
-
-body .l-WidgetArea {
-  height: auto;
-  width: 40%;
-  padding: 1.5rem 0 0 4rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-@media screen and (max-width: 768px) {
-  body .l-WidgetArea {
-    display: none;
-  }
-}
-
-body .l-WidgetItems {
-  margin-bottom: 2.5rem;
-}
-
-body .l-WidgetItems ul {
-  margin: 0.5rem 0 1rem;
-  padding: 0;
-}
-
-body .l-WidgetItems ul li {
-  margin-bottom: 0.7rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-body .l-WidgetItems ul img {
-  margin: 0 0.8rem 0.3rem 0;
-  padding: 0;
-}
-
-body .l-WidgetItem--Archive_year {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-body .l-WidgetItem--Archive_menu li {
-  padding-left: 0.8rem;
-}
-
-body .d- {
-  /*Header*/
-  /*MainPage*/
-  /*記事一覧ページ*/
-}
-
-body .d-NavArea--sub::before {
-  background-color: #fff;
-}
-
-@media screen and (max-width: 768px) {
-  body .d-NavArea {
-    background-color: #fff;
-    opacity: 0.8;
-  }
-}
-
-body .d-MenuBar_list {
-  font-family: Georgia, "Times New Roman", Times, serif;
-}
-
-body .d-MenuBar_list a {
-  color: #f8145b;
-}
-
-body .d-MenuBar_list--sub {
-  font-family: Georgia, "Times New Roman", Times, serif;
-}
-
-body .d-MenuBar_list--sub a {
-  color: #f8145b;
-}
-
-body .d-MainImageText::before {
-  background: url(../img/icon1.png) center no-repeat;
-  background-size: cover;
-}
-
-body .d-MainImageText_line {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
-body .d-SectionArea_frame {
-  border-top: solid 1pt #f8145b;
-  border-left: solid 1pt #f8145b;
-}
-
-body .d-SectionArea_frame_titleArea {
-  background: url(../img/icon2.png) left top no-repeat;
-  background-size: contain;
-  background-color: #fff;
-}
-
-body .d-SectionArea_frame_titleArea_title {
-  font-family: Georgia, "Times New Roman", Times, serif;
-  font-size: 1.3rem;
-  letter-spacing: 0.2rem;
-  color: #f8145b;
-}
-
-body .d-SectionArea_frame_mainArea {
-  color: #616161;
-}
-
-body .d-SectionArea_frame_footerArea {
-  background-color: #fff;
-  text-align: right;
-}
-
-body .d-MoreButton span {
-  font-family: Georgia, "Times New Roman", Times, serif;
-  font-size: small;
-  vertical-align: bottom;
-}
-
-body .d-MoreButton .arrow {
-  background: url(../img/arrow.png) left top no-repeat;
-  background-size: contain;
-  background-color: none;
-}
-
-body .d-AboutContents_parts_textBox_title {
-  font-size: 1.5rem;
-  text-align: center;
-}
-
-body .d-AboutContents_parts_textBox_title::before {
-  content: attr(data-cat) "\a";
-  white-space: pre;
-  font-size: 0.8rem;
-}
-
-body .d-AboutContents_parts_textBox_text {
+.footerArea_link {
   font-size: 1rem;
 }
 
-body .d-MenuLineUp .itemInfo {
-  font-size: 0.8rem;
-}
-
-body .d-ShopInfomation_textContainer {
-  text-align: left;
-}
-
-@media screen and (max-width: 768px) {
-  body .d-ShopInfomation_textContainer {
-    text-align: center;
-  }
-}
-
-body .d-ShopInfomation_textContainer .shopType {
+.footerArea_link a {
   color: #f8145b;
-  font-size: 0.9rem;
-  font-weight: bold;
 }
 
-body .d-ShopInfomation_textContainer .shopName {
-  font-size: 1.2rem;
-}
-
-body .d-ShopInfomation_textContainer .shopAddress {
+.footerArea_link_copyRight {
   font-size: 1rem;
-  font-style: normal;
-  line-height: inherit;
-}
-
-body .d-ShopInfomation_textContainer .shopAccess {
-  font-size: 0.9rem;
-}
-
-body .d-ShopInfomation_textContainer .shopInfo {
-  border-collapse: collapse;
-}
-
-@media screen and (min-width: 768px) {
-  body .d-ShopInfomation_textContainer .shopInfo .tel {
-    pointer-events: none;
-    cursor: default;
-  }
-}
-
-body .d-FooterArea {
-  text-align: center;
-  color: #f8145b;
-}
-
-body .d-FooterArea_link {
-  font-size: 1rem;
-}
-
-body .d-FooterArea_link a {
-  color: #f8145b;
-}
-
-body .d-FooterArea_copyRight {
-  font-size: 1rem;
-}
-
-body .d-TopImageArea {
-  background-position: left bottom;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: gray;
-}
-
-body .d-TopImageArea::before {
-  background: -webkit-gradient(linear, left top, right top, color-stop(40%, rgba(255, 255, 255, 0)), color-stop(60%, rgba(255, 255, 255, 0.7)));
-  background: linear-gradient(to right, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.7) 60%);
-}
-
-body .d-TopImageArea_title {
-  font-size: 2.5rem;
-  font-family: Georgia, "Times New Roman", Times, serif;
-  color: #f8145b;
-}
-
-body .d-CategoryArea a:first-child {
-  border-left: solid 1px #f8145b;
-}
-
-body .d-CategoryArea a {
-  text-align: center;
-  font-size: 1.2rem;
-  border-right: #f8145b 1px solid;
-}
-
-body .d-Pagenation {
-  font-size: 1.2rem;
-}
-
-body .d-SingleArea_titleArea {
-  border-bottom: #f8145b 1.5px solid;
-}
-
-body .d-SingleArea_titleArea_category {
-  border-color: #ccc;
-}
-
-body .d-SingleArea_titleArea_date {
-  font-size: 0.7rem;
-}
-
-body .d-SingleArea_titleArea_title {
-  font-size: 1.2rem;
-  font-weight: bold;
-  line-height: 2;
-  color: #f8145b;
-}
-
-body .d-BackButton {
-  background-color: #f8145b;
-  color: #fff;
-  text-align: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-body .d-NextandPrevPosts .prev::before {
-  background: url(../img/prev.png) center no-repeat;
-  background-size: contain;
-}
-
-body .d-NextandPrevPosts .next::after {
-  background: url(../img/next.png) center no-repeat;
-  background-size: contain;
-}
-
-body .d-WidgetItem--Archive_year {
-  font-size: 1.1rem;
-}
-
-body .d-WidgetItem--Archive_button:checked + .d-WidgetItem--Archive_year::after {
-  content: "▲";
-}
-
-body .d-WidgetItem--Archive_button + .d-WidgetItem--Archive_year::after {
-  content: "▼";
 }
 /*# sourceMappingURL=style.css.map */
