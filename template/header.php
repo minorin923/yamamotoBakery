@@ -1,14 +1,17 @@
 <header class="headerArea">
   <div class="headerContainer">
-  <label class="menuButton toggleLabel" for="navAreaToggle"><i class="fa fa-bars"></i></label>
+  <!-- <label class="menuButton toggleLabel" for="navAreaToggle"><i class="fa fa-bars"></i></label> -->
+  <label class="menuButton toggleLabel" for="navAreaToggle">
+    <img src="<?= get_template_directory_uri(); ?>/img/menu_icon.svg" alt="">
+  </label>
   <h1 class="logoMark">
-    <a href="/#topSection"><img src="<?= get_template_directory_uri(); ?>/img/logo.png" alt=""></a>
+    <img src="<?= get_template_directory_uri(); ?>/img/logo.svg" alt="">
   </h1>
   <input id="navAreaToggle" class="toggleButton" type="checkbox"></input>
   <nav class="navArea toggleTarget">
     <div class="navArea_menuBar">
       <h1 class="navArea_menuBar_logoMark">
-        <img src="<?= get_template_directory_uri(); ?>/img/logo.png" alt="">
+        <img src="<?= get_template_directory_uri(); ?>/img/logo.svg" alt="">
       </h1>
       <?php
       if (has_nav_menu('header-navigation')) {
@@ -35,6 +38,5 @@
     </div>
     <label class="navArea_blankSpace toggleLabel" for="navAreaToggle"></label>
   </nav>
-    </div>
 </header>
 <!-- header -->

@@ -15,7 +15,7 @@ Template Name: home
   <section id="topSection" class="js_fadeIn">
     <div class="mainImageArea">
       <div class="imageFrame">
-        <img class="image" src="/wp-content/themes/yamamotobakery/img/cafeSpace1.png" alt="">
+        <img class="image" src="<?= get_template_directory_uri(); ?>/img/cafeSpace.png" alt="">
       </div>
       <div class="mainImageArea_text">
         <span class="line1">白に包まれた優しい空間で</span>
@@ -29,7 +29,9 @@ Template Name: home
   <section id="newsSection" class="sectionContainer Gm-js_fadeIn">
     <div class="sectionContainer_frame">
       <div class="sectionContainer_frame_titleArea">
-        <h2 class="sectionContainer_frame_titleArea_title">News Topics</h2>
+        <h2 class="sectionContainer_frame_titleArea_title">
+        <img src="<?= get_template_directory_uri(); ?>/img/newsTitle.svg" alt="">
+        </h2>
       </div>
       <div class="sectionContainer_frame_mainArea">
         <div class="newsList">
@@ -38,7 +40,8 @@ Template Name: home
       </div>
       <div class="sectionContainer_frame_footerArea">
         <a class="moreButton" href="/news">
-          <span>more</span> <span class="arrow"></span>
+        <img src="<?= get_template_directory_uri(); ?>/img/newsAll.svg" alt="">
+          <!-- <span>more</span> <span class="arrow"></span> -->
         </a>
       </div>
     </div>
@@ -49,7 +52,9 @@ Template Name: home
   <section id="blogSection" class="sectionContainer Gm-js_fadeIn">
     <div class="sectionContainer_frame">
       <div class="sectionContainer_frame_titleArea">
-        <h2 class="sectionContainer_frame_titleArea_title">blog</h2>
+        <h2 class="sectionContainer_frame_titleArea_title">
+        <img src="<?= get_template_directory_uri(); ?>/img/blogTitle.svg" alt="">
+        </h2>
       </div>
       <div class="sectionContainer_frame_mainArea">
         <div class="blogList">
@@ -58,7 +63,7 @@ Template Name: home
       </div>
       <div class="sectionContainer_frame_footerArea">
         <a class="moreButton" href="/blog">
-          <span>more</span> <span class="arrow"></span>
+        <img src="<?= get_template_directory_uri(); ?>/img/blogAll.svg" alt="">
         </a>
       </div>
     </div>
@@ -67,16 +72,18 @@ Template Name: home
 
   <!-- start:AboutSection -->
   <section id="aboutSection" class="sectionContainer Gm-js_fadeIn">
-    <div class="sectionContainer_frame">
+    <div class="">
       <div class="sectionContainer_frame_titleArea">
-        <h2 class="sectionContainer_frame_titleArea_title">About Yamamoto Bakery</h2>
+        <h2 class="sectionContainer_frame_titleArea_title">
+        <img src="<?= get_template_directory_uri(); ?>/img/aboutTitle.svg" alt="">
+        </h2>
       </div>
       <div class="sectionContainer_frame_mainArea">
         <div class="aboutContents">
           <div class="aboutContents_parts ">
             <div class="aboutContents_parts_image">
               <div class="imageFrame">
-                <img class="image" src="/wp-content/themes/yamamotobakery/img/shopPic1.jpg" alt=""></div>
+                <img class="image" src="<?= get_template_directory_uri(); ?>/img/shopPic1.jpg" alt=""></div>
             </div>
             <div class="aboutContents_parts_textBox">
               <h3 class="aboutContents_parts_textBox_title" data-cat="～安心安全へのこだわり～">山本ベーカリーについて</h3>
@@ -85,10 +92,10 @@ Template Name: home
                 努めております。</p>
             </div>
           </div>
-          <div class="aboutContents_parts--reverse">
+          <div class="aboutContents_parts reverse">
             <div class="aboutContents_parts_image">
               <div class="imageFrame">
-                <img class="image" src="/wp-content/themes/yamamotobakery/img/cafeSpace1.png" alt=""></div>
+                <img class="image" src="<?= get_template_directory_uri(); ?>/img/cafeSpace.png" alt=""></div>
             </div>
             <div class="aboutContents_parts_textBox">
               <h3 class="aboutContents_parts_textBox_title" data-cat="～優雅なひと時を～">カフェスペース</h3>
@@ -107,7 +114,9 @@ Template Name: home
   <section id="menuLineUpSection" class="sectionContainer Gm-js_fadeIn">
     <div class="sectionContainer_frame">
       <div class="sectionContainer_frame_titleArea">
-        <h2 class="sectionContainer_frame_titleArea_title">Menu LineUp</h2>
+        <h2 class="sectionContainer_frame_titleArea_title">
+          <img src="<?= get_template_directory_uri(); ?>/img/menuTitle.svg" alt="">
+        </h2>
       </div>
       <div class="sectionContainer_frame_mainArea">
         <div class="menuLineUp">
@@ -123,7 +132,7 @@ Template Name: home
               <p class="itemInfo">1本(2斤)：1,000円(税別)</p>
             </div>
           </div>
-          <div class="menuLineUp_menu">
+          <div class="menuLineUp_menu reverse">
             <div class="menuLineUp_menu_image">
               <div class="imageFrame">
                 <img class="image" src="/wp-content/themes/yamamotobakery/img/bleed.png" alt="">
@@ -157,7 +166,9 @@ Template Name: home
   <section id="shopInfoSection" class="sectionContainer Gm-js_fadeIn">
     <div class="sectionContainer_frame">
       <div class="sectionContainer_frame_titleArea">
-        <h2 class="sectionContainer_frame_titleArea_title">Shop Info</h2>
+        <h2 class="sectionContainer_frame_titleArea_title">
+        <img src="<?= get_template_directory_uri(); ?>/img/shopInfoTitle.svg" alt="">
+        </h2>
       </div>
       <div class="sectionContainer_frame_mainArea">
         <div class="shopInfomation">

@@ -29,6 +29,10 @@
 /*固定変数*/
 $textColor:#616161;
 $mainColor:#f8145b;
+$asortColor1:#d41451;
+$asortColor2:#760a2c;
+$asortColor3:#f0ede5;
+$accentColor:#1cB3a8;
 $pcScreenSize:768px;
 $serifFont:Georgia, 'Times New Roman', Times, serif;
 
@@ -154,7 +158,7 @@ $aspectWidth-4-3:75%;
         //layout
         display: inline-block;
         //deco
-        text-decoration: underline;
+        text-decoration: underline  $accentColor;
         letter-spacing: 0.3rem;
         white-space: wrap;
         overflow: hidden;
@@ -164,14 +168,13 @@ $aspectWidth-4-3:75%;
   } 
 }
 
-@mixin ld-PostItem--blog{
+@mixin ld-PostItem--blog($aspect:$aspectWidth-4-3){
   //layout
   height: auto; width: 22%;
-  min-width: 150px;
-  margin: 0 5% 5%;
+  min-width: 140px;
   display: flex;
   flex-direction: column;
-  
+  margin-bottom: 5%;
 
   &_link{
     //layout
@@ -183,6 +186,7 @@ $aspectWidth-4-3:75%;
       //layout
       height: auto; width: 100%;
       position: relative;
+      @include l-AspectFixed($aspect);
     }
 
     &_category{
@@ -289,6 +293,13 @@ $aspectWidth-4-3:75%;
 }
 @mixin l-menuButton{
   height: 100%; width: 20%; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  img{
+    height:60%; width: auto;
+    object-fit: contain;
+  }
   @media screen and (min-width:$pcScreenSize) {
     display: none;
   }
@@ -296,8 +307,12 @@ $aspectWidth-4-3:75%;
 @mixin l-logoMark{
   height: 100%; width: 60%;
   margin: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   img{
-    height: 3rem; width: 15rem;
+    height: 70%; width: auto;
     object-fit: contain;
   }
   @media screen and (min-width:$pcScreenSize){
@@ -307,6 +322,7 @@ $aspectWidth-4-3:75%;
 @mixin l-navArea{
   z-index: 101;
   position: fixed;
+
   @media screen and (max-width:$pcScreenSize) {
     height: 100vh; width: 100vw;
   }
@@ -317,25 +333,32 @@ $aspectWidth-4-3:75%;
 }
 
 @mixin l-navArea_menuBar{
-  height: 100%; width: 65%;
+  height: 100%; width: 75%;
   display: flex;
   flex-direction: column;
   @media screen and (min-width:$pcScreenSize){
-    height: auto; width: 100%;
-    flex-direction: row;
+    height: 100%; width: 100%;
+    display: grid;
+    grid-template:
+    "logo sub sns" 50%
+    "logo menu menu" 50%
+    /30%   40%  30%;
+    ;
   }
 }
 @mixin l-navArea_blankSpace {
-  height: 100%; width: 35%;
+  height: 100%; width: 25%;
   @media screen and (min-width:$pcScreenSize){
     display: none;
   }
 }
-@mixin l-navArea_menuBar_logoMark {
+@mixin l-navArea_logoMark {
   margin: 2rem auto;
   img{height: 3rem; width: auto;}
   @media screen and (min-width:$pcScreenSize){
-    margin: 0 auto;
+    margin: 0 ;
+    height: 100%; width: 100%;
+    grid-area: logo;
   }
 }
 
@@ -345,25 +368,39 @@ $aspectWidth-4-3:75%;
   a{padding: 0.75rem 1rem;}
   @media screen and (min-width:$pcScreenSize){
     height: auto; width: 40vw;
-    top:10rem; left:30vw;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: start;
-    li{height: auto; width: 50%;}
   }
 }
 @mixin l-menuBar_list{
   @extend %l-list;
   flex-direction: column;
   margin: 0 auto 3rem;
+  @media screen and (min-width:$pcScreenSize){
+    height: 100%; width: 100%;
+    margin: 0;
+    flex-direction: row;
+    justify-content: space-around;
+    grid-area: menu;
+  }
 }
 @mixin l-menuBar_list--sub{
   @extend %l-list;
   margin: 0 auto;
+  @media screen and (min-width:$pcScreenSize){
+    height: 100%; width: 100%;
+    margin: 0;
+    justify-content: flex-end;
+    grid-area: sub;
+  }
 }
 @mixin l-menuBar_list--SNS{
   @extend %l-list;
   margin: 0 auto;
+  @media screen and (min-width:$pcScreenSize){
+    height: 100%; width: 100%;
+    margin: 0;
+    justify-content: flex-end;
+    grid-area: sns;
+  }
 }
 
 
@@ -430,8 +467,9 @@ $aspectWidth-4-3:75%;
 
 
 @mixin l-moreButton {
-  height: 2rem; width: 6rem;
+  height: 2rem; width: auto;
   margin-top: 0.5rem;
+  display: inline-block;
   span{
     position: relative;
     top:0.1rem
@@ -444,44 +482,52 @@ $aspectWidth-4-3:75%;
 }
 
 @mixin l-blogList{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 0 10%;
+
+  @media screen and (min-width:$pcScreenSize){
+    justify-content: space-between;
+    padding: 0;
+  }
 }
 
 
   // aboutSection
 @mixin l-aboutContents_parts($reverse:false){
-  height: auto; width: 100%;
-  padding-bottom: 3rem;
-  display: flex;
-  @media screen and (max-width:$pcScreenSize){
-    display: block;
-  }
+  display: block;
   @if $reverse {flex-direction: row-reverse;}
-}
-
-    
-@mixin l-aboutContents_parts_image{
-  height: auto; width: 60%;
-  @media screen and (max-width:$pcScreenSize){
-    height: 100%; width: 100%;
+  @media screen and (min-width:$pcScreenSize){
+    height: auto; width: 100%;
+    display: flex;
   }
-  img{
-    object-position: center center;
+}
+  
+@mixin l-aboutContents_parts_image{
+  height: auto; width: 100%;
+  img{object-position: center center;}
+  @media screen and (min-width:$pcScreenSize){
+    height: 100%; width: 50%;
   }
 }
 
 @mixin l-aboutContents_parts_textBox{
-  height: auto; width: 40%;
-  padding: 1rem 1rem;
-  @media screen and (max-width:$pcScreenSize){
-    height: 100%; width: 100%;
+  height: auto; width: 100%;
+  @media screen and (min-width:$pcScreenSize){
+    height: 100%; width: 50%;
   }
 }
 
 @mixin l-aboutContents_parts_textBox_title{
-  margin-bottom: 1rem;
+  height: auto; width: 80%;
+  margin:0 auto;
+}
+@mixin l-aboutContents_parts_textBox_text {
+  height: auto; width: 80%;
+  margin: 0 auto;
+  padding-top: 0.2rem;
+  padding-left: 1rem;
 }
 
     //LineupSection
@@ -489,27 +535,31 @@ $aspectWidth-4-3:75%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+
 }
 @mixin l-menuLineUp_menu{
-  height: auto; width: 22%;
+  height: auto; width: 80%;
   display: flex;
   flex-direction: column;
   min-width: 140px;
   margin:0 auto 1rem;
+  @media screen and (min-width:$pcScreenSize){
+    flex-direction: row;
+  }
 }
 @mixin l-menuLineUp_menu_image{
   height: auto; width: 100%;
-
-  img{
-    object-position: center center; 
+  img{object-position: center center; }
+  @media screen and (min-width:$pcScreenSize){
+    height: auto; width: 45%;
   }
 }
 @mixin l-menuLineUp_menu_image_textBox{
-  .itemName{
-    margin-bottom: 0.3rem;
-  }
-  .itemInfo{
-    margin-bottom: 0;
+  height: auto; width: 100%;
+  .itemName{margin-bottom: 0.3rem;}
+  .itemInfo{margin-bottom: 0;}
+  @media screen and (min-width:$pcScreenSize){
+    height: auto; width: 55%;
   }
 }
 
@@ -730,18 +780,23 @@ $aspectWidth-4-3:75%;
 
 
     /*Header*/
-@mixin d-navArea{
-  &--sub::before{
-    background-color: #fff; 
-  }
-  @media screen and (max-width:$pcScreenSize) {
-    background-color: #fff;
-    opacity: 0.8;
-    a{
-      // font-size: 1.3rem;
-    }
-  }
+@mixin d-headerContainer {
+  background-color: #fff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .5);
 }
+@mixin d-navArea{
+
+}
+@mixin d-menuButton{
+  color: $accentColor;
+  font-size: 35pt;
+  text-align: center;
+}
+@mixin d-navArea_menuBar {
+  background-color: #eee;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .5);
+}
+
 @mixin d-menuBar_list{
   font-family: $serifFont;
   a{
@@ -755,6 +810,10 @@ $aspectWidth-4-3:75%;
   }
 }
 
+@mixin d-mainImageArea_image(){
+  border-top:solid 5pt $asortColor2;
+  border-bottom:solid 5pt $asortColor2;    
+}
 
 @mixin d-mainImageText {
   &::before{
@@ -767,48 +826,17 @@ $aspectWidth-4-3:75%;
 }
 
 
-@mixin d-sectionArea_frame{
-  border-top:solid 1pt $mainColor;
-  border-left:solid 1pt $mainColor;     
-}
-@mixin d-sectionArea_frame_titleArea{
-  background: url(../img/icon2.png) left top no-repeat;
-  background-size: contain;
-  background-color: #fff;           
-}
-@mixin d-sectionArea_frame_titleArea_title{
-  font-family: $serifFont;
-  font-size: 1.3rem;
-  letter-spacing: 0.2rem;
-  color: $mainColor;
-}
-    
-@mixin d-sectionArea_frame_mainArea{
-  color: $textColor;
-}        
-@mixin d-sectionArea_frame_footerArea{
-  background-color: #fff;
-  text-align: right;
-}
-
-@mixin d-moreButton{
-  span{
-    font-family: $serifFont;
-    font-size: small;
-    vertical-align: bottom;
-  }
-  .arrow{
-    background:url(../img/arrow.png) left top no-repeat;
-    background-size: contain;
-    background-color:none;
-  }
-}
-
 
  // aboutSection
+@mixin d-aboutContents {
+  border-top:solid 5pt $asortColor2;
+  border-bottom:solid 5pt $asortColor2;    
+}
 @mixin d-aboutContents_parts_textBox_title{
   font-size: 1.5rem;
   text-align: center;
+  color: $asortColor1;
+  border-bottom: 1px solid $asortColor1;
   &::before{
     content: attr(data-cat) "\A";
     white-space: pre;
@@ -820,6 +848,10 @@ $aspectWidth-4-3:75%;
 }
 
   //LineupSection
+@mixin d-menuLineUp {
+  border:  3pt solid $asortColor2;
+  background-color: $asortColor3;
+}
 @mixin d-menuLineUp_menu_image_textBox{
   .itemInfo{
     font-size: 0.8rem;
@@ -971,54 +1003,52 @@ $aspectWidth-4-3:75%;
 /*-------------------------------------*/
 .headerArea{
   @include l-headerArea();
-  @include d-dummyDesign();
+  // @include d-dummyDesign();
   .headerContainer{
   @include m-Toggle($display:flex);
   @include l-headerContainer();
-  @include d-dummyDesign();
+  @include d-headerContainer();
   .toggleLabel{}
   .menuButton{
-    @include d-dummyDesign();
-    // @include d-ButtonDesign();
+    @include d-menuButton();
     @include l-menuButton();
   }
   .logoMark{
-    @include d-dummyDesign();
+    // @include d-dummyDesign();
     @include l-logoMark();
   }
   .toggleButton{}
   .toggleTarget{}
   .navArea{
-    @include d-dummyDesign();
+    // @include d-dummyDesign();
     @include l-navArea();
     @include d-navArea();
   }
   .navArea_menuBar{
-    @include d-dummyDesign();
+    // @include d-dummyDesign();
+    @include d-navArea_menuBar();
     @include l-navArea_menuBar();
     &_logoMark{
-      @include d-dummyDesign();
-      @include l-navArea_menuBar_logoMark();
+      // @include d-dummyDesign();
+      @include l-navArea_logoMark();
     }
     &_list{
-      @include d-dummyDesign();
+      // @include d-dummyDesign();
       @include l-menuBar_list(); 
       @include d-menuBar_list();
       &--sub{
-        @include d-dummyDesign();
+        // @include d-dummyDesign();
         @include l-menuBar_list--sub(); 
         @include d-menuBar_list();
       }
       &--SNS{
-        @include d-dummyDesign();
+        // @include d-dummyDesign();
         @include l-menuBar_list--SNS(); 
         @include d-menuBar_list();
-      }
-      
+      }   
     }
   }
   .navArea_blankSpace{
-    @include d-dummyDesign();
     @include l-navArea_blankSpace();
   }
 }
@@ -1027,12 +1057,13 @@ $aspectWidth-4-3:75%;
 
 #topSection{
 .mainImageArea{
-  @include d-dummyDesign();
+  // @include d-dummyDesign();
   @include l-mainImageArea();
   @include l-AspectFixed($aspectWidth-16-9);
-  &_frame{
-    &_image{
+  .imageFrame{
+    .image{
       @include l-mainImageArea_image();
+      @include d-mainImageArea_image();
     }
   }
   &_text{
@@ -1045,31 +1076,28 @@ $aspectWidth-4-3:75%;
 }
 
 .sectionContainer{
-  @include d-dummyDesign();
+  // @include d-dummyDesign();
   @include l-sectionArea;
   &_frame{
-    @include d-dummyDesign();
+    // @include d-dummyDesign();
     @include l-sectionArea_frame;
-    @include d-sectionArea_frame;
     &_titleArea{
-      @include d-dummyDesign();
+      // @include d-dummyDesign();
       @include l-sectionArea_frame_titleArea;
-      @include d-sectionArea_frame_titleArea;
       &_title{
-        @include d-dummyDesign();
+        // @include d-dummyDesign();
         @include l-sectionArea_frame_titleArea_title;
-        @include d-sectionArea_frame_titleArea_title;
       }
     }
-    &_mainArea{  @include d-dummyDesign();}
+    &_mainArea{  
+      // @include d-dummyDesign();
+    }
     &_footerArea{
-      @include d-dummyDesign();
+      // @include d-dummyDesign();
       @include l-sectionArea_frame_footerArea();
       .moreButton{
-        @include d-dummyDesign();
+        // @include d-dummyDesign();
         @include l-moreButton;
-        @include d-moreButton;
-        @include d-ButtonDesign();
       }
     }
   }
@@ -1077,7 +1105,7 @@ $aspectWidth-4-3:75%;
 
 .newsList{
   .Gl-PostItem--news{
-    @include d-dummyDesign();
+    // @include d-dummyDesign();
     @include ld-PostItem--news();
   }
 }
@@ -1085,22 +1113,18 @@ $aspectWidth-4-3:75%;
 .blogList{
   @include l-blogList();
   .Gl-PostItem--blog{
-    @include d-dummyDesign();
-    @include ld-PostItem--blog();
-    &_link{
-      &_image{
-        @include l-AspectFixed($aspectWidth-4-3);
-      }
-    }
+    // @include d-dummyDesign();
+    @include ld-PostItem--blog($aspectWidth-4-3);
   }
 }
 
 .aboutContents{
+  @include d-aboutContents();
+  .reverse{
+    flex-direction: row-reverse;
+  }
   &_parts{
     @include l-aboutContents_parts;
-    &--reverse{
-      @include l-aboutContents_parts(true);
-    }
     &_image{
       @include d-dummyDesign();
       @include l-aboutContents_parts_image;
@@ -1110,25 +1134,37 @@ $aspectWidth-4-3:75%;
       @include d-dummyDesign();
       @include l-aboutContents_parts_textBox;
       &_title{
+        @include d-dummyDesign();
         @include l-aboutContents_parts_textBox_title;
         @include d-aboutContents_parts_textBox_title;
       }
       &_text{
+        @include d-dummyDesign();
+        @include l-aboutContents_parts_textBox_text;
         @include d-aboutContents_parts_textBox_text;
       }
     }
   }
 }
 
+#menuLineUpSection{
+  @include d-menuLineUp();
+}
 .menuLineUp{
   @include l-menuLineUp();
+
+  .reverse{
+    @media screen and (min-width:$pcScreenSize){
+      flex-direction: row-reverse;
+    }
+  }
   &_menu{
-    @include d-dummyDesign();
+    // @include d-dummyDesign();
     @include l-menuLineUp_menu();
     &_image{
-      @include d-dummyDesign();
+      // @include d-dummyDesign();
       @include l-menuLineUp_menu_image();
-      @include l-AspectFixed($aspectWidth-4-3);
+      @include l-AspectFixed($aspectWidth-16-9);
     }
     &_textBox{
       @include d-dummyDesign();
