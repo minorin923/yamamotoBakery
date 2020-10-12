@@ -21,6 +21,12 @@
           'menu_class'      => 'navArea_menuBar_list' ,
         ));
       }
+      if (has_nav_menu('header-navigation-SNS')) {
+        wp_nav_menu(array(
+          'theme_location'  => 'header-navigation-SNS',
+          'container'       => '',
+          'menu_class'      => 'navArea_menuBar_list--SNS' ,
+        ));
       if (has_nav_menu('header-navigation-sub')) {
         wp_nav_menu(array(
           'theme_location'  => 'header-navigation-sub',
@@ -28,12 +34,6 @@
           'menu_class'      => 'navArea_menuBar_list--sub' ,
         ));
       }
-      if (has_nav_menu('header-navigation-SNS')) {
-        wp_nav_menu(array(
-          'theme_location'  => 'header-navigation-SNS',
-          'container'       => '',
-          'menu_class'      => 'navArea_menuBar_list--SNS' ,
-        ));
       } ?>
     </div>
     <label class="navArea_blankSpace toggleLabel" for="navAreaToggle"></label>

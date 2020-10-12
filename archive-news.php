@@ -9,21 +9,21 @@ Template Name: newslist
 
 <?php get_template_part('template/header'); ?>
 
-<?php get_template_part('template/topImage'); ?>
+<div class="titleBackGround">
+  <img src="<?= get_template_directory_uri(); ?>/img/newsList.svg" alt="">
+</div>
+	
+<main class="main">
 
-<section class="l-SectionArea Gl-MultiColumn">
-  <div class="l-SingleArea ">
-    <!-- 固定ページ本文の出力 -->
+<!-- 固定ページ本文の出力 -->
+<div class="singleContainer">
+	<div class="singleContainer_singleArea">
     <?php get_template_part('template/archiveContent','news'); ?>
-  </div>
-  <!-- end:singleArea -->
-
-  <!-- サイドバー読み込み -->
-  <?php if (is_active_sidebar('widgetarea-3')) : ?>
-    <div class="widget-column l-WidgetArea ">
-      <?php dynamic_sidebar('widgetarea-3'); ?>
-    </div><!-- .widget-area -->
-  <?php endif; ?>
-</section>
+	</div>
+	<!-- end:singleArea -->
+	<div class="singleContainer_sideArea">
+		<?php get_template_part('template/widgetArea', 'blog1'); ?>
+	</div>
+</div>
 
 <?php get_footer(); ?>

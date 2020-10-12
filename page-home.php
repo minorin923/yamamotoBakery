@@ -18,8 +18,8 @@ Template Name: home
         <img class="image" src="<?= get_template_directory_uri(); ?>/img/cafeSpace.png" alt="">
       </div>
       <div class="mainImageArea_text">
-        <span class="line1">白に包まれた優しい空間で</span>
-        <span class="line2">優雅な朝のひと時を。</span>
+        <span class="line1">一日のはじまりに、</span>
+        <span class="line2">優雅な朝のひとときを。</span>
       </div>
     </div>
   </section>
@@ -35,7 +35,7 @@ Template Name: home
       </div>
       <div class="sectionContainer_frame_mainArea">
         <div class="newsList">
-         <?= getCatItems(array("count"=>"3","listtype"=>"news", "post_type"=>"news", "taxonomy"=>"news-cat")) ?>
+         <?= getCatItems(array("count"=>"3", "className"=>"post_news", "thumbnail"=>false, "post_type"=>"news", "taxonomy"=>"news-cat")) ?>
         </div>
       </div>
       <div class="sectionContainer_frame_footerArea">
@@ -58,7 +58,7 @@ Template Name: home
       </div>
       <div class="sectionContainer_frame_mainArea">
         <div class="blogList">
-        <?= getCatItems(array("count"=>"4")) ?>
+        <?= getCatItems(array("count"=>"4", "className"=>"post_blog", "thumbnail"=>true)) ?>
         </div>
       </div>
       <div class="sectionContainer_frame_footerArea">
@@ -127,21 +127,9 @@ Template Name: home
               </div>
             </div>
             <div class="menuLineUp_menu_textBox">
-              <p class="itemName">十勝生クリーム食パン</p>
-              <p class="itemInfo">1斤：500円（税別)</p>
-              <p class="itemInfo">1本(2斤)：1,000円(税別)</p>
-            </div>
-          </div>
-          <div class="menuLineUp_menu reverse">
-            <div class="menuLineUp_menu_image">
-              <div class="imageFrame">
-                <img class="image" src="/wp-content/themes/yamamotobakery/img/bleed.png" alt="">
-              </div>
-            </div>
-            <div class="menuLineUp_menu_textBox">
-              <p class="itemName">十勝生クリーム食パン</p>
-              <p class="itemInfo">1斤：500円（税別)</p>
-              <p class="itemInfo">1本(2斤)：1,000円(税別)</p>
+              <div class="itemName">十勝生クリーム食パン</div>
+              <p class="itemInfo">小麦を国産にした贅沢なパンです。国産小麦の豊潤な味をお楽しみいただけます。</p>
+              <p class="itemPrice">1本(2斤)：1,000円(税別)</p>
             </div>
           </div>
           <div class="menuLineUp_menu">
@@ -152,8 +140,20 @@ Template Name: home
             </div>
             <div class="menuLineUp_menu_textBox">
               <p class="itemName">十勝生クリーム食パン</p>
-              <p class="itemInfo">1斤：500円（税別)</p>
-              <p class="itemInfo">1本(2斤)：1,000円(税別)</p>
+              <p class="itemInfo">小麦を国産にした贅沢なパンです。国産小麦の豊潤な味をお楽しみいただけます。</p>
+              <p class="itemPrice">1本(2斤)：1,000円(税別)</p>
+            </div>
+          </div>
+          <div class="menuLineUp_menu">
+            <div class="menuLineUp_menu_image">
+              <div class="imageFrame">
+                <img class="image" src="/wp-content/themes/yamamotobakery/img/bleed.png" alt="">
+              </div>
+            </div>
+            <div class="menuLineUp_menu_textBox">
+              <p class="itemName">十勝生クリーム食パン</p>
+              <p class="itemInfo">小麦を国産にした贅沢なパンです。国産小麦の豊潤な味をお楽しみいただけます。</p>
+              <p class="itemPrice">1本(2斤)：1,000円(税別)</p>
             </div>
           </div>
         </div>
@@ -161,7 +161,7 @@ Template Name: home
     </div>
   </section>
   <!-- end:MenuLineUpSection -->
-
+  
   <!-- start:shopinfoSection -->
   <section id="shopInfoSection" class="sectionContainer Gm-js_fadeIn">
     <div class="sectionContainer_frame">
@@ -174,7 +174,7 @@ Template Name: home
         <div class="shopInfomation">
           <div class="shopInfomation_shopImage">
             <div class="imageFrame">
-              <img class="image" src="/wp-content/themes/yamamotobakery/img/shop1.png" alt="">
+              <img class="image" src="<?= get_template_directory_uri(); ?>/img/shopInfo.png" alt="">
             </div>
           </div>
           <div class="shopInfomation_textContainer"><span class="shopType">Cafe&amp;Bakery</span>
@@ -209,7 +209,6 @@ Template Name: home
     </div>
   </section>
   <!-- end:shopinfoSection -->
-
 </main>
 <!-- main -->
 

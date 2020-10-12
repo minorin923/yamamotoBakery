@@ -141,12 +141,13 @@ add_action('restrict_manage_posts', 'add_post_taxonomy_restrict_filter');
 /*(4) ショートコード定義  */
 //[1] 記事一覧を表示させるショートコード
 // ショートコード: [getArticleList count="a"  listtype="b"  post_type="c" taxonomy_"d"]
-// "count" = 表示記事数,  "listtype"=リストの形式指定(blog/news)  "post_type" = 投稿記事タイプ "taxonomy" = カスタム投稿タイプのカテゴリのタクソノミー名
+// "count" = 表示記事数,  "thumbnail"=サムネイル指定(true/flase)  "post_type" = 投稿記事タイプ "taxonomy" = カスタム投稿タイプのカテゴリのタクソノミー名
 function getCatItems($atts, $content = null)
 {
   extract(shortcode_atts(array(
     "count" => '4',
-    "listtype" => 'blog',
+    "className" => 'news',
+    "thumbnail" => false,
     "post_type" => 'post',
     "taxonomy" => ''
   ), $atts));
@@ -164,7 +165,6 @@ function getCatItems($atts, $content = null)
     return '<p>記事がありません。</p>';
   }
 
-  $itemClassName = 'Gl-PostItem--' . $listtype;
   foreach ($myposts as $post) {
     // 記事オブジェクトの整形
     setup_postdata($post);
@@ -176,41 +176,52 @@ function getCatItems($atts, $content = null)
         $taxonomyArray = array(new class{ public $name = 'unKnown'; public $description = '';});
       } 
     } else {
-      $categoryArray = get_the_category();
+      $taxonomyArray = get_the_category();
     }
 
-    $retHtml .= '<div class="' . $itemClassName . '">';
-    $retHtml .= '<a class="' . $itemClassName . '_link" href="' . get_permalink() . '">';
-
-    if ($listtype === 'blog') {
-      $retHtml .= '<div class="' . $itemClassName . '_link_image "><div class=" imageFrame">';
-      if (has_post_thumbnail()) {
-        $retHtml .=  get_the_post_thumbnail($page->ID, 'thumbnail', array('class' => 'image'));
-      } else {
-        $retHtml .= '<div class="image" style="background-color:gray;"></div>';
-      }
-    }
-
-    if ($taxonomy !== '') {
-      $retHtml .= '<span class="' . $itemClassName . '_link_category"' . $taxonomyArray[0]->description . '>'  . $taxonomyArray[0]->name . '</span>';
-    } else {
-      $retHtml .= '<span class="' . $itemClassName . '_link_category"' . $categoryArray[0]->description . '>' . $categoryArray[0]->name . '</span>';
-    }
-
-    if ($listtype === 'blog') {
-      $retHtml .= '</div></div>';
-    }
-
-    $retHtml .= '<div class="' . $itemClassName . '_link_textBox">';
-    $retHtml .= '<span class="' . $itemClassName . '_link_textBox--date">' . get_the_date() . '</span>';
-    $retHtml .= '<p class="' . $itemClassName . '_link_textBox--title">' .  the_title("", "", false)  . '</p>';
-    $retHtml .= '</div></a></div>';
+    $retHtml .= drawPostItem($post,$thumbnail,$taxonomyArray[0],$className);
   }
 
   // oldpost変数をpost変数に戻す
   $post = $oldpost;
   return $retHtml;
 }
+
+function drawPostItem($post,$thumbnail=false,$taxonomy,$itemClassName)
+{
+  $retHtml .= '<div class="' . $itemClassName . '">';
+  $retHtml .= '<a class="post_link" href="' . get_permalink() . '">';
+
+  if ($thumbnail) {
+    $retHtml .= '<div class="post_link_image"><div class="imageFrame">';
+    if (has_post_thumbnail()) {
+      $retHtml .=  get_the_post_thumbnail($post->ID, 'thumbnail', array('class' => 'image'));
+    } else {
+      $retHtml .= '<div class="image" style="background-color:gray;"></div>';
+    }
+  }
+
+  $retHtml .= '<span class="post_link_category" ' . $taxonomy->description . '>'  . $taxonomy->name . '</span>';
+
+  if ($thumbnail) {$retHtml .= '</div></div>';}
+
+  $retHtml .= '<div class="post_link_textBox">';
+  $retHtml .= '<span class="post_link_textBox--date">' . get_the_date() . '</span>';
+  $retHtml .= '<p class="post_link_textBox--title">' .  postTitleSet(the_title("", "", false),10)  . '</p>';
+  $retHtml .= '</div></a></div>';
+  
+  return $retHtml;
+}
+
+function postTitleSet($str,$textCount){
+  $textCode ='UTF-8';
+  if(mb_strlen($str,$textCode) > $textCount){
+    return (mb_substr($str,0,$textCount,$textCode).'…');
+  }
+  return $str;
+}
+
+
 // 呼び出しの指定
 add_shortcode("getArticleList", "getCatItems");
 
@@ -234,6 +245,7 @@ class customarchive extends WP_Widget
   {
     /*HTML出力 */
     echo $args['before_widget'];
+
     echo $args['before_title'];
     if ($instance['title'] != '') {
       echo apply_filters('widget_title', $instance['title']);
@@ -257,25 +269,33 @@ class customarchive extends WP_Widget
                                         GROUP BY month , year
                                         ORDER BY post_date DESC");
 
-    $count = 0;
-    foreach ($months as $month) :
+    
+    $count = 0; $year_count=0;
+    foreach ($months as $month) {
       $year_current = $month->year;
       $count++;
       if ($year_current != $year_prev) {
-        if ($year_prev != null) {
-          echo  '</ul></div>';
+        if ($year_prev != null) { 
+          echo '</ul>';
+          echo '<div class="widget--Archive_totalCount">('.$year_count.')</div>';
+          echo '</div>';
+          $year_count = 0;
         }
-        echo '<div><input id="menuToggle' . $count . '" class="l-WidgetItem--Archive_button d-WidgetItem--Archive_button Gm-Toggle_button " type="checkbox" ></input>';
-        echo '<label class="l-WidgetItem--Archive_year d-WidgetItem--Archive_year Gm-Toggle_label" for="menuToggle' . $count . '">' . $month->year . '年</label>';
-        echo '<ul class="l-WidgetItem--Archive_menu d-WidgetItem--Archive_menu Gm-Toggle_target">';
+        echo '<div class="widget--Archive">';
+        echo '<label class="widget--Archive_year toggleLabel" for="menuToggle' . $count . '">' . $month->year .'</label>';
+        echo '<input id="menuToggle'.$count.'" class="toggleButton" type="checkbox" ></input>';
+        echo '<ul class="widget--Archive_menu toggleTarget">';
       }
       echo '<li><a href="/' . $month->year . '/' . date("m", mktime(0, 0, 0, $month->month, 1, $month->year)) . $posttype . '">';
-      echo date("n", mktime(0, 0, 0, $month->month, 1, $month->year)) . '月';
-      echo '(' . $month->post_count . ')';
-      echo '</a></li>';
+      echo ''.date("n", mktime(0, 0, 0, $month->month, 1, $month->year)) . '月';
+      echo '</a><span>(' . $month->post_count . ')</span>';
+      echo '</li>';
       $year_prev = $year_current;
-    endforeach;
-    echo '</ul></div>';
+      $year_count += $month->post_count;
+    }
+    echo '</ul>';
+    echo '<div class="widget--Archive_totalCount">('.$year_count.')</div>';
+    echo '</div>';
     echo $args['after_widget'];
   }
 
@@ -305,30 +325,34 @@ class customarchive extends WP_Widget
 
 /*(6) サイドバー・ウィジェット登録*/
 add_action('widgets_init', function () {
+  $before_widget ='<div class="widget">';
+  $before_title = '<div class="widget_titleArea"><h2 class="widget_titleArea_title">';
+  $after_title = '</h2></div><div class="widget_mainArea">';
+  $after_widget = '</div></div>';
   //[1] サイドバーの登録
   register_sidebar(array(
     'name'          => 'サイドバー1',
     'id'            => 'widgetarea-1',
-    'before_widget' => '<div class="l-SectionArea_frame d-SectionArea_frame l-WidgetItems">',
-    'after_widget'  => '</div></div>',
-    'before_title'  => '<div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea"><h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">',
-    'after_title'   => '</h2></div><div class="d-SectionArea_frame_mainArea">',
+    'before_widget' => $before_widget,
+    'after_widget'  => $after_widget,
+    'before_title'  => $before_title,
+    'after_title'   => $after_title,
   ));
   register_sidebar(array(
     'name'          => 'サイドバー2',
     'id'            => 'widgetarea-2',
-    'before_widget' => '<div class="l-SectionArea_frame d-SectionArea_frame l-WidgetItems">',
-    'after_widget'  => '</div></div>',
-    'before_title'  => '<div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea"><h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">',
-    'after_title'   => '</h2></div><div class="d-SectionArea_frame_mainArea">',
+    'before_widget' => $before_widget,
+    'after_widget'  => $after_widget,
+    'before_title'  => $before_title,
+    'after_title'   => $after_title,
   ));
   register_sidebar(array(
     'name'          => 'サイドバー3',
     'id'            => 'widgetarea-3',
-    'before_widget' => '<div class="l-SectionArea_frame d-SectionArea_frame l-WidgetItems">',
-    'after_widget'  => '</div></div>',
-    'before_title'  => '<div class="l-SectionArea_frame_titleArea d-SectionArea_frame_titleArea"><h2 class="l-SectionArea_frame_titleArea_title d-SectionArea_frame_titleArea_title">',
-    'after_title'   => '</h2></div><div class="d-SectionArea_frame_mainArea">',
+    'before_widget' => $before_widget,
+    'after_widget'  => $after_widget,
+    'before_title'  => $before_title,
+    'after_title'   => $after_title,
   ));
 
   //[2] ウィジェットの追加

@@ -9,9 +9,22 @@ Template Name: archive
 
 <?php get_template_part('template/header'); ?>
 
-<?php get_template_part('template/topImage'); ?>
+<div class="titleBackGround">
+  <img src="<?= get_template_directory_uri(); ?>/img/blogList.svg" alt="">
+</div>
+	
+<main class="main">
 
 <!-- 固定ページ本文の出力 -->
-<?php get_template_part('template/archiveContent'); ?>
+<div class="singleContainer">
+	<div class="singleContainer_singleArea">
+    <?php get_template_part('template/archiveContent'); ?>
+	</div>
+	<!-- end:singleArea -->
+	<div class="singleContainer_sideArea">
+		<?php get_template_part('template/widgetArea', 'blog1'); ?>
+	</div>
+</div>
+
 
 <?php get_footer(); ?>
