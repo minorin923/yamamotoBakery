@@ -34,14 +34,13 @@ Template Name: home
         </h2>
       </div>
       <div class="sectionContainer_frame_mainArea">
-        <div class="newsList">
+        <div class="newsContents">
          <?= getCatItems(array("count"=>"3", "className"=>"post_news", "thumbnail"=>false, "post_type"=>"news", "taxonomy"=>"news-cat")) ?>
         </div>
       </div>
       <div class="sectionContainer_frame_footerArea">
         <a class="moreButton" href="/news">
         <img src="<?= get_template_directory_uri(); ?>/img/newsAll.svg" alt="">
-          <!-- <span>more</span> <span class="arrow"></span> -->
         </a>
       </div>
     </div>
@@ -57,7 +56,7 @@ Template Name: home
         </h2>
       </div>
       <div class="sectionContainer_frame_mainArea">
-        <div class="blogList">
+        <div class="blogContents">
         <?= getCatItems(array("count"=>"4", "className"=>"post_blog", "thumbnail"=>true)) ?>
         </div>
       </div>

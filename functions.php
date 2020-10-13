@@ -207,7 +207,7 @@ function drawPostItem($post,$thumbnail=false,$taxonomy,$itemClassName)
 
   $retHtml .= '<div class="post_link_textBox">';
   $retHtml .= '<span class="post_link_textBox--date">' . get_the_date() . '</span>';
-  $retHtml .= '<p class="post_link_textBox--title">' .  postTitleSet(the_title("", "", false),10)  . '</p>';
+  $retHtml .= '<p class="post_link_textBox--title">' .  postTitleSet(the_title("", "", false),12)  . '</p>';
   $retHtml .= '</div></a></div>';
   
   return $retHtml;
@@ -385,7 +385,7 @@ add_filter('nav_menu_css_class', 'my_css_attributes_filter', 100, 1);
 //[3]ナビゲーションバーのaタグにclassを追加するコード
 function add_class_on_link($item_output, $item)
 {
-  $addClassName = 'Gm-js_scroll';
+  $addClassName = 'm-Js_Scroll';
   return preg_replace('/(<a.*?)/', '$1' . ' class="' . $addClassName . '"', $item_output);
 }
 add_filter('walker_nav_menu_start_el', 'add_class_on_link', 10, 4);
