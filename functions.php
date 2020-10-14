@@ -148,6 +148,7 @@ function getCatItems($atts, $content = null)
     "count" => '4',
     "className" => 'news',
     "thumbnail" => false,
+    "wordCount" => 12,
     "post_type" => 'post',
     "taxonomy" => ''
   ), $atts));
@@ -179,7 +180,7 @@ function getCatItems($atts, $content = null)
       $taxonomyArray = get_the_category();
     }
 
-    $retHtml .= drawPostItem($post,$thumbnail,$taxonomyArray[0],$className);
+    $retHtml .= drawPostItem($post,$thumbnail,$wordCount,$taxonomyArray[0],$className);
   }
 
   // oldpost変数をpost変数に戻す
@@ -187,7 +188,7 @@ function getCatItems($atts, $content = null)
   return $retHtml;
 }
 
-function drawPostItem($post,$thumbnail=false,$taxonomy,$itemClassName)
+function drawPostItem($post,$thumbnail,$wordCount,$taxonomy,$itemClassName)
 {
   $retHtml .= '<div class="' . $itemClassName . '">';
   $retHtml .= '<a class="post_link" href="' . get_permalink() . '">';
@@ -207,16 +208,16 @@ function drawPostItem($post,$thumbnail=false,$taxonomy,$itemClassName)
 
   $retHtml .= '<div class="post_link_textBox">';
   $retHtml .= '<span class="post_link_textBox--date">' . get_the_date() . '</span>';
-  $retHtml .= '<p class="post_link_textBox--title">' .  postTitleSet(the_title("", "", false),12)  . '</p>';
+  $retHtml .= '<p class="post_link_textBox--title">' .  postTitleSet(the_title("", "", false),$wordCount)  . '</p>';
   $retHtml .= '</div></a></div>';
   
   return $retHtml;
 }
 
-function postTitleSet($str,$textCount){
+function postTitleSet($str,$wordCount){
   $textCode ='UTF-8';
-  if(mb_strlen($str,$textCode) > $textCount){
-    return (mb_substr($str,0,$textCount,$textCode).'…');
+  if(mb_strlen($str,$textCode) > $wordCount){
+    return (mb_substr($str,0,$wordCount,$textCode).'…');
   }
   return $str;
 }

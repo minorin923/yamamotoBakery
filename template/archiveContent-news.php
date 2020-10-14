@@ -16,7 +16,7 @@
           //該当タクソノミーがない場合のWPError回避処理
           $taxonomyArray = array(new class{ public $name = 'unKnown'; public $description = '';});
         } 
-        echo drawPostItem($post,false,$taxonomyArray[0],"post_news");
+        echo drawPostItem($post,false,12,$taxonomyArray[0],"post_news");
       }
     ?>
     </div>

@@ -13,7 +13,7 @@
 	</div>
 	<!-- end:singleArea -->
 	<div class="singleContainer_sideArea">
-		<?php get_template_part('template/widgetArea', 'blog1'); ?>
+		<?php get_template_part('template/widgetArea'); ?>
 	</div>
 </div>
 

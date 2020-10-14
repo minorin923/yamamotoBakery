@@ -38,6 +38,7 @@ $gothicFont:"Yu Gothic","Hiragino Kaku Gothic ProN";
 $minchoFont:"Yu Mincho";
 $serifFont:"Cambria Math", 'Times New Roman', Times, serif;
 $san-serifFont:"Hiragino Sans",sans-serif;
+$scriptFont:"Great Vibes";
 $gridScale:20px;
 
 html{
@@ -79,13 +80,6 @@ li{
 
 
 
-@mixin absoluteItem ($top:auto,$bottom:auto,$left:auto,$right:auto){
-  top: $top; bottom:$bottom;
-  left: $left; right: $right;
-  position: absolute;
-}
-
-
 /*1-1. 汎用クラス定義*/
 /*(1) General Layout     :レイアウト指定クラス*/
 /*[1]要素のアスペクト比固定*/
@@ -111,7 +105,17 @@ $aspectWidth-4-3:75%;
   }
 }
 
-  /*[2]記事一覧の基本書式*/
+@mixin l-imgCenterSet ($height:50%) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  img{
+    height:$height; width: auto;
+    object-fit: contain;
+  }
+}
+
+/*[2]記事一覧の基本書式*/
 @mixin ld-PostItem--news{
   margin-bottom: 1rem;
   .post{
@@ -131,7 +135,7 @@ $aspectWidth-4-3:75%;
         height: auto; width: 5rem;
         padding: 0.1rem 0 0.1rem 0;
         position: absolute;
-        top: 0; left: 7.5rem;
+        top: -0.2rem; left: 6.5rem;
         text-align: center;
         //deco
         font-size: 0.9rem;
@@ -150,7 +154,7 @@ $aspectWidth-4-3:75%;
           padding-right: 8rem;
           //deco
           font-size: 0.9rem;
-          letter-spacing: 0.1rem;
+          letter-spacing: 0rem;
           white-space: nowrap;
         }
         &--title{
@@ -160,7 +164,7 @@ $aspectWidth-4-3:75%;
           //deco
           font-size: 0.9rem;
           text-decoration: underline  $accentColor;
-          letter-spacing: 0.3rem;
+          letter-spacing: 0.2rem;
           white-space: wrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -205,7 +209,7 @@ $aspectWidth-4-3:75%;
       
       &_textBox{
         //layout
-        height: 5.5rem; width: 100%;
+        height: 4.5rem; width: 100%;
         margin-top: 0.5rem;
         overflow: hidden;
 
@@ -228,83 +232,6 @@ $aspectWidth-4-3:75%;
   }
 }
 
-  /*[3]複数カラム*/
-@mixin l-MultiColumn{
-  display: flex;
-  flex-direction: row;
-  @media screen and (max-width:$pcScreenSize){
-    flex-direction: column;
-  }
-}
-
-
-/*(2) Gd-  General Decoration :デザイン装飾クラス*/
-/*[0]ダミーデザイン*/
-@mixin d-dummyDesign {
-  background-color: rgba(#999 ,0.3);
-  border: solid 0.1px #09f;
-  box-sizing:border-box;
-  opacity: 0.9;
-}
-@mixin d-backGroundGrid {
-  background-image:
-  linear-gradient(transparent 95%,rgba(0, 0, 0, 0.5) 95%),
-  linear-gradient(90deg,transparent 95%,rgba(0, 0, 0, 0.5) 95%);
-  background-size: $gridScale $gridScale;
-  background-repeat: repeat;
-}
-
-  /*[1]ボタン要素*/
-@mixin d-ButtonDesign{
-    display: inline-block;
-    cursor: pointer;
-    white-space: nowrap;
-    text-align: center;
-    font-size: medium;
-    color: $mainColor;
-    background-color: #f8f9fa;
-    border-color: #f8f9fa;
-    border-radius: 2px;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .5);
-}
-
-
-/*(3) Gm-  General Motion     :モーション付与クラス*/
-  /*[1]ボタンによる要素の表示切替*/
-@mixin m-Toggle($display:block){
-  //<label class="s-toggle-label" for="toggle"></label>
-  & > .toggleLabel{cursor: pointer;}
-  //<input id="toggle" class="s-toggle--buton" type="checkbox" ></input>
-  & > .toggleButton{display: none;}
-  //表示非表示を切り替える任意の要素に以下のクラスを付ける
-  & > .toggleTarget{display: none;}
-  & > .toggleButton:checked + .toggleTarget{display: $display;}
-}
-
-  /*[2]各種jsアニメーション*/
-@mixin m-Js_fadeIn{
-  &_action{
-    animation: fade 2s 0s 1 ;
-  } 
-}
-@keyframes fade {
-  from{opacity: 0; transform: translateY(30px);}
-    to{opacity: 1;transform: translateY(0);}   
-}
-@mixin m-Js_scroll{}
-
-
-
-@mixin l-imgCenterSet ($height:50%) {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  img{
-    height:$height; width: auto;
-    object-fit: contain;
-  }
-}
-
 @mixin ld-linkMark($bottom:0,$display:inline-block) {
   display: $display;
   position: relative;
@@ -320,21 +247,6 @@ $aspectWidth-4-3:75%;
     border-radius: 50%;
     background-color:rgba($accentColor,0.2);
   }
-}
-
-@mixin d-borderLine($borderWidth:5px,$borderColor:$asortColor2,$side:false){
-  box-sizing:border-box;
-  border-top:solid $borderWidth $borderColor;
-  border-bottom:solid $borderWidth $borderColor;    
-  @if($side){
-    border-left:solid $borderWidth $borderColor;
-    border-right:solid $borderWidth $borderColor; 
-  }
-  background-color: $borderColor;
-}
-
-@mixin d-backGroundColor($background:$asortColor3){
-  background-color: $background;
 }
 
 //破線
@@ -362,6 +274,119 @@ $aspectWidth-4-3:75%;
     }
   }
 }
+
+//
+@mixin ld-TitleDesign {
+  //layout
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto 0;
+  //deco
+  color: $asortColor1;
+  font-size: 1rem;
+  font-family: $minchoFont;
+
+  &::before{
+    //layout
+    content: attr(data-english) "\A";
+    display: inline-block;
+    height: auto; width: 100%;
+    text-align:center;
+    padding: 0 5%;
+    //deco
+    font-size: 1.8rem;
+    font-family: $scriptFont;
+    border-bottom: 2px solid $asortColor1;
+  }
+  
+}
+
+/*(2) Gd-  General Decoration :デザイン装飾クラス*/
+/*[0]ダミーデザイン*/
+@mixin d-dummyDesign {
+  background-color: rgba(#999 ,0.3);
+  border: solid 0.1px #09f;
+  box-sizing:border-box;
+  opacity: 0.9;
+}
+@mixin d-backGroundGrid {
+  background-image:
+  linear-gradient(transparent 95%,rgba(0, 0, 0, 0.5) 95%),
+  linear-gradient(90deg,transparent 95%,rgba(0, 0, 0, 0.5) 95%);
+  background-size: $gridScale $gridScale;
+  background-repeat: repeat;
+}
+
+/*[1]ボタン要素*/
+@mixin d-ButtonDesign{
+  //layout
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  height: 1.2rem; width: auto;
+  padding: 0 0.5%;
+  //deco
+  white-space: nowrap;
+  font-size: 1.1rem;
+  font-family: $serifFont;
+  color: $accentColor;
+  background-color: #fff;
+  border-bottom: 2px solid $accentColor;
+  //background-color: #f8f9fa;
+  // border-color: #f8f9fa;
+  // border-radius: 2px;
+  // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .5);
+  &::after{
+    content: "";
+    display: inline-block;
+    height: 0.9rem; width:2.5rem;
+    margin-left: 10%;
+    background: url(../img/linkArrow.svg) left center no-repeat;
+    background-size: contain;
+  }
+}
+
+@mixin d-borderLine($borderWidth:5px,$borderColor:$asortColor2,$side:false){
+  box-sizing:border-box;
+  border-top:solid $borderWidth $borderColor;
+  border-bottom:solid $borderWidth $borderColor;    
+  @if($side){
+    border-left:solid $borderWidth $borderColor;
+    border-right:solid $borderWidth $borderColor; 
+  }
+  background-color: $borderColor;
+}
+
+@mixin d-backGroundColor($background:$asortColor3){
+  background-color: $background;
+}
+
+/*(3) Gm-  General Motion     :モーション付与クラス*/
+/*[1]ボタンによる要素の表示切替*/
+@mixin m-Toggle($display:block){
+  //<label class="s-toggle-label" for="toggle"></label>
+  & > .toggleLabel{cursor: pointer;}
+  //<input id="toggle" class="s-toggle--buton" type="checkbox" ></input>
+  & > .toggleButton{display: none;}
+  //表示非表示を切り替える任意の要素に以下のクラスを付ける
+  & > .toggleTarget{display: none;}
+  & > .toggleButton:checked + .toggleTarget{display: $display;}
+}
+
+  /*[2]各種jsアニメーション*/
+@mixin m-Js_FadeIn{
+  &_action{
+    animation: fade 2s 0s 1 ;
+  } 
+}
+@keyframes fade {
+  from{opacity: 0; transform: translateY(30px);}
+    to{opacity: 1;transform: translateY(0);}   
+}
+@mixin m-Js_scroll{}
+
+
 
 
 
@@ -411,7 +436,7 @@ $aspectWidth-4-3:75%;
     grid-template:
     "logo . sns sub" 50%
     "logo . menu menu" 50%
-    /28% 4%  28% 40%;
+    /28% 4%  auto 16rem;
   }
 }
 @mixin l-navArea_blankSpace {
@@ -458,7 +483,7 @@ $aspectWidth-4-3:75%;
 @mixin l-menuBar_list--sub{
   @include l-list;
   @media screen and (min-width:$pcScreenSize){
-    justify-content: flex-start;
+    justify-content: flex-end;
     grid-area: sub;
   }
 }
@@ -502,13 +527,9 @@ $aspectWidth-4-3:75%;
 @mixin l-sectionArea_frame_titleArea{
   height: $gridScale*4; width: auto;
   margin-bottom: $gridScale*1;
+  text-align: center;
 }
-@mixin l-sectionArea_frame_titleArea_title{
-  height: 100%; width: auto;
-  margin: 0; padding: 0;
-  display: flex;
-  justify-content:center;
-}
+
 @mixin l-sectionArea_frame_footerArea{
   height: $gridScale*2; width: auto;
   text-align: right;
@@ -648,16 +669,14 @@ $aspectWidth-4-3:75%;
   }
 }
 
-
-    //googleMap
+//googleMap
 @mixin l-googleMap{
   height: 40vh; width: 100%;
   margin-top: 3%;
-  img{
+  &_map{
     height: 40vh; width: 100%;
     position: absolute;
     left: 0;
-    object-fit: cover;
   }
 }
 
@@ -737,20 +756,14 @@ $aspectWidth-4-3:75%;
   margin-bottom: ($gridScale*2);
   @media screen and (min-width:$pcScreenSize){
     height: auto; width: 70%;
-    // margin: ($gridScale *2) 0 0 ($gridScale *2) ;
   }
 }
-
 
 @mixin l-blogList{
   display: flex;
   flex-wrap: wrap;
   justify-content: start;
-  // padding: 0 10%;
   padding: 0;
-  @media screen and (min-width:$pcScreenSize){
-    padding: 0;
-  }
 }
 
 @mixin l-sideArea {
@@ -767,30 +780,6 @@ $aspectWidth-4-3:75%;
     @include ld-DashedLine();
   }
 }
-
-@mixin ld-single {
-  &_titleArea{
-    margin-bottom: 2rem;
-    position: relative;
-
-    &_category{
-      left: 0;
-      padding: 0.1rem 0.3rem;
-      position: static;
-    }
-    &_date{
-       position: absolute;
-       right: 0;
-    }
-    &_title{
-      margin-top: 1.1rem;
-    }
-  }
-  &_mainArea{}
-  &_footer{}
-}
-
-
 
 
     /*Header*/
@@ -1006,7 +995,7 @@ body{
       @include l-sectionArea_frame_titleArea;
       &_title{
         // @include d-dummyDesign();
-        @include l-sectionArea_frame_titleArea_title;
+        @include ld-TitleDesign();
       }
     }
     &_mainArea{  
@@ -1017,7 +1006,8 @@ body{
       @include l-sectionArea_frame_footerArea();
       .moreButton{
         // @include d-dummyDesign();
-        @include l-moreButton;
+        // @include l-moreButton;
+        @include d-ButtonDesign;
       }
     }
   }
@@ -1135,7 +1125,7 @@ body{
 }
 
 
-.titleBackGround{
+.subPageTitleArea{
   @include l-titleBackGround();
   @include d-titleBackGround();
   @include d-borderLine();
@@ -1276,7 +1266,6 @@ body{
         font-size: 1.2rem;
         color: $mainColor;
         font-family: $minchoFont,$serifFont;
-        @include l-sectionArea_frame_titleArea_title;
       }
     }
     &_mainArea{
@@ -1360,3 +1349,6 @@ body{
   justify-content: space-between;
 }
 
+.m-Js_FadeIn{
+  // @include m-Js_FadeIn();
+}

@@ -1,6 +1,6 @@
 <?php if (get_post_type() === 'news') {
   if (is_active_sidebar('widgetarea-3')) : ?>
-    <div class="widgetSection ">
+    <div class="widgetSection1">
       <?php dynamic_sidebar('widgetarea-3'); ?>
     </div>
   <?php endif;

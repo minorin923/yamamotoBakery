@@ -72,7 +72,6 @@ li {
 /*(1) General Layout     :レイアウト指定クラス*/
 /*[1]要素のアスペクト比固定*/
 /*[2]記事一覧の基本書式*/
-/*[3]複数カラム*/
 /*(2) Gd-  General Decoration :デザイン装飾クラス*/
 /*[0]ダミーデザイン*/
 /*[1]ボタン要素*/
@@ -252,7 +251,7 @@ body {
     width: 100%;
     display: -ms-grid;
     display: grid;
-    grid-template: "logo . sns sub" 50% "logo . menu menu" 50% /28% 4%  28% 40%;
+    grid-template: "logo . sns sub" 50% "logo . menu menu" 50% /28% 4%  auto 16rem;
   }
 }
 
@@ -397,9 +396,9 @@ body {
 
 @media screen and (min-width: 768px) {
   .headerArea .headerContainer .navArea_menuBar_list--sub {
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
     grid-area: sub;
   }
 }
@@ -558,19 +557,36 @@ body {
   height: 80px;
   width: auto;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .sectionContainer_frame_titleArea_title {
-  height: 100%;
-  width: auto;
-  margin: 0;
-  padding: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: auto 0;
+  color: #d41451;
+  font-size: 1rem;
+  font-family: "Yu Mincho";
+}
+
+.sectionContainer_frame_titleArea_title::before {
+  content: attr(data-english) "\a";
+  display: inline-block;
+  height: auto;
+  width: 100%;
+  text-align: center;
+  padding: 0 5%;
+  font-size: 1.8rem;
+  font-family: "Great Vibes";
+  border-bottom: 2px solid #d41451;
 }
 
 .sectionContainer_frame_footerArea {
@@ -580,15 +596,32 @@ body {
 }
 
 .sectionContainer_frame_footerArea .moreButton {
-  height: 2rem;
-  width: auto;
-  margin-top: 0.5rem;
+  cursor: pointer;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  height: 1.2rem;
+  width: auto;
+  padding: 0 0.5%;
+  white-space: nowrap;
+  font-size: 1.1rem;
+  font-family: "Cambria Math", "Times New Roman", Times, serif;
+  color: #1cB3a8;
+  background-color: #fff;
+  border-bottom: 2px solid #1cB3a8;
+}
+
+.sectionContainer_frame_footerArea .moreButton::after {
+  content: "";
+  display: inline-block;
+  height: 0.9rem;
+  width: 2.5rem;
+  margin-left: 10%;
+  background: url(../img/linkArrow.svg) left center no-repeat;
+  background-size: contain;
 }
 
 .newsContents .post_news {
@@ -613,8 +646,8 @@ body {
   width: 5rem;
   padding: 0.1rem 0 0.1rem 0;
   position: absolute;
-  top: 0;
-  left: 7.5rem;
+  top: -0.2rem;
+  left: 6.5rem;
   text-align: center;
   font-size: 0.9rem;
   border-radius: 3px;
@@ -638,7 +671,7 @@ body {
 .newsContents .post_news .post_link_textBox--date {
   padding-right: 8rem;
   font-size: 0.9rem;
-  letter-spacing: 0.1rem;
+  letter-spacing: 0rem;
   white-space: nowrap;
 }
 
@@ -648,7 +681,7 @@ body {
   font-size: 0.9rem;
   -webkit-text-decoration: underline #1cB3a8;
           text-decoration: underline #1cB3a8;
-  letter-spacing: 0.3rem;
+  letter-spacing: 0.2rem;
   white-space: wrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -726,7 +759,7 @@ body {
 }
 
 .blogContents .post_blog .post_link_textBox {
-  height: 5.5rem;
+  height: 4.5rem;
   width: 100%;
   margin-top: 0.5rem;
   overflow: hidden;
@@ -768,8 +801,8 @@ body {
   width: 5rem;
   padding: 0.1rem 0 0.1rem 0;
   position: absolute;
-  top: 0;
-  left: 7.5rem;
+  top: -0.2rem;
+  left: 6.5rem;
   text-align: center;
   font-size: 0.9rem;
   border-radius: 3px;
@@ -793,7 +826,7 @@ body {
 .newsList .post_news .post_link_textBox--date {
   padding-right: 8rem;
   font-size: 0.9rem;
-  letter-spacing: 0.1rem;
+  letter-spacing: 0rem;
   white-space: nowrap;
 }
 
@@ -803,7 +836,7 @@ body {
   font-size: 0.9rem;
   -webkit-text-decoration: underline #1cB3a8;
           text-decoration: underline #1cB3a8;
-  letter-spacing: 0.3rem;
+  letter-spacing: 0.2rem;
   white-space: wrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -819,12 +852,6 @@ body {
       -ms-flex-pack: start;
           justify-content: start;
   padding: 0;
-}
-
-@media screen and (min-width: 768px) {
-  .blogList {
-    padding: 0;
-  }
 }
 
 .blogList .post_blog {
@@ -891,7 +918,7 @@ body {
 }
 
 .blogList .post_blog .post_link_textBox {
-  height: 5.5rem;
+  height: 4.5rem;
   width: 100%;
   margin-top: 0.5rem;
   overflow: hidden;
@@ -1290,13 +1317,11 @@ body {
   margin-top: 3%;
 }
 
-.googleMap img {
+.googleMap_map {
   height: 40vh;
   width: 100%;
   position: absolute;
   left: 0;
-  -o-object-fit: cover;
-     object-fit: cover;
 }
 
 .footerArea {
@@ -1322,7 +1347,7 @@ body {
   font-size: 0.9rem;
 }
 
-.titleBackGround {
+.subPageTitleArea {
   height: 200px;
   width: auto;
   display: -webkit-box;
@@ -1650,16 +1675,6 @@ body {
   font-size: 1.2rem;
   color: #f8145b;
   font-family: "Yu Mincho", "Cambria Math", "Times New Roman", Times, serif;
-  height: 100%;
-  width: auto;
-  margin: 0;
-  padding: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
 }
 
 .widgetSection1 .widget_mainArea {
@@ -1728,16 +1743,6 @@ body {
   font-size: 1.2rem;
   color: #f8145b;
   font-family: "Yu Mincho", "Cambria Math", "Times New Roman", Times, serif;
-  height: 100%;
-  width: auto;
-  margin: 0;
-  padding: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
 }
 
 .widgetSection2 .widget_mainArea {

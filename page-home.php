@@ -12,7 +12,7 @@ Template Name: home
 <main class="main">
 
   <!-- start:topSection -->
-  <section id="topSection" class="js_fadeIn">
+  <section id="topSection" class="m-Js_FadeIn">
     <div class="mainImageArea">
       <div class="imageFrame">
         <img class="image" src="<?= get_template_directory_uri(); ?>/img/cafeSpace.png" alt="">
@@ -26,56 +26,46 @@ Template Name: home
   <!-- end:topSection -->
 
   <!-- start:newsSection -->
-  <section id="newsSection" class="sectionContainer Gm-js_fadeIn">
+  <section id="newsSection" class="sectionContainer m-Js_FadeIn">
     <div class="sectionContainer_frame">
       <div class="sectionContainer_frame_titleArea">
-        <h2 class="sectionContainer_frame_titleArea_title">
-        <img src="<?= get_template_directory_uri(); ?>/img/newsTitle.svg" alt="">
-        </h2>
+        <h2 class="sectionContainer_frame_titleArea_title" data-english ="News Tipcs">お客様へのお知らせ</h2>
       </div>
       <div class="sectionContainer_frame_mainArea">
         <div class="newsContents">
-         <?= getCatItems(array("count"=>"3", "className"=>"post_news", "thumbnail"=>false, "post_type"=>"news", "taxonomy"=>"news-cat")) ?>
+         <?= getCatItems(array("count"=>"3", "className"=>"post_news", "thumbnail"=>false,"wordCount"=>20, "post_type"=>"news", "taxonomy"=>"news-cat")) ?>
         </div>
       </div>
       <div class="sectionContainer_frame_footerArea">
-        <a class="moreButton" href="/news">
-        <img src="<?= get_template_directory_uri(); ?>/img/newsAll.svg" alt="">
-        </a>
+        <a class="moreButton" href="/news">News All</a>
       </div>
     </div>
   </section>
   <!-- end:newsSection -->
 
   <!-- start:blogSection -->
-  <section id="blogSection" class="sectionContainer Gm-js_fadeIn">
+  <section id="blogSection" class="sectionContainer m-Js_FadeIn">
     <div class="sectionContainer_frame">
       <div class="sectionContainer_frame_titleArea">
-        <h2 class="sectionContainer_frame_titleArea_title">
-        <img src="<?= get_template_directory_uri(); ?>/img/blogTitle.svg" alt="">
-        </h2>
+        <h2 class="sectionContainer_frame_titleArea_title" data-english ="Blog Tipcs">当店のブログ</h2>
       </div>
       <div class="sectionContainer_frame_mainArea">
         <div class="blogContents">
-        <?= getCatItems(array("count"=>"4", "className"=>"post_blog", "thumbnail"=>true)) ?>
+        <?= getCatItems(array("count"=>"4", "thumbnail"=>true, "className"=>"post_blog")) ?>
         </div>
       </div>
       <div class="sectionContainer_frame_footerArea">
-        <a class="moreButton" href="/blog">
-        <img src="<?= get_template_directory_uri(); ?>/img/blogAll.svg" alt="">
-        </a>
+        <a class="moreButton" href="/blog">Blogs All</a>
       </div>
     </div>
   </section>
   <!-- end:blogSection -->
 
   <!-- start:AboutSection -->
-  <section id="aboutSection" class="sectionContainer Gm-js_fadeIn">
+  <section id="aboutSection" class="sectionContainer m-Js_FadeIn">
     <div class="">
       <div class="sectionContainer_frame_titleArea">
-        <h2 class="sectionContainer_frame_titleArea_title">
-        <img src="<?= get_template_directory_uri(); ?>/img/aboutTitle.svg" alt="">
-        </h2>
+      <h2 class="sectionContainer_frame_titleArea_title" data-english ="about YamamotoBakery">山本ベーカリーについて</h2>
       </div>
       <div class="sectionContainer_frame_mainArea">
         <div class="aboutContents">
@@ -110,12 +100,10 @@ Template Name: home
   <!-- end:AboutSection -->
 
   <!-- start:menuLineUpSection -->
-  <section id="menuLineUpSection" class="sectionContainer Gm-js_fadeIn">
+  <section id="menuLineUpSection" class="sectionContainer m-Js_FadeIn">
     <div class="sectionContainer_frame">
       <div class="sectionContainer_frame_titleArea">
-        <h2 class="sectionContainer_frame_titleArea_title">
-          <img src="<?= get_template_directory_uri(); ?>/img/menuTitle.svg" alt="">
-        </h2>
+      <h2 class="sectionContainer_frame_titleArea_title" data-english ="Menu LineUp">メニューのご紹介</h2>
       </div>
       <div class="sectionContainer_frame_mainArea">
         <div class="menuLineUp">
@@ -162,12 +150,10 @@ Template Name: home
   <!-- end:MenuLineUpSection -->
   
   <!-- start:shopinfoSection -->
-  <section id="shopInfoSection" class="sectionContainer Gm-js_fadeIn">
+  <section id="shopInfoSection" class="sectionContainer m-Js_FadeIn">
     <div class="sectionContainer_frame">
       <div class="sectionContainer_frame_titleArea">
-        <h2 class="sectionContainer_frame_titleArea_title">
-        <img src="<?= get_template_directory_uri(); ?>/img/shopInfoTitle.svg" alt="">
-        </h2>
+        <h2 class="sectionContainer_frame_titleArea_title" data-english ="Shop Infomation">店舗紹介</h2>
       </div>
       <div class="sectionContainer_frame_mainArea">
         <div class="shopInfomation">
@@ -203,7 +189,9 @@ Template Name: home
             </table>
           </div>
         </div>
-        <div class="googleMap"><img src="/wp-content/themes/yamamotobakery/img/googlemap.png" alt=""></div>
+        <div class="googleMap">
+        <iframe class="googleMap_map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.785154906868!2d139.7663702505756!3d35.682291780096776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bfc40f10f69%3A0x30bde288c0edfb04!2z5p2x5Lqs6aeF5LiA55Wq6KGX!5e0!3m2!1sja!2sjp!4v1602640666300!5m2!1sja!2sjp" width="1000" height="400" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
       </div>
     </div>
   </section>

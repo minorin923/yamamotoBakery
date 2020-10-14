@@ -11,8 +11,8 @@ Template Name: owner
 
 <main class="main">
 
-  <div class="titleBackGround">
-    <img src="<?= get_template_directory_uri(); ?>/img/owner.svg" alt="">
+  <div class="subPageTitleArea_title">
+  <h2 class="subPageTitleArea_title" data-english ="Owner">当店のオーナー紹介</h2>
   </div>
 
   <section id="ownerSection" class="sectionContainer Gm-js_fadeIn">
@@ -35,53 +35,6 @@ Template Name: owner
     </div>
   </section>
 
-  <!-- start:shopinfoSection -->
-  <section id="shopInfoSection" class="sectionContainer Gm-js_fadeIn">
-    <div class="sectionContainer_frame">
-      <div class="sectionContainer_frame_titleArea">
-        <h2 class="sectionContainer_frame_titleArea_title">
-        <img src="<?= get_template_directory_uri(); ?>/img/shopInfoTitle.svg" alt="">
-        </h2>
-      </div>
-      <div class="sectionContainer_frame_mainArea">
-        <div class="shopInfomation">
-          <div class="shopInfomation_shopImage">
-            <div class="imageFrame">
-              <img class="image" src="<?= get_template_directory_uri(); ?>/img/shopInfo.png" alt="">
-            </div>
-          </div>
-          <div class="shopInfomation_textContainer"><span class="shopType">Cafe&amp;Bakery</span>
-            <h3 class="shopName"><?= $cfs->get('name'); ?></h3>
-            <address class="shopAddress"><?= $cfs->get('address'); ?></address>
-            <p class="shopAccess"><?= $cfs->get('access'); ?></p>
-
-            <table class="shopInfo">
-              <tbody>
-                <tr>
-                  <th>電話番号</th>
-                  <td><a class="tel" href="tel:<?= $cfs->get('tel'); ?>"><?= $cfs->get('tel'); ?></a></td>
-                </tr>
-                <tr>
-                  <th>営業時間</th>
-                  <td><?= $cfs->get('time'); ?></td>
-                </tr>
-                <tr>
-                  <th>定休日</th>
-                  <td><?= $cfs->get('holiday'); ?></td>
-                </tr>
-                <tr>
-                  <th>駐車場</th>
-                  <td><?= $cfs->get('parking'); ?></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="googleMap"><img src="/wp-content/themes/yamamotobakery/img/googlemap.png" alt=""></div>
-      </div>
-    </div>
-  </section>
-  <!-- end:shopinfoSection -->
 </main>
 <!-- main -->
 
