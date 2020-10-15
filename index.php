@@ -9,25 +9,27 @@ Template Name: index
 
 <?php get_template_part('template/header'); ?>
 
-
-<div class="titleBackGround">
-  <img src="<?= get_template_directory_uri(); ?>/img/blogList.svg" alt="">
-</div>
 	
-<main class="main">
+<main class="BlogListPage">
 
-<!-- 固定ページ本文の出力 -->
+	<section class="BlogListSection Gm-js_fadeIn">
+    <div class="BlogListSection__titleArea">
+    <h2 class="SectionTitle" data-english ="BlogList">ブログ一覧</h2>
+    </div>
+    <div class="BlogListSection__mainArea">
+			<div class="SingleContainer">
+				<div class="SingleContainer_singleArea">
+					<?php get_template_part('template/archiveContent'); ?>
+				</div>
+				<!-- end:singleArea -->
+				<div class="SingleContainer_sideArea">
+					<?php get_template_part('template/widgetArea'); ?>
+				</div>
+			</div>
+		</div>
+	</section>
 
-<div class="singleContainer">
-	<div class="singleContainer_singleArea">
-    <?php get_template_part('template/archiveContent'); ?>
-	</div>
-	<!-- end:singleArea -->
-	<div class="singleContainer_sideArea">
-		<?php get_template_part('template/widgetArea'); ?>
-	</div>
-</div>
-
-
+</main>
+<!-- main -->
 
 <?php get_footer(); ?>

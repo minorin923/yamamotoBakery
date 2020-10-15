@@ -1,14 +1,15 @@
 <?php if (have_posts()) : ?>
 
-  <?php if (is_month()) : ?>
-    <h2> <?php the_time('Y年m月') ?> の記事一覧</h2>
-  <?php endif; ?>
-  <?php if (is_category()) : ?>
-    <h2> <?= get_the_category()[0]->name ?> カテゴリの記事一覧</h2>
-  <?php endif; ?>
+  <div class="PostCategoryTitle">
+    <?php if (is_month()) : ?>
+      <h2> <?php the_time('Y年m月') ?> の記事一覧</h2>
+    <?php endif; ?>
+    <?php if (is_category()) : ?>
+      <h2> <?= get_the_category()[0]->name ?> カテゴリの記事一覧</h2>
+    <?php endif; ?>
+  </div>
 
-  <div class="sectionContainer">
-    <div class="blogList">
+  <div class="BlogList">
     <?php
       while (have_posts() ){
         the_post();
@@ -23,7 +24,6 @@
         echo drawPostItem($post,true,12,$taxonomyArray[0],"post_blog");
       }
     ?>
-    </div>
   </div>
   <!-- end:mainContants -->
   

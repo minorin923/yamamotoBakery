@@ -85,7 +85,7 @@ li{
 /*[1]要素のアスペクト比固定*/
 $aspectWidth-16-9:56.25%;
 $aspectWidth-4-3:75%;
-@mixin l-AspectFixed ($aspectWidthRate:$aspectWidth-16-9,$objectfit:cover){
+@mixin l-AspectFixed ($aspectWidthRate:$aspectWidth-16-9,$object-position:center,$object-fit:cover){
   position: relative;
   /*アスペクト非固定用疑似要素*/
   &::before{
@@ -100,7 +100,8 @@ $aspectWidth-4-3:75%;
     top: 0; bottom: 0; left: 0; right: 0;
     & > .image{
       height: 100%; width: 100%;
-      object-fit: $objectfit;
+      object-fit: $object-fit;
+      object-position: $object-position;
     }
   }
 }
@@ -366,12 +367,12 @@ $aspectWidth-4-3:75%;
 /*[1]ボタンによる要素の表示切替*/
 @mixin m-Toggle($display:block){
   //<label class="s-toggle-label" for="toggle"></label>
-  & > .toggleLabel{cursor: pointer;}
+   .toggleLabel{cursor: pointer;}
   //<input id="toggle" class="s-toggle--buton" type="checkbox" ></input>
-  & > .toggleButton{display: none;}
+   .toggleButton{display: none;}
   //表示非表示を切り替える任意の要素に以下のクラスを付ける
-  & > .toggleTarget{display: none;}
-  & > .toggleButton:checked + .toggleTarget{display: $display;}
+   .toggleTarget{}
+   .toggleButton:checked + .toggleTarget{display: $display;}
 }
 
   /*[2]各種jsアニメーション*/
@@ -392,68 +393,6 @@ $aspectWidth-4-3:75%;
 
 /*HTML要素特化 l-*/
 /*Header*/
-@mixin l-headerArea{
-  height: $gridScale * 4; width: 100%;
-}
-@mixin l-headerContainer {
-  display: flex;
-  position: fixed;
-  z-index: 100;
-}
-
-@mixin l-menuButton{
-  height: 100%; width: 20%; 
-  @include l-imgCenterSet(60%);
-  @media screen and (min-width:$pcScreenSize) {
-    display: none;
-  }
-}
-@mixin l-logoMark{
-  height: 100%; width: 60%;
-  margin: 0;
-  @include l-imgCenterSet(70%);
-  @media screen and (min-width:$pcScreenSize){
-    display: none;
-  }
-}
-@mixin l-navArea{
-  height: 100%; width: 100%;
-  position: fixed;
-  z-index: 101;
-  @media screen and (min-width:$pcScreenSize) {
-    height: $gridScale * 4; width: 100%;
-    display: flex;
-  }
-}
-
-@mixin l-navArea_menuBar{
-  height: 100%; width: 75%;
-  display: flex;
-  flex-direction: column;
-  @media screen and (min-width:$pcScreenSize){
-    height: 100%; width: 100%;
-    display: grid;
-    grid-template:
-    "logo . sns sub" 50%
-    "logo . menu menu" 50%
-    /28% 4%  auto 16rem;
-  }
-}
-@mixin l-navArea_blankSpace {
-  height: 100%; width: 25%;
-  @media screen and (min-width:$pcScreenSize){
-    display: none;
-  }
-}
-@mixin l-navArea_logoMark {
-  @include l-imgCenterSet(80%);
-  @media screen and (min-width:$pcScreenSize){
-    // @include l-imgCenterSet(80%);
-    height: 100%; width: 100%;
-    margin: 0;
-    grid-area: logo;
-  }
-}
 
 @mixin l-list ($bottom:0){
   margin: 0 auto;
@@ -469,432 +408,44 @@ $aspectWidth-4-3:75%;
     margin: 0;
   }
 }
-@mixin l-menuBar_list{
-  @include l-list(0.3rem);
-  margin-bottom: 3rem;
-  flex-direction: column;
-  @media screen and (min-width:$pcScreenSize){
-    margin-bottom: 0;
-    flex-direction: row;
-    justify-content: flex-start;
-    grid-area: menu;
-  }
-}
-@mixin l-menuBar_list--sub{
-  @include l-list;
-  @media screen and (min-width:$pcScreenSize){
-    justify-content: flex-end;
-    grid-area: sub;
-  }
-}
-@mixin l-menuBar_list--SNS{
-  @include l-list;
-  @media screen and (min-width:$pcScreenSize){
-    justify-content: flex-end;
-    grid-area: sns;
-  }
-}
-
-
-/* topSection*/
-@mixin l-mainImageArea {
-  height: 75vh; width: 100%;
-  margin: 0;
-  position: relative;
-  img{object-position: top left;}
-}
-
-@mixin l-mainImageText {
-  position: absolute;
-  top:7%; right:7%;
-  // z-index: 3;
-  display: flex;
-  flex-direction: column;
-  & > .line1{}
-  & > .line2{padding-left: 4.5rem;}
-}
-
-
-/*Section*/
-@mixin l-sectionArea {
-  height: auto; width: 100%;
-  margin: ($gridScale*2) auto 0;
-}
-@mixin l-sectionArea_frame{
-  padding: 0 10%;
-  position: relative; 
-}
-@mixin l-sectionArea_frame_titleArea{
-  height: $gridScale*4; width: auto;
-  margin-bottom: $gridScale*1;
-  text-align: center;
-}
-
-@mixin l-sectionArea_frame_footerArea{
-  height: $gridScale*2; width: auto;
-  text-align: right;
-}
-@mixin l-moreButton {
-  height: 2rem; width: auto;
-  margin-top: 0.5rem;
-  display: inline-flex;
-  align-items: center;
-}
-
-
-//blogSection
-@mixin l-blogList{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: start;
-  padding: 0 10%;
-
-  @media screen and (min-width:$pcScreenSize){
-    padding: 0;
-  }
-}
-
-
-// aboutSection
-@mixin l-aboutContents_parts{
-  display: block;
-  &:last-child{flex-direction: row-reverse;}
-  @media screen and (min-width:$pcScreenSize){
-    height: auto; width: 100%;
-    display: flex;
-  }
-}
-@mixin l-aboutContents_parts_image{
-  height: auto; width: 100%;
-  img{object-position: center center;}
-  @media screen and (min-width:$pcScreenSize){
-    height: 100%; width: 100%;
-  }
-}
-
-@mixin l-aboutContents_parts_textBox{
-  height: auto; width: 100%;
-  @media screen and (min-width:$pcScreenSize){
-    height: 100%; width: 100%;
-  }
-}
-@mixin l-aboutContents_parts_textBox_title{
-  height: auto; width: 80%;
-  margin:1rem auto 0;
-  &::before{
-    content: attr(data-cat) "\A";
-    font-size: 1rem;
-  }
-}
-@mixin l-aboutContents_parts_textBox_text {
-  height: auto; width: 80%;
-  margin: 0 auto;
-  padding-top: 0.2rem;
-  padding-left: 1rem;
-}
-
-    //LineupSection
-@mixin l-menuLineUp{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-@mixin l-menuLineUp_menu{
-  height: auto; width: 100%;
-  min-width: 140px;
-  margin:0 auto 3rem;
-  display: flex;
-  flex-direction: column;
-  @media screen and (min-width:$pcScreenSize){
-    flex-direction: row;
-    &:nth-child(2n){flex-direction: row-reverse;}
-  }
-}
-@mixin l-menuLineUp_menu_image{
-  height: auto; width: 100%;
-  img{object-position: center center;}
-  @media screen and (min-width:$pcScreenSize){
-    height: auto; width: 45%;
-  }
-}
-@mixin l-menuLineUp_menu_image_textBox{
-  height: auto; width: 100%;
-  .itemName{
-    text-align: center;
-    margin: 0.5rem 0 0;
-  }
-  .itemInfo{
-    padding-left: 0.5rem;
-    margin-bottom: 0;
-  }
-  .itemPrice{
-    padding-left: 0.5rem;
-    margin-top: 1rem;
-  }
-  @media screen and (min-width:$pcScreenSize){
-    height: auto; width: 55%;
-  }
-}
-
-    //ShopinfoSection
-@mixin l-shopInfomation{
-  display: block;
-  @media screen and (min-width:$pcScreenSize){
-    height: auto; width: 100%; 
-    display: flex;
-  }
-}
-@mixin l-shopInfomation_shopImage{
-  height: auto; width: 100%;
-  margin-bottom: 1rem;
-  img{object-position: center center;}
-  @media screen and (min-width:$pcScreenSize){
-    height: auto; width: 58.2%;
-  }
-}
-
-@mixin l-shopInfomation_textContainer{
-  margin-left: 3%;
-  .shopType{}
-  .shopName{margin: 0rem 0 0.5rem;}
-  .shopAddress{margin: 1rem 0;}
-  .shopAccess{margin-bottom: 0;}
-  .shopInfo{
-    margin-top: 1rem;
-    display: inline-block;
-    th{
-      height: auto; width: 6rem;
-      padding: 0rem 0;
-    }
-  }
-}
-
-//googleMap
-@mixin l-googleMap{
-  height: 40vh; width: 100%;
-  margin-top: 3%;
-  &_map{
-    height: 40vh; width: 100%;
-    position: absolute;
-    left: 0;
-  }
-}
-
-    //footer
-@mixin l-footerArea{
-  height:$gridScale*3; width: auto;
-  display: flex;
-  justify-content: center;
-  &_copyRight{
-    margin: auto 0;
-  }
-}
-
-//title
-@mixin l-titleBackGround {
-  height: $gridScale *10; width: auto;
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 2rem ;
-}
-@mixin d-titleBackGround {
-  background:url(../img/titleImg.png) left no-repeat;
-  background-size: cover;
-}
-
-//Owner
-@mixin l-ownerInfomation {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  @media screen and (min-width:$pcScreenSize){
-    flex-direction: row;
-  }
-}
-@mixin l-ownerPicture{
-  height: 100%; width: 100%;
-  margin-bottom: 1rem;
-}
-@mixin l-ownertextBox{
-  height: 100%; width: 100%;
-  margin-left: 1rem;
-}
-@mixin l-ownertextBox_title {
-  text-align: center;
-  line-height: 1;
-  &::before{
-    content: attr(data-cat) "\A";
-    white-space: pre;
-    font-size: 1rem;
-  }
-}
-@mixin d-ownertextBox_title {
-  color: $asortColor1;
-  font-size: 1.6rem;
-  // border-bottom: solid 1px $asortColor1;
-  &::before{
-    color: $textColor;
-  }
-}
-@mixin l-ownertextBox_text {
-  padding-left: 0.5rem;
-  font-size: 1rem;
-}
-
-
-//single
-@mixin l-singleContainer {
-  display: flex;
-  flex-direction: column; 
-  @media screen and (min-width:$pcScreenSize){
-    flex-direction: row; 
-  }
-}
-
-@mixin l-singleArea {
-  height: auto; width: 100%; 
-  margin-bottom: ($gridScale*2);
-  @media screen and (min-width:$pcScreenSize){
-    height: auto; width: 70%;
-  }
-}
-
-@mixin l-blogList{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: start;
-  padding: 0;
-}
-
-@mixin l-sideArea {
-  height: auto; width: auto;
-  padding: $gridScale *2 4%;
-  position: relative;
-  @media screen and (min-width:$pcScreenSize){
-    height: auto; width: 30%;
-  }
-}
-@mixin d-sideArea {
-  @include ld-DashedLine($isVertical:false);
-  @media screen and (min-width:$pcScreenSize){
-    @include ld-DashedLine();
-  }
-}
-
-
-    /*Header*/
+/*Header*/
 @mixin d-headerBackGround {
   background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .5);
-}
-
-@mixin d-menuButton{
-  color: $accentColor;
-  font-size: 35pt;
-  text-align: center;
 }
 
 @mixin d-menuBar_list(){
   font-family: $serifFont;
   a{color: $mainColor;}
 }
-@mixin d-menuBar_list--sub {
-  font-size: 0.7rem;
-  font-family: $gothicFont;
-  font-weight: 600;
-} 
-@mixin d-menuBar_list--SNS {
-  font-size: 0.8rem;
+
+
+/*Section*/
+@mixin l-sectionArea {
+  height: auto; width: auto;
+  margin-top: ($gridScale*2);
 }
-
-@mixin d-mainImageText {
-  & > .line1 ,& > .line2{
-    font-family: $minchoFont;
-    font-weight: 600;
-    font-size: 1.6rem;
-    color: $mainColor;
-    letter-spacing: 0rem;
-    white-space: nowrap;
-  }
-}
-
-
- // aboutSection
-@mixin d-aboutContents_parts_textBox_title{
-  font-size: 1.6rem;
-  font-family: $minchoFont;
+@mixin l-sectionArea_frame_titleArea{
+  height: $gridScale*4; width: auto;
+  margin-bottom: $gridScale*1;
   text-align: center;
-  color: $asortColor1;
-  border-bottom:solid 1pt $asortColor1;   
-  line-height: 1;
-  &::before{
-    white-space: pre;
-  }
 }
-@mixin d-aboutContents_parts_textBox_text{
-  font-size: 1.1rem;
-  font-family: $minchoFont;
+@mixin l-sectionArea_frame_footerArea{
+  height: $gridScale*2; width: auto;
+  text-align: right;
+  padding: 0 10%;
 }
 
-  //LineupSection
-@mixin d-menuLineUp_menu_image_textBox{
-  font-family: $minchoFont;
-  .itemName{
-    display: block;
-    color: $asortColor1;
-    border-bottom:solid 1pt $asortColor1;  
-    font-size: 1.6rem;
-    font-weight: 600;
-  }
-  .itemInfo,.itemPrice{font-size: 1.2rem;}
-}
-
-//ShopinfoSection
-@mixin d-shopInfomation_textContainer{
-  text-align: left;
-  @media screen and (max-width:$pcScreenSize){
-    text-align: center;
-  }
-
-  font-size: 0.8rem;
-  .shopType{
-    color: $mainColor;
-    font-weight: bold;
-  }
-  .shopName{
-    color: $mainColor;
-    font-size: 0.8rem;
-  }
-  .shopAddress{
-    // font-size: 0.8rem;
-    font-style: normal;
-    line-height: inherit;
-  }
-  .shopAccess{
-    // font-size: 0.8rem;
-  }
-  .shopInfo{
-    // font-size: 0.8rem;
-    border-collapse: collapse;
-    .tel{
-      //PCサイズレイアウト時はリンクを無効にする。
-      @media screen and (min-width:$pcScreenSize){
-        pointer-events: none;
-        cursor: default;
-      }
-    }
-  }
-}
-
-//footer
-@mixin d-footerArea{
-  text-align: center;
-  color: $mainColor;
-  border-top:solid 2pt $asortColor1;
-}
-@mixin d-footerArea_link_copyRight{
-  font-family: $serifFont;
-  font-size: 0.9rem;
+//title
+@mixin ld-titleBackGround {
+  /*Layout*/
+  height: $gridScale *10; width: auto;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 2rem ;
+  /*Decoration*/
+  background:url(../img/titleImg.png) left no-repeat;
+  background-size: cover;
 }
 
 
@@ -911,268 +462,150 @@ body{
 }
 
 /*Header*/
-.headerArea{
-  @include l-headerArea();
-  // @include d-dummyDesign();
-  .headerContainer{
+.HeaderArea{
+@at-root{
+  &{
+     /*Layout*/
+    height: $gridScale * 4; width: 100%;
+     /*Decoration*/
     // @include d-dummyDesign();
-  @include m-Toggle($display:flex);
-  @include l-headerArea();
-  @include l-headerContainer();
-  @include d-headerBackGround();
+  }
+  .HeaderContainer{
+     /*Layout*/
+    height: $gridScale * 4; width: 100%;
+    display: flex;
+    position: fixed;
+    z-index: 100;
+     /*Decoration*/
+    // @include d-dummyDesign();
+    @include d-headerBackGround();
+     /*Motion*/
+    @include m-Toggle($display:flex);
+  }
   .toggleLabel{}
   .menuButton{
-    @include l-menuButton();
-    @include d-menuButton();
+     /*Layout*/
+    height: 100%; width: 20%; 
+    @include l-imgCenterSet(60%);
+     /*Decoration*/
+    color: $accentColor;
+    font-size: 35pt;
+    text-align: center;
   }
   .logoMark{
+     /*Layout*/
+    height: 100%; width: 60%;
+    margin: 0;
+    @include l-imgCenterSet(70%);
+     /*Decoration*/
     // @include d-dummyDesign();
-    @include l-logoMark();
   }
   .toggleButton{}
   .toggleTarget{}
-  .navArea{
-    // @include d-dummyDesign();
-    @include l-navArea();
+  .HeaderContainer__NavArea{display: none;}
+
+  @media screen and (min-width:$pcScreenSize) {
+    .menuButton{display: none;}
+    .logoMark{display: none;}
+    .HeaderContainer__NavArea{display: block;}
   }
-  .navArea_menuBar{
+}}
+
+.NavArea{
+@at-root{
+  &{
+    /*Layout*/
+    height: 100%; width: 100%;
+    display: flex;
+    position: fixed;
+    top: auto; left: 0;
+    z-index: 101;
+    /*Decoration*/
     // @include d-dummyDesign();
-    @include l-navArea_menuBar();
+  }
+  .NavArea__menuBar{
+     /*Layout*/
+    height: 100%; width: 75%;
+    display: flex;
+    flex-direction: column;
+     /*Decoration*/
+    // @include d-dummyDesign();
     @include d-headerBackGround();
-    // @include d-navArea_menuBar();
-    &_logoMark{
-      //  @include d-dummyDesign();
-      @include l-navArea_logoMark();
-    }
-    &_list{
-      //  @include d-dummyDesign();
-      @include l-menuBar_list(); 
+  }
+  .NavArea__logoMark{
+     /*Layout*/
+     @include l-imgCenterSet(80%);
+     /*Decoration*/
+    //  @include d-dummyDesign();
+  }
+  .NavArea__mainList{
+     /*Layout*/
+     @include l-list(0.3rem);
+     margin-bottom: 3rem;
+     flex-direction: column;
+     /*Decoration*/
+    //  @include d-dummyDesign();
       @include d-menuBar_list();
+  }
+  .NavArea__subList{
+     /*Layout*/
+     @include l-list;
+     /*Decoration*/
+    //  @include d-dummyDesign();
+    @include d-menuBar_list();
+    font-size: 0.7rem;
+    font-family: $gothicFont;
+    font-weight: 600;
+  }
+  .NavArea__snsList{
+     /*Layout*/
+     @include l-list;
+     /*Decoration*/
+    //  @include d-dummyDesign();
+    @include d-menuBar_list();
+    font-size: 0.8rem;
+  }
+  .NavArea__blankSpace{
+    height: 100%; width: 25%;
+  }
 
-      &--sub{
-        //  @include d-dummyDesign();
-        @include l-menuBar_list--sub(); 
-        @include d-menuBar_list();
-        @include d-menuBar_list--sub();
-
-      }
-      &--SNS{
-        //  @include d-dummyDesign();
-        @include l-menuBar_list--SNS(); 
-        @include d-menuBar_list();
-        @include d-menuBar_list--SNS(); 
-      }   
+  @media screen and (min-width:$pcScreenSize) {
+    &{
+      height: $gridScale * 4; width: 100%;
+      display: flex;
     }
-  }
-  .navArea_blankSpace{
-    @include l-navArea_blankSpace();
-  }
-}
-}
-
-
-.mainImageArea{
-  // @include d-dummyDesign();
-  @include l-mainImageArea();
-  @include d-borderLine;
-  @include l-AspectFixed($aspectWidth-16-9);
-  .imageFrame{.image{}}
-  &_text{
-    @include l-mainImageText;
-    @include d-mainImageText;
-    .line1{} .line2{}
-  }
-}
-
-.sectionContainer{
-  // @include d-dummyDesign();
-  @include l-sectionArea;
-  &_frame{
-    // @include d-dummyDesign();
-    @include l-sectionArea_frame;
-    &_titleArea{
-      // @include d-dummyDesign();
-      @include l-sectionArea_frame_titleArea;
-      &_title{
-        // @include d-dummyDesign();
-        @include ld-TitleDesign();
-      }
+    .NavArea__menuBar{
+      height: 100%; width: 100%;
+      display: grid;
+      grid-template:
+      "logo . sns sub" 50%
+      "logo . menu menu" 50%
+      /28% 4%  auto 16rem;
     }
-    &_mainArea{  
-      // @include d-dummyDesign();
+    .NavArea__logoMark{
+      height: 100%; width: 100%;
+      margin: 0;
+      grid-area: logo;
     }
-    &_footerArea{
-      // @include d-dummyDesign();
-      @include l-sectionArea_frame_footerArea();
-      .moreButton{
-        // @include d-dummyDesign();
-        // @include l-moreButton;
-        @include d-ButtonDesign;
-      }
+    .NavArea__mainList{
+      margin-bottom: 0;
+      flex-direction: row;
+      justify-content: flex-start;
+      grid-area: menu;
     }
-  }
-}
-
-.newsContents{
-  .post_news{
-    // @include d-dummyDesign();
-    @include ld-PostItem--news();
-  }
-}
-
-.blogContents{
-  display: flex;
-  justify-content: space-between;
-  .post_blog{
-    // @include d-dummyDesign();
-    @include ld-PostItem--blog($aspectWidth-4-3);
-  }
-}
-
-.newsList{
-  .post_news{
-    // @include d-dummyDesign();
-    padding: 0 5%;
-    @include ld-PostItem--news();
-  }
-}
-
-.blogList{
-  @include l-blogList();
-  .post_blog{
-    // @include d-dummyDesign();
-    padding: 0 5%;
-    @include ld-PostItem--blog($aspectWidth-4-3);
-  }
-}
-
-.aboutContents{
-  @include d-borderLine;
-  &_parts{
-    @include l-aboutContents_parts;
-    @include d-backGroundColor;
-    &_image{
-      // @include d-dummyDesign();
-      @include l-aboutContents_parts_image;
-      @include l-AspectFixed($aspectWidth-4-3);
+    .NavArea__subList{
+      justify-content: flex-end;
+      grid-area: sub;
     }
-    &_textBox{
-      // @include d-dummyDesign();
-      @include l-aboutContents_parts_textBox;
-      &_title{
-        // @include d-dummyDesign();
-        @include l-aboutContents_parts_textBox_title;
-        @include d-aboutContents_parts_textBox_title;
-      }
-      &_text{
-        // @include d-dummyDesign();
-        @include l-aboutContents_parts_textBox_text;
-        @include d-aboutContents_parts_textBox_text;
-      }
+    .NavArea__snsList{
+      justify-content: flex-end;
+      grid-area: sns;
     }
+    .NavArea__blankSpace{display: none;}
   }
-}
 
-#menuLineUpSection{
-  @include d-borderLine($side:true);
-  @include d-backGroundColor;
-}
-.menuLineUp{
-  @include l-menuLineUp();
-  
-  &_menu{
-    // @include d-dummyDesign();
-    @include l-menuLineUp_menu();
-    &_image{
-      // @include d-dummyDesign();
-      @include l-menuLineUp_menu_image();
-      @include l-AspectFixed($aspectWidth-16-9,contain);
-    }
-    &_textBox{
-      // @include d-dummyDesign();
-      @include l-menuLineUp_menu_image_textBox();
-      @include d-menuLineUp_menu_image_textBox();
-    }
-  }
-}
-.shopInfomation{
-  @include l-shopInfomation();
-  &_shopImage{
-    // @include d-dummyDesign();
-    @include l-AspectFixed($aspectWidth-16-9,$objectfit:cover);
-    @include l-shopInfomation_shopImage();
-    @include d-borderLine($side:true);
-  }
-  &_textContainer{
-    // @include d-dummyDesign();
-    @include l-shopInfomation_textContainer();
-    @include d-shopInfomation_textContainer();
-  }
-}
+}}
 
-.googleMap{
-  // @include d-dummyDesign();
- @include l-googleMap();
-}
-
-.footerArea{
-  // @include d-dummyDesign();
-  @include l-footerArea();
-  @include d-footerArea();
-  &_copyRight{
-    @include d-footerArea_link_copyRight();
-  }
-}
-
-
-.subPageTitleArea{
-  @include l-titleBackGround();
-  @include d-titleBackGround();
-  @include d-borderLine();
-}
-
-//ownerPage
-.ownerInfomation{
-  @include l-ownerInfomation();
-  .ownerPicture{
-    // @include d-dummyDesign();
-    @include l-ownerPicture();
-    @include l-AspectFixed($aspectWidth-4-3);
-    @include d-borderLine($side:true);
-  }
-  .ownertextBox{
-    // @include d-dummyDesign();
-    @include l-ownertextBox();
-    &_title{
-      @include l-ownertextBox_title;
-      @include d-ownertextBox_title;
-    }
-    &_text{
-      @include l-ownertextBox_text();
-    }
-  }
-}
-
-//single
-.singleContainer{
-  // @include m-Toggle();
-  @include l-singleContainer();
-  &_singleArea{
-    h2{
-      margin-top: 0.5rem;
-      text-align: center;
-      color: $mainColor;
-      font-family: $minchoFont;
-    }
-    // @include d-dummyDesign();
-    @include l-singleArea();
-  }
-  &_sideArea{
-    @include l-sideArea();
-    @include d-sideArea();
-    @include d-backGroundColor;
-  }
-}
 
 .single{
   &_titleArea{
@@ -1257,7 +690,7 @@ body{
 }
 
 @mixin ld-widgetSection {
-  @include l-sectionArea_frame();
+  // @include l-sectionArea_frame();
   .widget{
     margin-bottom: 2rem;
     &_titleArea{
@@ -1311,6 +744,7 @@ body{
     @include ld-linkMark($display: flex);
   }
   &_menu{
+    display: none;
     flex-direction: column;
     margin: 0 0.5rem;
     a{
@@ -1351,4 +785,546 @@ body{
 
 .m-Js_FadeIn{
   // @include m-Js_FadeIn();
+}
+
+
+
+.post_news{
+  // @include d-dummyDesign();
+  @include ld-PostItem--news();
+}
+.post_blog{
+  // @include d-dummyDesign();
+  @include ld-PostItem--blog($aspectWidth-4-3);
+}
+.SectionTitle{
+  @include ld-TitleDesign();
+}
+.moreButton{
+  @include d-ButtonDesign();
+}
+
+
+
+
+
+
+.TopSection{
+@at-root{
+  .TopSection__image{
+    /*Layout*/
+    @include l-AspectFixed($aspectWidth-16-9,$object-position:top left);
+    height: 75vh; width: 100%;
+    margin: 0;
+    /*Decoration*/
+    // @include d-dummyDesign();
+    @include d-borderLine;
+    .imageFrame{.image{}}
+  }
+  .TopSection__text{
+    /*Layout*/
+    position: absolute;
+    top:7%; right:7%;
+    display: flex;
+    flex-direction: column;
+    & > .line1{} 
+    & > .line2{padding-left: 4.5rem;}
+    /*Decoration*/
+    & > .line1 ,& > .line2{
+      font-family: $minchoFont;
+      font-weight: 600;
+      font-size: 1.6rem;
+      color: $mainColor;
+      letter-spacing: 0rem;
+      white-space: nowrap;
+    }
+  }
+}}
+
+.NewsContents{
+  padding: 0 10%;
+}
+
+.NewsSection{
+  @include l-sectionArea();
+  @at-root{
+    .NewsSection__titleArea{
+      @include l-sectionArea_frame_titleArea();
+    }
+    .NewsSection__mainArea{ }
+    .NewsSection__footerArea{   
+      @include l-sectionArea_frame_footerArea();
+    }
+  }
+}
+
+.BlogSection{
+  @include l-sectionArea();
+  @at-root{
+    .BlogSection__titleArea{
+      @include l-sectionArea_frame_titleArea();
+    }
+    .BlogSection__mainArea{
+      padding: 0 10%;
+    }
+    .BlogContents{
+      display: flex;
+      justify-content: space-between;
+    }
+    .BlogSection__footerArea{
+      padding: 0 10%;
+      @include l-sectionArea_frame_footerArea();
+    }
+  }
+}
+
+.AboutSection{
+  @include l-sectionArea();
+  @at-root{
+    .AboutSection__titleArea{
+      @include l-sectionArea_frame_titleArea();
+    }
+    .AboutSection__mainArea{
+      padding: 0;
+    }
+  }
+}
+
+.AboutContents{
+  @include d-borderLine;
+  @at-root{
+    .AboutContents__parts{
+      /*Layout*/      
+      display: block;
+      &:last-child{flex-direction: row-reverse;}
+      @media screen and (min-width:$pcScreenSize) {
+        height: auto; width: 100%;
+        display: flex;
+      }
+      /*Decoration*/
+      @include d-backGroundColor;
+    }
+    .AboutContents__image{
+      /*Layout*/
+      @include l-AspectFixed($aspectWidth-4-3);
+      height: auto; width: 100%;
+      img{object-position: center center;}
+      @media screen and (min-width:$pcScreenSize){
+        height: 100%; width: 100%;
+      }
+      /*Decoration*/
+    }
+    .AboutContents__textBox{
+      /*Layout*/
+      height: auto; width: 100%;
+      @media screen and (min-width:$pcScreenSize){
+        height: 100%; width: 100%;
+      }
+      /*Decoration*/
+    }
+    .AboutContents__title{
+      /*Layout*/
+      height: auto; width: 80%;
+      margin:1rem auto 0;
+      &::before{
+        content: attr(data-cat) "\A";
+        font-size: 1rem;
+      }
+      /*Decoration*/
+      font-size: 1.6rem;
+      font-family: $minchoFont;
+      text-align: center;
+      color: $asortColor1;
+      border-bottom:solid 1pt $asortColor1;   
+      line-height: 1;
+      &::before{
+        white-space: pre;
+      }
+    }
+
+    .AboutContents__text{
+      /*Layout*/
+      height: auto; width: 80%;
+      margin: 0 auto;
+      padding-top: 0.2rem;
+      padding-left: 1rem;
+      /*Decoration*/
+      font-size: 1.1rem;
+      font-family: $minchoFont;
+    }
+    
+  }
+}
+
+
+.MenuSection{
+  /*Layout*/
+  @include l-sectionArea();
+  /*Decoration*/
+  @include d-borderLine($side:true);
+  @include d-backGroundColor;
+  @at-root{
+    .MenuSection__titleArea{
+      /*Layout*/
+      margin-top: 2rem;
+      @include l-sectionArea_frame_titleArea();
+      /*Decoration*/
+    }
+    .MenuSection__mainArea{
+      /*Layout*/
+      padding: 0 10%;
+      /*Decoration*/
+    }
+  }
+}
+
+.MenuContents{
+  /*Layout*/
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /*Decoration*/
+  .MenuItem{
+    /*Layout*/
+    height: auto; width: 100%;
+    min-width: 140px;
+    margin:0 auto 3rem;
+    display: flex;
+    flex-direction: column;
+    @media screen and (min-width:$pcScreenSize){
+      flex-direction: row;
+      &:nth-child(2n){flex-direction: row-reverse;}
+    }
+    /*Decoration*/
+    .MenuItem__image{
+      /*Layout*/
+      @include l-AspectFixed($aspectWidth-16-9,contain);
+      height: auto; width: 100%;
+      img{object-position: center center;}
+      @media screen and (min-width:$pcScreenSize){
+        height: auto; width: 45%;
+      }
+      /*Decoration*/
+    }
+    .MenuItem__textBox{
+      /*Layout*/
+      height: auto; width: 100%;
+      .itemName{
+        text-align: center;
+        margin: 0.5rem 0 0;
+      }
+      .itemInfo{
+        padding-left: 0.5rem;
+        margin-bottom: 0;
+      }
+      .itemPrice{
+        padding-left: 0.5rem;
+        margin-top: 1rem;
+      }
+      @media screen and (min-width:$pcScreenSize){
+        height: auto; width: 55%;
+      }
+      /*Decoration*/
+      font-family: $minchoFont;
+  .itemName{
+    display: block;
+    color: $asortColor1;
+    border-bottom:solid 1pt $asortColor1;  
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+  .itemInfo,.itemPrice{font-size: 1.2rem;}
+    }
+  }
+}
+
+.ShopInfoSection{
+  /*Layout*/
+  @include l-sectionArea();
+  /*Decoration*/
+  @at-root{
+    .ShopInfoSection__titleArea{
+      /*Layout*/
+      @include l-sectionArea_frame_titleArea();
+      /*Decoration*/
+    }
+    .ShopInfoSection__mainArea{
+      /*Layout*/
+      padding: 0 10%;
+      /*Decoration*/
+    }
+  }
+}
+
+.ShopInfomation{
+  /*Layout*/
+  display: block;
+  @media screen and (min-width:$pcScreenSize){
+    height: auto; width: 100%; 
+    display: flex;
+  }
+  /*Decoration*/
+  .ShopInfomation__image{
+    /*Layout*/
+    @include l-AspectFixed($aspectWidth-16-9,$object-fit:cover);
+    height: auto; width: 100%;
+    margin-bottom: 1rem;
+    img{object-position: center center;}
+    @media screen and (min-width:$pcScreenSize){
+      height: auto; width: 58.2%;
+    }
+    /*Decoration*/
+    @include d-borderLine($side:true);
+  }
+  .ShopInfomation__textContainer{
+    /*Layout*/
+    margin-left: 3%;
+    .shopType{}
+    .shopName{margin: 0rem 0 0.5rem;}
+    .shopAddress{margin: 1rem 0;}
+    .shopAccess{margin-bottom: 0;}
+    .shopInfo{
+      margin-top: 1rem;
+      display: inline-block;
+      th{
+        height: auto; width: 6rem;
+        padding: 0rem 0;
+      }
+    }
+    /*Decoration*/
+    text-align: left;
+  @media screen and (max-width:$pcScreenSize){
+    text-align: center;
+  }
+
+  font-size: 0.8rem;
+  .shopType{
+    color: $mainColor;
+    font-weight: bold;
+  }
+  .shopName{
+    color: $mainColor;
+    font-size: 0.8rem;
+  }
+  .shopAddress{
+    // font-size: 0.8rem;
+    font-style: normal;
+    line-height: inherit;
+  }
+  .shopAccess{
+    // font-size: 0.8rem;
+  }
+  .shopInfo{
+    // font-size: 0.8rem;
+    border-collapse: collapse;
+    .tel{
+      //PCサイズレイアウト時はリンクを無効にする。
+      @media screen and (min-width:$pcScreenSize){
+        pointer-events: none;
+        cursor: default;
+      }
+    }
+  }
+  }
+
+}
+
+.GoogleMap{
+  /*Layout*/
+  height: 40vh; width: 100%;
+  margin-top: 3%;
+  /*Decoration*/
+  .GoogleMap__map{
+    /*Layout*/
+    height: 40vh; width: 100%;
+    position: absolute;
+    left: 0;
+    /*Decoration*/
+  }
+}
+
+.FooterArea{
+  /*Layout*/
+  height:$gridScale*3; width: auto;
+  display: flex;
+  justify-content: center;
+  /*Decoration*/
+  // @include d-dummyDesign();
+  text-align: center;
+  color: $mainColor;
+  border-top:solid 2pt $asortColor1;
+  .FooterArea__copyRight{
+    /*Layout*/
+    margin: auto 0;
+    /*Decoration*/
+    font-family: $serifFont;
+    font-size: 0.9rem;
+  }
+}
+
+//ownerPage
+.OwnerSection{
+  .OwnerSection__titleArea{
+    @include ld-titleBackGround();
+    /*Layout*/
+    /*Decoration*/
+    @include d-borderLine();
+  }
+  .OwnerSection__mainArea{
+    /*Layout*/
+    padding: 5% 10%;
+    /*Decoration*/
+  }
+}
+
+.OwnerInfomation{
+  /*Layout*/
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  @media screen and (min-width:$pcScreenSize){
+    flex-direction: row;
+  }
+  /*Decoration*/
+  .OwnerInfomation__image{
+    /*Layout*/
+    @include l-AspectFixed($aspectWidth-4-3);
+    height: 100%; width: 100%;
+    margin-bottom: 1rem;
+    /*Decoration*/
+    // @include d-dummyDesign();
+    @include d-borderLine($side:true);
+  }
+  .OwnerInfomation__textBox{
+    /*Layout*/
+    height: 100%; width: 100%;
+    margin-left: 1rem;
+    /*Decoration*/
+    // @include d-dummyDesign();
+    .title{
+      /*Layout*/
+      text-align: center;
+      line-height: 1;
+      &::before{
+        content: attr(data-cat) "\A";
+        white-space: pre;
+        font-size: 1rem;
+      }
+      /*Decoration*/
+      color: $asortColor1;
+      font-size: 1.6rem;
+      // border-bottom: solid 1px $asortColor1;
+      &::before{
+        color: $textColor;
+      }
+    }
+    .text{
+      /*Layout*/
+      padding-left: 0.5rem;
+      font-size: 1rem;
+      /*Decoration*/
+    }
+  }
+}
+
+
+.BlogListSection{
+  .BlogListSection__titleArea{
+          /*Layout*/
+      /*Decoration*/
+    @include ld-titleBackGround();
+    @include d-borderLine();
+  }
+  .BlogListSection__mainArea{
+  }
+}
+
+.NewsListSection{
+  .NewsListSection__titleArea{
+          /*Layout*/
+      /*Decoration*/
+    @include ld-titleBackGround();
+    @include d-borderLine();
+  }
+  .NewsListSection__mainArea{
+  }
+}
+
+//single
+.SingleContainer{
+  /*Layout*/
+  display: flex;
+  flex-direction: column; 
+  @media screen and (min-width:$pcScreenSize){
+    flex-direction: row; 
+  }
+  /*Decoration*/
+  &_singleArea{
+    /*Layout*/
+    height: auto; width: 100%; 
+    margin-bottom: ($gridScale*2);
+    @media screen and (min-width:$pcScreenSize){
+      height: auto; width: 70%;
+      padding: 1% 5%;
+    }
+    /*Decoration*/
+    // @include d-dummyDesign();
+  }
+  &_sideArea{
+    /*Layout*/
+    height: auto; width: auto;
+    padding: $gridScale *2 4%;
+    position: relative;
+    @media screen and (min-width:$pcScreenSize){
+      height: auto; width: 30%;
+    }
+    /*Decoration*/
+    @include d-backGroundColor;
+    @include ld-DashedLine($isVertical:false);
+    @media screen and (min-width:$pcScreenSize){
+      @include ld-DashedLine();
+    }
+  }
+}
+
+
+.PostCategoryTitle{
+            /*Layout*/
+      /*Decoration*/
+  font-size: 1rem;
+  color: $mainColor;
+  font-family: $minchoFont,$serifFont;
+  text-align: center;
+}
+
+.BlogList{
+            /*Layout*/
+      /*Decoration*/
+  &{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    padding: 0 5%;
+  }
+  .post_blog{
+    // @include d-dummyDesign();
+    padding: 0 5%;
+    @include ld-PostItem--blog($aspectWidth-4-3);
+  }
+  @media screen and (min-width:$pcScreenSize){
+    &{
+      padding: 0;
+    }
+  }
+
+}
+
+.FixedSection{
+  .FixedSection__titleArea{
+    @include ld-titleBackGround();
+    @include d-borderLine();
+  }
+  .FixedSection__mainArea{
+    padding: 5% 10%;
+  }
 }
