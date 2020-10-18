@@ -1,13 +1,13 @@
 <header class="HeaderArea">
   <div class="HeaderContainer">
-    <label class="menuButton toggleLabel" for="navAreaToggle">
+    <label class="menuButton toggleLabel" >
       <img src="<?= get_template_directory_uri(); ?>/img/menu_icon.svg" alt="">
     </label>
     <h1 class="logoMark">
       <img src="<?= get_template_directory_uri(); ?>/img/logo.svg" alt="">
     </h1>
-    <input id="navAreaToggle" class="toggleButton" type="checkbox"></input>
-    <div class="HeaderContainer__NavArea  toggleTarget">
+    <!-- <input id="navAreaToggle" class="toggleButton" type="checkbox"></input> -->
+    <div class="HeaderContainer__NavArea">
       <nav class="NavArea">
         <div class="NavArea__menuBar">
           <h1 class="NavArea__logoMark">
@@ -36,7 +36,7 @@
             ));
           } ?>
         </div>
-        <label class="NavArea__blankSpace toggleLabel" for="navAreaToggle"></label>
+        <label class="NavArea__blankSpace toggleItem"></label>
       </nav>
     </div>
   </div>

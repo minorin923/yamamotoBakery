@@ -1,0 +1,239 @@
+//固定変数
+$textColor: #616161;
+$mainColor: #f8145b;
+$asortColor1: #d41451;
+$asortColor2: #760a2c;
+$asortColor3: #f0ede5;
+$accentColor: #1cb3a8;
+$pcScreenSize: 768px;
+$gothicFont: "Yu Gothic", "Hiragino Kaku Gothic ProN";
+$minchoFont: "Yu Mincho";
+$serifFont: "Cambria Math", "Times New Roman", Times, serif;
+$san-serifFont: "Hiragino Sans", sans-serif;
+$scriptFont: "Great Vibes";
+$gridScale: 20px;
+
+
+//1-1. 汎用クラス定義
+//[0]ダミーデザイン
+@mixin d-dummyDesign {
+  background-color: rgba(#999, 0.3);
+  border: solid 0.1px #09f;
+  box-sizing: border-box;
+  opacity: 0.9;
+}
+@mixin d-backGroundGrid {
+  background-image: linear-gradient(transparent 95%, rgba(0, 0, 0, 0.5) 95%),
+    linear-gradient(90deg, transparent 95%, rgba(0, 0, 0, 0.5) 95%);
+  background-size: $gridScale $gridScale;
+  background-repeat: repeat;
+}
+
+//[1]要素のアスペクト比固定
+$aspectWidth-16-9: 56.25%;  $aspectWidth-4-3: 75%;
+@mixin l-AspectFixed($aspectWidthRate: $aspectWidth-16-9, $object-position: center, $object-fit: cover) {
+  position: relative;
+  //アスペクト非固定用疑似要素
+  &::before {
+    content: "";
+    display: block;
+    //padding-topの高さは元要素のwidthで決まる
+    padding-top: $aspectWidthRate;
+  }
+  & > .imageFrame {
+    //absluteで親要素のbeforeに貼り付ける
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    & > .image {
+      height: 100%;
+      width: 100%;
+      object-fit: $object-fit;
+      object-position: $object-position;
+    }
+  }
+}
+
+@mixin l-imgCenterSet($height: 50%) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  img {
+    height: $height;
+    width: auto;
+    object-fit: contain;
+  }
+}
+
+//[2]リンク目印マーク付与
+@mixin ld-linkMark($bottom: 0, $display: inline-block) {
+  display: $display;
+  position: relative;
+  z-index: 0;
+  &::after {
+    content: "";
+    display: block;
+    height: 0.3rem;
+    width: 110%;
+    position: absolute;
+    bottom: $bottom;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+    border-radius: 50%;
+    background-color: rgba($accentColor, 0.2);
+  }
+}
+
+//[3]破線付与
+@mixin ld-DashedLine($isVertical: true, $lineWidth: 1.5px, $lineLength: 43px, $invert: false) {
+  &::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    @if ($isVertical) {
+      height: 100%;
+      width: $lineWidth;
+      top: 0;
+      @if ($invert) {
+        left: auto;
+        right: 0;
+      } @else {
+        left: 0;
+        right: auto;
+      }
+      background-image: linear-gradient(rgba(0, 0, 0, 0.5) 60%, transparent 60%);
+      background-size: $lineWidth $lineLength;
+      background-repeat: repeat-y;
+    } @else {
+      height: $lineWidth;
+      width: 100%;
+      left: 0;
+      @if ($invert) {
+        top: auto;
+        bottom: 0;
+      } @else {
+        top: 0;
+        bottom: auto;
+      }
+      background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 60%, transparent 60%);
+      background-size: $lineLength $lineWidth;
+      background-repeat: repeat-x;
+    }
+  }
+}
+
+//[4]タイトルデザイン
+@mixin ld-TitleDesign {
+  //layout
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto 0;
+  //deco
+  color: $asortColor1;
+  font-size: 1rem;
+  font-family: $minchoFont;
+
+  &::before {
+    //layout
+    content: attr(data-english) "\A";
+    display: inline-block;
+    height: auto;
+    width: 100%;
+    text-align: center;
+    padding: 0 5%;
+    //deco
+    font-size: 1.8rem;
+    font-family: $scriptFont;
+    border-bottom: 2px solid $asortColor1;
+  }
+}
+
+//ボタン要素
+@mixin d-ButtonDesign {
+  //Layout
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  height: 1.2rem;
+  width: auto;
+  padding: 0 0.5%;
+  //Decoration
+  white-space: nowrap;
+  font-size: 1.1rem;
+  font-family: $serifFont;
+  color: $accentColor;
+  background-color: #fff;
+  border-bottom: 2px solid $accentColor;
+  //background-color: #f8f9fa;
+  // border-color: #f8f9fa;
+  // border-radius: 2px;
+  // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .5);
+  &::after {
+    //Layout
+    content: "";
+    display: inline-block;
+    height: 0.9rem;
+    width: 2.5rem;
+    margin-left: 10%;
+    //Decoration
+    background: url(../img/linkArrow.svg) left center no-repeat;
+    background-size: contain;
+  }
+}
+//ボーダーライン
+@mixin d-borderLine($borderWidth: 5px, $borderColor: $asortColor2, $side: false) {
+  box-sizing: border-box;
+  border-top: solid $borderWidth $borderColor;
+  border-bottom: solid $borderWidth $borderColor;
+  @if ($side) {
+    border-left: solid $borderWidth $borderColor;
+    border-right: solid $borderWidth $borderColor;
+  }
+  background-color: $borderColor;
+}
+//背景色
+@mixin d-backGroundColor($background: $asortColor3) {
+  background-color: $background;
+}
+
+//(3) Gm-  General Motion     :モーション付与クラス
+//[1]ボタンによる要素の表示切替
+@mixin m-Toggle($display: block) {
+  //<label class="s-toggle-label" for="toggle"></label>
+  .toggleLabel {
+    cursor: pointer;
+  }
+  //<input id="toggle" class="s-toggle--buton" type="checkbox" ></input>
+  .toggleButton {
+    display: none;
+  }
+  //表示非表示を切り替える任意の要素に以下のクラスを付ける
+  .toggleTarget {
+  }
+  .toggleButton:checked + .toggleTarget {
+    display: $display;
+  }
+}
+
+//[2]各種jsアニメーション
+@mixin m-Js_FadeIn {
+  &_action {
+    animation: fade 2s 0s 1;
+  }
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@mixin m-Js_scroll {
+}

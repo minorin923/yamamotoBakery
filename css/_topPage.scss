@@ -1,0 +1,392 @@
+@import "constMixin";
+
+
+//Section
+@mixin l-sectionArea {
+  height: auto;
+  width: auto;
+  margin-top: ($gridScale * 2);
+}
+@mixin l-sectionArea_frame_titleArea {
+  height: $gridScale * 4;
+  width: auto;
+  margin-bottom: $gridScale * 1;
+  text-align: center;
+}
+@mixin l-sectionArea_frame_footerArea {
+  height: $gridScale * 2;
+  width: auto;
+  text-align: right;
+  padding: 0 10%;
+}
+
+//topSection
+.TopSection {
+  @at-root {
+    .TopSection__image {
+      //Layout
+      @include l-AspectFixed($aspectWidth-16-9, $object-position: top left);
+      height: 75vh;
+      width: 100%;
+      margin: 0;
+      //Decoration
+      // @include d-dummyDesign();
+      @include d-borderLine;
+      .imageFrame {
+        .image {
+        }
+      }
+    }
+    .TopSection__text {
+      //Layout
+      position: absolute;
+      top: 7%;
+      right: 0;
+      display: none;
+      @media screen and (min-width: $pcScreenSize) {
+        display: block;
+      }
+    }
+  }
+}
+
+//NewsSection
+.NewsSection {
+  @include l-sectionArea();
+  @at-root {
+    .NewsSection__titleArea {
+      @include l-sectionArea_frame_titleArea();
+    }
+    .NewsSection__mainArea {
+    }
+    .NewsSection__footerArea {
+      @include l-sectionArea_frame_footerArea();
+    }
+  }
+}
+.NewsContents {
+  padding: 0 10%;
+}
+
+//BlogSection
+.BlogSection {
+  @include l-sectionArea();
+  @at-root {
+    .BlogSection__titleArea {
+      @include l-sectionArea_frame_titleArea();
+    }
+    .BlogSection__mainArea {
+      padding: 0 10%;
+    }
+    .BlogSection__footerArea {
+      padding: 0 10%;
+      @include l-sectionArea_frame_footerArea();
+    }
+  }
+}
+.BlogContents {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+//AboutSection
+.AboutSection {
+  @include l-sectionArea();
+  @at-root {
+    .AboutSection__titleArea {
+      @include l-sectionArea_frame_titleArea();
+    }
+    .AboutSection__mainArea {
+      padding: 0;
+    }
+  }
+}
+.AboutContents {
+  @include d-borderLine;
+  @at-root {
+    .AboutContents__parts {
+      //Layout
+      display: block;
+      &:last-child {
+        flex-direction: row-reverse;
+      }
+      @media screen and (min-width: $pcScreenSize) {
+        height: auto;
+        width: 100%;
+        display: flex;
+      }
+      //Decoration
+      @include d-backGroundColor;
+    }
+    .AboutContents__image {
+      //Layout
+      @include l-AspectFixed($aspectWidth-4-3);
+      height: auto;
+      width: 100%;
+      img {
+        object-position: center center;
+      }
+      @media screen and (min-width: $pcScreenSize) {
+        height: 100%;
+        width: 100%;
+      }
+      //Decoration
+    }
+    .AboutContents__textBox {
+      //Layout
+      height: auto;
+      width: 100%;
+      @media screen and (min-width: $pcScreenSize) {
+        height: 100%;
+        width: 100%;
+      }
+      //Decoration
+    }
+    .AboutContents__title {
+      //Layout
+      height: auto;
+      width: 80%;
+      margin: 1rem auto 0;
+      &::before {
+        content: attr(data-cat) "\A";
+        font-size: 1rem;
+      }
+      //Decoration
+      font-size: 1.6rem;
+      font-family: $minchoFont;
+      text-align: center;
+      color: $asortColor1;
+      border-bottom: solid 1pt $asortColor1;
+      line-height: 1;
+      &::before {
+        white-space: pre;
+      }
+    }
+
+    .AboutContents__text {
+      //Layout
+      height: auto;
+      width: 80%;
+      margin: 0 auto;
+      padding-top: 0.2rem;
+      padding-left: 1rem;
+      //Decoration
+      font-size: 1.1rem;
+      font-family: $minchoFont;
+    }
+  }
+}
+
+//menuSection
+.MenuSection {
+  //Layout
+  @include l-sectionArea();
+  //Decoration
+  @include d-borderLine($side: true);
+  @include d-backGroundColor;
+  @at-root {
+    .MenuSection__titleArea {
+      //Layout
+      margin-top: 2rem;
+      @include l-sectionArea_frame_titleArea();
+      //Decoration
+    }
+    .MenuSection__mainArea {
+      //Layout
+      padding: 0 10%;
+      //Decoration
+    }
+  }
+}
+.MenuContents {
+  //Layout
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  //Decoration
+  .MenuItem {
+    //Layout
+    height: auto;
+    width: 100%;
+    min-width: 140px;
+    margin: 0 auto 3rem;
+    display: flex;
+    flex-direction: column;
+    @media screen and (min-width: $pcScreenSize) {
+      flex-direction: row;
+      &:nth-child(2n) {
+        flex-direction: row-reverse;
+      }
+    }
+    //Decoration
+    .MenuItem__image {
+      //Layout
+      @include l-AspectFixed($aspectWidth-16-9, contain);
+      height: auto;
+      width: 100%;
+      img {
+        object-position: center center;
+      }
+      @media screen and (min-width: $pcScreenSize) {
+        height: auto;
+        width: 45%;
+      }
+      //Decoration
+    }
+    .MenuItem__textBox {
+      //Layout
+      height: auto;
+      width: 100%;
+      .itemName {
+        text-align: center;
+        margin: 0.5rem 0 0;
+      }
+      .itemInfo {
+        padding-left: 0.5rem;
+        margin-bottom: 0;
+      }
+      .itemPrice {
+        padding-left: 0.5rem;
+        margin-top: 1rem;
+      }
+      @media screen and (min-width: $pcScreenSize) {
+        height: auto;
+        width: 55%;
+      }
+      //Decoration
+      font-family: $minchoFont;
+      .itemName {
+        display: block;
+        color: $asortColor1;
+        border-bottom: solid 1pt $asortColor1;
+        font-size: 1.6rem;
+        font-weight: 600;
+      }
+      .itemInfo,
+      .itemPrice {
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+//ShopInfoSection
+.ShopInfoSection {
+  //Layout
+  @include l-sectionArea();
+  //Decoration
+  @at-root {
+    .ShopInfoSection__titleArea {
+      //Layout
+      @include l-sectionArea_frame_titleArea();
+      //Decoration
+    }
+    .ShopInfoSection__mainArea {
+      //Layout
+      padding: 0 10%;
+      //Decoration
+    }
+  }
+}
+.ShopInfomation {
+  //Layout
+  display: block;
+  @media screen and (min-width: $pcScreenSize) {
+    height: auto;
+    width: 100%;
+    display: flex;
+  }
+  //Decoration
+  .ShopInfomation__image {
+    //Layout
+    @include l-AspectFixed($aspectWidth-16-9, $object-fit: cover);
+    height: auto;
+    width: 100%;
+    margin-bottom: 1rem;
+    img {
+      object-position: center center;
+    }
+    @media screen and (min-width: $pcScreenSize) {
+      height: auto;
+      width: 58.2%;
+    }
+    //Decoration
+    @include d-borderLine($side: true);
+  }
+  .ShopInfomation__textContainer {
+    //Layout
+    margin-left: 3%;
+    .shopType {
+    }
+    .shopName {
+      margin: 0rem 0 0.5rem;
+    }
+    .shopAddress {
+      margin: 1rem 0;
+    }
+    .shopAccess {
+      margin-bottom: 0;
+    }
+    .shopInfo {
+      margin-top: 1rem;
+      display: inline-block;
+      th {
+        height: auto;
+        width: 6rem;
+        padding: 0rem 0;
+      }
+    }
+    //Decoration
+    text-align: left;
+    @media screen and (max-width: $pcScreenSize) {
+      text-align: center;
+    }
+
+    font-size: 0.8rem;
+    .shopType {
+      color: $mainColor;
+      font-weight: bold;
+    }
+    .shopName {
+      color: $mainColor;
+      font-size: 0.8rem;
+    }
+    .shopAddress {
+      // font-size: 0.8rem;
+      font-style: normal;
+      line-height: inherit;
+    }
+    .shopAccess {
+      // font-size: 0.8rem;
+    }
+    .shopInfo {
+      // font-size: 0.8rem;
+      border-collapse: collapse;
+      .tel {
+        text-decoration: underline $accentColor;
+        //PCサイズレイアウト時はリンクを無効にする。
+        @media screen and (min-width: $pcScreenSize) {
+          pointer-events: none;
+          cursor: default;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+.GoogleMap {
+  //Layout
+  height: 40vh;
+  width: 100%;
+  margin-top: 3%;
+  //Decoration
+  .GoogleMap__map {
+    //Layout
+    height: 40vh;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    //Decoration
+  }
+}

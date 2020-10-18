@@ -1,0 +1,226 @@
+@import "constMixin";
+
+//Header
+@mixin l-list($bottom: 0) {
+  margin: 0 auto;
+  padding: 0 0 0.3rem;
+  display: flex;
+  align-items: flex-end;
+  a {
+    margin: 0 1rem;
+    @include ld-linkMark($bottom);
+  }
+  @media screen and (min-width: $pcScreenSize) {
+    height: auto;
+    width: 100%;
+    margin: 0;
+  }
+}
+@mixin d-headerBackGround {
+  background-color: #fff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+}
+@mixin d-menuBar_list() {
+  font-family: $serifFont;
+  a {
+    color: $mainColor;
+  }
+}
+
+.HeaderArea {
+  @at-root {
+    & {
+      //Layout
+      height: $gridScale * 4;
+      width: 100%;
+      //Decoration
+      // @include d-dummyDesign();
+    }
+    .HeaderContainer {
+      //Layout
+      height: $gridScale * 4;
+      width: 100%;
+      display: flex;
+      position: fixed;
+      top: 0;
+      z-index: 100;
+      //Decoration
+      // @include d-dummyDesign();
+      @include d-headerBackGround();
+      //Motion
+      @include m-Toggle($display: flex);
+    }
+    .toggleLabel {
+    }
+    .menuButton {
+      //Layout
+      height: 100%;
+      width: 20%;
+      @include l-imgCenterSet(60%);
+      //Decoration
+      color: $accentColor;
+      font-size: 35pt;
+      text-align: center;
+    }
+    .logoMark {
+      //Layout
+      height: 100%;
+      width: 60%;
+      margin: 0;
+      @include l-imgCenterSet(70%);
+      //Decoration
+      // @include d-dummyDesign();
+    }
+    .toggleButton {
+    }
+    .toggleTarget {
+    }
+    .HeaderContainer__NavArea {
+      display: none;
+    }
+    .HeaderContainer__NavArea.-Opend{
+      display: block;
+    }
+
+    @media screen and (min-width: $pcScreenSize) {
+      .menuButton {
+        display: none;
+      }
+      .logoMark {
+        display: none;
+      }
+      .HeaderContainer__NavArea {
+        display: block;
+      }
+    }
+  }
+}
+
+.NavArea {
+  @at-root {
+    & {
+      //Layout
+      height: 100%;
+      width: 100%;
+      display: flex;
+      position: fixed;
+      top: auto;
+      left: 0;
+      z-index: 101;
+      //Decoration
+      // @include d-dummyDesign();
+    }
+    .NavArea__menuBar {
+      //Layout
+      height: 100%;
+      width: 75%;
+      display: flex;
+      flex-direction: column;
+      //Decoration
+      // @include d-dummyDesign();
+      @include d-headerBackGround();
+    }
+    .NavArea__logoMark {
+      //Layout
+      @include l-imgCenterSet(80%);
+      //Decoration
+      //  @include d-dummyDesign();
+    }
+    .NavArea__mainList {
+      //Layout
+      @include l-list(0.3rem);
+      margin-bottom: 3rem;
+      flex-direction: column;
+      //Decoration
+      //  @include d-dummyDesign();
+      @include d-menuBar_list();
+    }
+    .NavArea__subList {
+      //Layout
+      @include l-list;
+      //Decoration
+      //  @include d-dummyDesign();
+      @include d-menuBar_list();
+      font-size: 0.7rem;
+      font-family: $gothicFont;
+      font-weight: 600;
+    }
+    .NavArea__snsList {
+      //Layout
+      @include l-list;
+      //Decoration
+      //  @include d-dummyDesign();
+      @include d-menuBar_list();
+      font-size: 0.8rem;
+    }
+    .NavArea__blankSpace {
+      height: 100%;
+      width: 25%;
+    }
+
+    @media screen and (min-width: $pcScreenSize) {
+      & {
+        height: $gridScale * 4;
+        width: 100%;
+        display: flex;
+      }
+      .NavArea__menuBar {
+        height: 100%;
+        width: 100%;
+        display: grid;
+        grid-template:
+          "logo . sns sub" 50%
+          "logo . menu menu" 50%
+          /28% 4% auto 16rem;
+      }
+      .NavArea__logoMark {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        grid-area: logo;
+      }
+      .NavArea__mainList {
+        margin-bottom: 0;
+        flex-direction: row;
+        justify-content: flex-start;
+        grid-area: menu;
+      }
+      .NavArea__subList {
+        justify-content: flex-end;
+        grid-area: sub;
+      }
+      .NavArea__snsList {
+        justify-content: flex-end;
+        grid-area: sns;
+      }
+      .NavArea__blankSpace {
+        display: none;
+      }
+    }
+  }
+}
+
+
+//Footer
+.FooterArea {
+  //Layout
+  //Decoration
+  // @include d-dummyDesign();
+
+  .FooterArea__copyRight {
+    //Layout
+    margin: auto 0;
+    height: $gridScale * 3;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //Decoration
+    font-family: $serifFont;
+    font-size: 0.9rem;
+    color: $mainColor;
+    border-top: solid 2pt $asortColor1;
+  }
+}
+
+

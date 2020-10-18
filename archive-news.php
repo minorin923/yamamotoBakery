@@ -9,27 +9,14 @@ Template Name: newslist
 
 <?php get_template_part('template/header'); ?>
 
-<main class="NewsListPage">
-
-	<section class="NewsListSection Gm-js_fadeIn">
-    <div class="NewsListSection__titleArea">
-    <h2 class="SectionTitle" data-english ="BlogList">ブログ一覧</h2>
-    </div>
-    <div class="NewsListSection__mainArea">
-			<div class="SingleContainer">
-				<div class="SingleContainer_singleArea">
-				<?php get_template_part('template/archiveContent','news'); ?>
-				</div>
-				<!-- end:singleArea -->
-				<div class="SingleContainer_sideArea">
-					<?php get_template_part('template/widgetArea'); ?>
-				</div>
-			</div>
-		</div>
-	</section>
-
-</main>
-<!-- main -->
-
+<?php 
+  $pageName = 'NewsList';
+	$pageTitle = 'ブログ一覧';
+	$PageType = 'Archive';
+	$archivePartName ='news';
+	include locate_template('template/subPagePart-1.php');
+	include locate_template('template/singleContainer.php');
+	include locate_template('template/subPagePart-2.php');  
+?>
 
 <?php get_footer(); ?>

@@ -191,10 +191,10 @@ function getCatItems($atts, $content = null)
 function drawPostItem($post,$thumbnail,$wordCount,$taxonomy,$itemClassName)
 {
   $retHtml .= '<div class="' . $itemClassName . '">';
-  $retHtml .= '<a class="post_link" href="' . get_permalink() . '">';
+  $retHtml .= '<a class="' . $itemClassName . '__linkContainer" href="' . get_permalink() . '">';
 
   if ($thumbnail) {
-    $retHtml .= '<div class="post_link_image"><div class="imageFrame">';
+    $retHtml .= '<div class="' . $itemClassName . '__image"><div class="imageFrame">';
     if (has_post_thumbnail()) {
       $retHtml .=  get_the_post_thumbnail($post->ID, 'thumbnail', array('class' => 'image'));
     } else {
@@ -202,13 +202,13 @@ function drawPostItem($post,$thumbnail,$wordCount,$taxonomy,$itemClassName)
     }
   }
 
-  $retHtml .= '<span class="post_link_category" ' . $taxonomy->description . '>'  . $taxonomy->name . '</span>';
+  $retHtml .= '<span class="' . $itemClassName . '__category" ' . $taxonomy->description . '>'  . $taxonomy->name . '</span>';
 
   if ($thumbnail) {$retHtml .= '</div></div>';}
 
-  $retHtml .= '<div class="post_link_textBox">';
-  $retHtml .= '<span class="post_link_textBox--date">' . get_the_date() . '</span>';
-  $retHtml .= '<p class="post_link_textBox--title">' .  postTitleSet(the_title("", "", false),$wordCount)  . '</p>';
+  $retHtml .= '<div class="' . $itemClassName . '__textBox">';
+  $retHtml .= '<span class="' . $itemClassName . '__date">' . get_the_date() . '</span>';
+  $retHtml .= '<p class="' . $itemClassName . '__title">' .  postTitleSet(the_title("", "", false),$wordCount)  . '</p>';
   $retHtml .= '</div></a></div>';
   
   return $retHtml;
@@ -278,14 +278,14 @@ class customarchive extends WP_Widget
       if ($year_current != $year_prev) {
         if ($year_prev != null) { 
           echo '</ul>';
-          echo '<div class="widget--Archive_totalCount">('.$year_count.')</div>';
+          echo '<div class="ArchiveWidget__totalCount">('.$year_count.')</div>';
           echo '</div>';
           $year_count = 0;
         }
-        echo '<div class="widget--Archive">';
-        echo '<label class="widget--Archive_year toggleLabel" for="menuToggle' . $count . '">' . $month->year .'</label>';
+        echo '<div class="ArchiveWidget">';
+        echo '<label class="ArchiveWidget__year toggleLabel" for="menuToggle' . $count . '">' . $month->year .'</label>';
         echo '<input id="menuToggle'.$count.'" class="toggleButton" type="checkbox" ></input>';
-        echo '<ul class="widget--Archive_menu toggleTarget">';
+        echo '<ul class="ArchiveWidget__menu toggleTarget">';
       }
       echo '<li><a href="/' . $month->year . '/' . date("m", mktime(0, 0, 0, $month->month, 1, $month->year)) . $posttype . '">';
       echo ''.date("n", mktime(0, 0, 0, $month->month, 1, $month->year)) . '月';
@@ -295,7 +295,7 @@ class customarchive extends WP_Widget
       $year_count += $month->post_count;
     }
     echo '</ul>';
-    echo '<div class="widget--Archive_totalCount">('.$year_count.')</div>';
+    echo '<div class="ArchiveWidget__totalCount">('.$year_count.')</div>';
     echo '</div>';
     echo $args['after_widget'];
   }
@@ -386,7 +386,7 @@ add_filter('nav_menu_css_class', 'my_css_attributes_filter', 100, 1);
 //[3]ナビゲーションバーのaタグにclassを追加するコード
 function add_class_on_link($item_output, $item)
 {
-  $addClassName = 'm-Js_Scroll';
+  $addClassName = 'Js__Scroll toggleItem';
   return preg_replace('/(<a.*?)/', '$1' . ' class="' . $addClassName . '"', $item_output);
 }
 add_filter('walker_nav_menu_start_el', 'add_class_on_link', 10, 4);
@@ -402,7 +402,7 @@ $arr_types = array('page'); //適用させる投稿タイプを指定
 $post_type = get_post_type( $post->ID );
 if (in_array($post_type, $arr_types)) $remove_filter = true;
 if ( $remove_filter ) {
-remove_filter('the_content', 'wpautop');
+// remove_filter('the_content', 'wpautop');
 remove_filter('the_excerpt', 'wpautop');
 }
 return $content;

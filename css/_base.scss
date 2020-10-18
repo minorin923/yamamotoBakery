@@ -1,0 +1,204 @@
+
+//HTML基本書式初期設定
+html {
+  //基礎フォント設定(画面600pxで12px,100pxで16px)
+  //font-size: calc(calc(12/16*100%) + 4 * (100vw - 600px) / 400)
+  font-size: 20px;
+}
+body {
+  color: $textColor;
+  font-family: $san-serifFont, $gothicFont,
+   "Helvetica Neue",
+    Arial,
+    "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans",
+    Meiryo,
+    sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  margin: 0;
+}
+h2,
+h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+p {
+  margin-top: 0;
+  box-sizing: border-box;
+}
+a {
+  display: block;
+  color: $textColor;
+  text-decoration: none;
+  background-color: transparent;
+}
+ul {
+  margin: 0;
+  list-style: none;
+}
+li {
+  display: inline-block;
+}
+
+
+
+
+//JavaScript動作付与クラス
+.Js{
+  @at-root{
+    .Js_FadeIn {
+      // @include m-Js_FadeIn();
+    }
+  }
+}
+
+
+
+
+//セクションタイトル
+.SectionTitle {
+  @include ld-TitleDesign();
+}
+//ボタン
+.moreButton {
+  @include d-ButtonDesign();
+}
+
+//ニュース記事
+.NewsPost {
+  @at-root {
+    & {
+      //Layout
+      margin-bottom: 1rem;
+    }
+    .NewsPost__linkContainer {
+      //Layout
+      height: auto;
+      width: auto;
+      display: inline-block;
+      position: relative;
+      //Decoration
+      text-decoration: none;
+      color: $textColor;
+    }
+    .NewsPost__image {
+      //Layout
+      display: none;
+    }
+    .NewsPost__category {
+      //Layout
+      height: auto;
+      width: 5rem;
+      padding: 0.1rem 0 0.1rem 0;
+      position: absolute;
+      top: 1.2rem;
+      left: 0rem;
+      text-align: center;
+      @media screen and (min-width: $pcScreenSize) {
+        top: -0.2rem;
+        left: 6.5rem;
+      }
+      //Decoration
+      font-size: 0.9rem;
+      border-radius: 3px;
+      border: $textColor 1px solid;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+    .NewsPost__textBox {
+      //Layout
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+    }
+    .NewsPost__date {
+      //Layout
+      padding-right: 1rem;
+      padding-bottom: 1.2rem;
+      @media screen and (min-width: $pcScreenSize) {
+        padding-right: 8rem;
+        padding-bottom: 0;
+      }
+      //Decoration
+      font-size: 0.9rem;
+      letter-spacing: 0rem;
+      white-space: nowrap;
+    }
+    .NewsPost__title {
+      //Layout
+      display: inline-block;
+      margin: 0;
+      //Decoration
+      font-size: 0.9rem;
+      text-decoration: underline $accentColor;
+      letter-spacing: 0.2rem;
+      white-space: wrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+//ブログ記事
+.BlogPost {
+  @at-root {
+    & {
+      //Layout
+      height: auto;
+      width: 20%;
+      min-width: 140px;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: $gridScale * 1;
+    }
+    .BlogPost__linkContainer {
+      //Layout
+      display: block;
+      //Decoration
+      color: $textColor;
+    }
+    .BlogPost__image {
+      //Layout
+      @include l-AspectFixed($aspectWidth-4-3);
+      height: auto;
+      width: 100%;
+      position: relative;
+    }
+    .BlogPost__category {
+      //Layout
+      height: auto;
+      width: 40%;
+      padding: 0.2rem 0 0.1rem 0;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      text-align: center;
+      //Decoration
+      font-size: 0.8rem;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+    .BlogPost__textBox {
+      //Layout
+      height: 4.5rem;
+      width: 100%;
+      margin-top: 0.5rem;
+      overflow: hidden;
+    }
+    .BlogPost__date {
+      //Layout
+      margin-bottom: 0.8rem;
+      //Decoration
+      font-size: 0.8rem;
+    }
+    .BlogPost__title {
+      //Layout
+      margin-bottom: 0;
+      //Decoration
+      font-size: 0.9rem;
+      text-decoration: underline $accentColor;
+    }
+  }
+}

@@ -3,8 +3,8 @@
 $(function(){
 
   /*(1)フェードインアニメーション*/
-  var fadeIn_default = 'm-Js_FadeIn';
-  var fadeIn_action = 'm-Js_FadeIn_action';
+  var fadeIn_default = 'Js__FadeIn';
+  var fadeIn_action = '-Action';
    /*ページ表示時*/
    window.onload = function() {
    scroll_effect();
@@ -26,7 +26,7 @@ $(function(){
   };
 
   /*(2)ページ内スクロールアニメーション */
-  var scroll_default = 'm-Js_Scroll';
+  var scroll_default = 'Js__Scroll';
   // #で始まるアンカーをクリックした場合に処理
   $('.'+scroll_default).click(function() {
     // スクロールの速度
@@ -45,5 +45,15 @@ $(function(){
   });
 
 
-  /*(3) */
+  /*(3) クラス付与*/
+  var menuButton = 'menuButton';
+  var toggleTarget = 'HeaderContainer__NavArea';
+  var toggleItem = 'toggleItem';
+  // #で始まるアンカーをクリックした場合に処理
+  $('.'+menuButton).click(function() {
+    $('.'+toggleTarget).addClass('-Opend');
+  });
+  $('.'+toggleItem).click(function() {
+    $('.'+toggleTarget).removeClass('-Opend');
+  });
 });

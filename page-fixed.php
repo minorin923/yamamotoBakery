@@ -9,24 +9,12 @@ Template Name: fiexdPage
 
 <?php get_template_part('template/header'); ?>
 
-<main class="FixedPage">
-
-  <section class="FixedSection Gm-js_fadeIn">
-    <div class="FixedSection__titleArea">
-    <h2 class="SectionTitle" data-english ="Fixed">固定ページ</h2>
-    </div>
-    <div class="FixedSection__mainArea">
-     <div class="ContentsContainer">
-        <?php if ( have_posts() ) : ?>
-          <?php while( have_posts() ) : the_post(); ?>
-            <?php the_content(); ?>
-          <?php endwhile;?>
-        <?php endif; ?>
-     </div>
-    </div>
-  </section>
-
-</main>
-<!-- main -->
+<?php 
+  $pageName = CFS()->get('pageName');
+  $pageTitle = CFS()->get('pageTitle');
+  include locate_template('template/subPagePart-1.php');
+	include locate_template('template/content.php');
+	include locate_template('template/subPagePart-2.php');  
+?>
 
 <?php get_footer(); ?>

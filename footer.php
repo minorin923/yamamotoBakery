@@ -1,11 +1,5 @@
 
-
-<footer class="FooterArea">
-  <div class="FooterArea__copyRight">
-    CopyRight(C) 2020 YamamotoBakery All Rights Reserved.
-  </div>
-</footer>
-<!-- footer -->
+<?php get_template_part('template/footer'); ?>
 
 <?php wp_footer(); ?>
 </body>
